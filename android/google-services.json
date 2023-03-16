@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "590463705442",
+    "project_id": "tdt4240-wordle-royale",
+    "storage_bucket": "tdt4240-wordle-royale.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590463705442:android:99d033c4b505e847e0cc3b",
+        "android_client_info": {
+          "package_name": "com.wordle.royale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590463705442-nssh984ci9u13erh7oocru1rjguie98r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8O5W8uX2FF5FRrVABQzNs8nzXnpYJU10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590463705442-nssh984ci9u13erh7oocru1rjguie98r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
