@@ -1,0 +1,9 @@
+services:
+  # MongoDB
+  vote-db:
+    container_name: wordle-db
+    image: mongo:6.0.3
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
