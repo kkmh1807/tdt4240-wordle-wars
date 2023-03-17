@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.wordle.royale.screens;
 
 import com.badlogic.gdx.Gdx;
@@ -123,9 +122,3 @@ public class SettingsScreen implements Screen {
     }
 }
 
-=======
-package screens;
-
-public class SettingsScreen {
-}
->>>>>>> main
