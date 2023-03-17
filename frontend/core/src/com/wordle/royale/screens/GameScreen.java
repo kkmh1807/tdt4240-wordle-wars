@@ -5,15 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
@@ -53,18 +49,18 @@ public class GameScreen implements Screen {
         quitGameButton = new TextButton("Quit Game", skin, "default");
         quitGameButton.setScale(1f, 2f);
         quitGameButton.setTransform(true);
-        quitGameButton.setPosition(Gdx.graphics.getWidth() /2f - quitGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f + quitGameButton.getHeight()*2);
+        quitGameButton.setPosition(Gdx.graphics.getWidth() /2f - quitGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
 
         quitGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.GAME);
+                parent.changeScreens(WordleController.MENU);
             }
         });
 
 
-
+        Gdx.input.setInputProcessor((stage));
         stage.addActor(quitGameButton);
 
     }

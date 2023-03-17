@@ -3,7 +3,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -33,7 +32,7 @@ public class MenuScreen implements Screen {
     private TextField addressText1;
     private TextureRegionDrawable someButtonImage;
     private TextButton startGameButton;
-    private TextButton exitButton;
+    private TextButton tutorialButton;
     private TextButton settingsButton;
     private WordleController parent;
 
@@ -60,12 +59,12 @@ public class MenuScreen implements Screen {
         startGameButton.setTransform(true);
         startGameButton.setPosition(Gdx.graphics.getWidth() /2f - startGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f + startGameButton.getHeight()*2);
 
-        exitButton = new TextButton("Tutorial", skin, "default");
+        tutorialButton = new TextButton("Tutorial", skin, "default");
 
-        exitButton.pad(20f);
-        exitButton.setTransform(true);
-        exitButton.setScale(1, 2f);
-        exitButton.setPosition(Gdx.graphics.getWidth() /2f - exitButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+        tutorialButton.pad(20f);
+        tutorialButton.setTransform(true);
+        tutorialButton.setScale(1, 2f);
+        tutorialButton.setPosition(Gdx.graphics.getWidth() /2f - tutorialButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
 
         settingsButton = new TextButton("Settings", skin, "default");
@@ -82,18 +81,20 @@ public class MenuScreen implements Screen {
             }
         });
 
-        exitButton.addListener(new ClickListener(){
+        tutorialButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                Gdx.app.exit();
+                parent.changeScreens(WordleController.TUTORIAL);
             }
         });
 
         settingsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                parent.changeScreens(WordleController.SETTINGS);
 
             }
+
         });
 
         Gdx.input.setInputProcessor(stage);
@@ -105,7 +106,7 @@ public class MenuScreen implements Screen {
 
 
         stage.addActor(startGameButton);
-        stage.addActor(exitButton);
+        stage.addActor(tutorialButton);
         stage.addActor(settingsButton);
         //stage.addActor(label1);
 
