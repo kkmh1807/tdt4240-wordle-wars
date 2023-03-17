@@ -49,7 +49,6 @@ public class WordleController extends Game {
                 if(menu == null) menu = new MenuScreen(this); // added (this)
                 this.setScreen(menu);
                 break;
-
             case GAME:
                 if(game == null) game = new GameScreen(this); //added (this)
                 this.setScreen(game);
