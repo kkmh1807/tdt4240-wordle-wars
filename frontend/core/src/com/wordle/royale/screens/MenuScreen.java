@@ -1,4 +1,4 @@
-package screens;
+package com.wordle.royale.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -25,8 +25,8 @@ public class MenuScreen implements Screen {
     private OrthographicCamera camera;
     private TextureAtlas atlas;
     protected Skin skin;
-    private final float GAME_WORLD_WIDTH = 1280;
-    private final float GAME_WORLD_HEIGHT = 720;
+    private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
+    private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
     private Label label1;
     private TextField name1;
     private Label addressLabel1;
@@ -54,35 +54,31 @@ public class MenuScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = new BitmapFont();
 
         startGameButton = new TextButton("Start Game", skin, "default");
-
-        startGameButton.pad(20f);
+        startGameButton.setScale(1f, 2f);
         startGameButton.setTransform(true);
-        startGameButton.setScale(0.5f);
-        startGameButton.setPosition(Gdx.graphics.getWidth() /2f - startGameButton.getWidth()/4, Gdx.graphics.getHeight()/2f + 25);
+        startGameButton.setPosition(Gdx.graphics.getWidth() /2f - startGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f + startGameButton.getHeight()*2);
 
-        exitButton = new TextButton("Exit", skin, "default");
+        exitButton = new TextButton("Tutorial", skin, "default");
 
         exitButton.pad(20f);
         exitButton.setTransform(true);
-        exitButton.setScale(0.5f);
-        exitButton.setPosition(Gdx.graphics.getWidth() /2f - exitButton.getWidth()/4, Gdx.graphics.getHeight()/2f -50);
+        exitButton.setScale(1, 2f);
+        exitButton.setPosition(Gdx.graphics.getWidth() /2f - exitButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
 
-        settingsButton = new TextButton("Click me", skin, "default");
+        settingsButton = new TextButton("Settings", skin, "default");
 
         settingsButton.pad(20f);
         settingsButton.setTransform(true);
-        settingsButton.setScale(0.4f);
-        settingsButton.setPosition(Gdx.graphics.getWidth() /2f - settingsButton.getWidth()/5, Gdx.graphics.getHeight()/2f -125);
+        settingsButton.setScale(1, 2f);
+        settingsButton.setPosition(Gdx.graphics.getWidth() /2f - settingsButton.getWidth()/2f, Gdx.graphics.getHeight()/2f - settingsButton.getHeight()*2);
 
         startGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.MENU);
+                parent.changeScreens(WordleController.GAME);
             }
         });
 
