@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
 
-public class GameScreen implements Screen {
+public class HighScoreScreen implements Screen {
 
     private SpriteBatch batch;
     private Stage stage;
@@ -24,11 +24,12 @@ public class GameScreen implements Screen {
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
 
-    private TextButton quitGameButton;
+    private TextButton backToMenu;
+    private TextButton playAgain;
 
     private WordleController parent;
 
-    public GameScreen(WordleController parent) {
+    public HighScoreScreen(WordleController parent) {
         this.parent = parent;
     }
 
@@ -46,13 +47,27 @@ public class GameScreen implements Screen {
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
-        quitGameButton = new TextButton("Quit Game", skin, "default");
-        quitGameButton.setScale(1f, 2f);
-        quitGameButton.setTransform(true);
-        quitGameButton.setPosition(Gdx.graphics.getWidth() /2f - quitGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+        backToMenu = new TextButton("To main menu", skin, "default");
+        backToMenu.setScale(1f, 2f);
+        backToMenu.setTransform(true);
+        backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
 
-        quitGameButton.addListener(new ClickListener(){
+        playAgain = new TextButton("To main menu", skin, "default");
+        playAgain.setScale(1f, 2f);
+        playAgain.setTransform(true);
+        playAgain.setPosition(Gdx.graphics.getWidth() /2f - playAgain.getWidth()/2f, Gdx.graphics.getHeight()/2f - playAgain.getHeight()*2);
+
+
+        playAgain.addListener((new ClickListener(){
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                parent.changeScreens(WordleController.GAME);
+            }
+        }));
+
+        backToMenu.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 parent.changeScreens(WordleController.MENU);
@@ -61,7 +76,7 @@ public class GameScreen implements Screen {
 
 
         Gdx.input.setInputProcessor((stage));
-        stage.addActor(quitGameButton);
+        stage.addActor(backToMenu);
 
     }
 
@@ -121,4 +136,5 @@ public class GameScreen implements Screen {
         stage.dispose();
     }
 }
+
 
