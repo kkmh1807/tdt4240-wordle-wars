@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wordle.royale.HighScore;
 import com.wordle.royale.WordleController;
 
 public class HighScoreScreen implements Screen {
@@ -28,6 +29,8 @@ public class HighScoreScreen implements Screen {
     private TextButton playAgain;
 
     private WordleController parent;
+
+    private HighScore highScore;
 
     public HighScoreScreen(WordleController parent) {
         this.parent = parent;
@@ -84,12 +87,14 @@ public class HighScoreScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        highScore = new HighScore();
         // camera.update();
 
 
 
 
         batch.begin();
+        highScore.render(batch);
 //        batch.setProjectionMatrix(camera.combined);
         /*Table table = new Table();
         table.add(label1);
