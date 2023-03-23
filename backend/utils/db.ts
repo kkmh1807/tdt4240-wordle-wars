@@ -18,7 +18,7 @@ const mongoConnect = async () => {
 
   database = mongoose.connection;
   database.once("open", async () => {
-    console.log("Connected to WordleDB (MongoDB) 💾");
+    console.log("Connected to WordleDB (MongoDB) 🪴");
   });
 
   // In case of any error while running
