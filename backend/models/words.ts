@@ -8,7 +8,7 @@ const wordSchema = new Schema<WordType>(
       required: true,
     },
   },
-  { collection: "word" }
+  { collection: "words" }
 );
 
 const Word = model<WordType>("Word", wordSchema);

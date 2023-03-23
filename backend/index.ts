@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import mongoConnect from "./utils/db";
 import dotenv from "dotenv";
 import cors from "cors";
-import routes from "./routes/hello";
+import wordRoutes from "./routes/word";
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // App routes
-app.use("/", routes);
+app.use("/word", wordRoutes);
 
 try {
   app.listen(port, (): void => {
