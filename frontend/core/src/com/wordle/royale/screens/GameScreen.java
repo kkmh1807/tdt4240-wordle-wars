@@ -9,10 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameScreen implements Screen {
 
@@ -23,10 +27,13 @@ public class GameScreen implements Screen {
     protected Skin skin;
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
+    private TextTileGrid textTileGrid;
+
+
 
     private TextButton quitGameButton;
-
     private WordleController parent;
+
 
     public GameScreen(WordleController parent) {
         this.parent = parent;
@@ -51,7 +58,6 @@ public class GameScreen implements Screen {
         quitGameButton.setTransform(true);
         quitGameButton.setPosition(Gdx.graphics.getWidth() /2f - quitGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
-
         quitGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -60,6 +66,8 @@ public class GameScreen implements Screen {
         });
 
 
+        textTileGrid = new TextTileGrid();
+        textTileGrid.draw( new Float[]{1f, 1f},batch,new Float[]{GAME_WORLD_WIDTH/2 -100, GAME_WORLD_HEIGHT});
         Gdx.input.setInputProcessor((stage));
         stage.addActor(quitGameButton);
 
@@ -69,24 +77,10 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // camera.update();
-
-
 
 
         batch.begin();
-//        batch.setProjectionMatrix(camera.combined);
-        /*Table table = new Table();
-        table.add(label1);
-        table.add(name1).width(100);
-        table.row();
-        table.add(addressLabel1);
-        table.add(addressText1).width(100);
-
-         */
         stage.draw();
-
-
         batch.end();
     }
 
