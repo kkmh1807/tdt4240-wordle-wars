@@ -19,5 +19,3 @@ services:
         - DATABASE_URI=$DOCKER_DATABASE_URI
         - USERNAME=$MONGO_INITDB_ROOT_USERNAME
         - PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
-    depends_on:
-      - wordle-db
