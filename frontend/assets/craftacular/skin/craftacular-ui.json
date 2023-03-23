@@ -46,7 +46,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		up: button
 		over: button-hover
 		disabled: button-disabled
-	}
+	},
+
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {

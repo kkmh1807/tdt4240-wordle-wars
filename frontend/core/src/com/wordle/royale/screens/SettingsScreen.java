@@ -5,9 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -15,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
 
 public class SettingsScreen implements Screen {
-
     private SpriteBatch batch;
     private Stage stage;
     private Viewport viewport;
@@ -28,6 +32,8 @@ public class SettingsScreen implements Screen {
 
     private WordleController parent;
 
+    private TextButton toggleMusic;
+
     public SettingsScreen(WordleController parent) {
         this.parent = parent;
     }
@@ -39,7 +45,9 @@ public class SettingsScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
-
+        Table table = new Table();
+        table.setFillParent(true);
+        stage.addActor(table);
 
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
@@ -49,7 +57,7 @@ public class SettingsScreen implements Screen {
         mainMenu = new TextButton("To main Menu", skin, "default");
         mainMenu.setScale(1f, 2f);
         mainMenu.setTransform(true);
-        mainMenu.setPosition(Gdx.graphics.getWidth() /2f - mainMenu.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+        mainMenu.setPosition(Gdx.graphics.getWidth() /2f - mainMenu.getWidth()/2f, mainMenu.getHeight());
 
 
         mainMenu.addListener(new ClickListener(){
@@ -63,6 +71,25 @@ public class SettingsScreen implements Screen {
         Gdx.input.setInputProcessor((stage));
         stage.addActor(mainMenu);
 
+
+        if (parent.getPreferences().getMusic()) {
+            toggleMusic = new TextButton("Music is enabled", skin, "default");
+        }  else {
+            toggleMusic = new TextButton("Music is disabled", skin, "default");
+        }
+        toggleMusic.setScale(1f, 2f);
+        toggleMusic.setTransform(true);
+
+        toggleMusic.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                boolean musicEnabled = parent.getPreferences().getMusic();
+                parent.getPreferences().setMusic(!musicEnabled);
+            }
+        });
+
+        table.add(toggleMusic);
+
     }
 
     @Override
@@ -72,7 +99,11 @@ public class SettingsScreen implements Screen {
         // camera.update();
 
 
-
+        if (parent.getPreferences().getMusic()) {
+            toggleMusic.setText("Music is enabled");
+        }  else {
+            toggleMusic.setText("Music is disabled");
+        }
 
         batch.begin();
 //        batch.setProjectionMatrix(camera.combined);

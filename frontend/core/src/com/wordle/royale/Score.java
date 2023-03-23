@@ -19,9 +19,13 @@ public class Score implements Comparable<Score> {
     }
     @Override
     public int compareTo(Score s) {
-        if (score > s.score) {
-            return score;
+        if(score > s.score) {
+            return -1;
+        } else if (score < s.score) {
+            return 1;
         }
-        return -1;
+        else {
+            return name.compareTo(s.name);
+        }
     }
 }

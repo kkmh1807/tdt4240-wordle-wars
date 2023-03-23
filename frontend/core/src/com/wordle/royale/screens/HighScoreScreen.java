@@ -53,7 +53,7 @@ public class HighScoreScreen implements Screen {
         backToMenu = new TextButton("To main menu", skin, "default");
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
-        backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+        backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, backToMenu.getHeight());
 
 
         playAgain = new TextButton("To main menu", skin, "default");

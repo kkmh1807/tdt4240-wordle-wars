@@ -37,9 +37,12 @@ public class WordleController extends Game {
 
     public final static float GAME_WORLD_WIDTH = 1280;
     public final static float GAME_WORLD_HEIGHT = 720;
+
+    private AppPreferences preferences;
+
     @Override
     public void create() {
-
+        preferences = new AppPreferences();
         menu = new MenuScreen(this);
         setScreen(menu);
     }
@@ -73,6 +76,10 @@ public class WordleController extends Game {
 
 
         }
+    }
+
+    public AppPreferences getPreferences() {
+        return preferences;
     }
 
 
