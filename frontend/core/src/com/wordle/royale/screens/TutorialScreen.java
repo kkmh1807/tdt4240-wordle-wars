@@ -85,7 +85,7 @@ public class TutorialScreen implements Screen {
         table.add(addressText1).width(100);
 
          */
-        tutorialText.getData().setScale(1f, 1.5f);
+        tutorialText.getData().setScale(1f, 2f);
         tutorialText.draw(batch, "You have six tries to guess the\nfive-letter Wordle of the day.\nType in your guess and submit\nyour word by hitting the “enter”\nkey on the Wordle keyboard.\n" +
                 "\nThe color of the tiles will\nchange after you submit your\nword.\nA yellow tile indicates that you\npicked the right letter but it’s\nin the wrong spot.\nThe green tile indicates that\nyou picked the right letter in\nthe correct spot. The gray tile\nindicates that the letter you\npicked is not included\nin the word at all.\n\nContinue until you solve the\nWordle or run out of guesses.\nGood luck!", Gdx.graphics.getWidth()/4f ,Gdx.graphics.getHeight() - backToMenu.getHeight()*2);
         stage.draw();

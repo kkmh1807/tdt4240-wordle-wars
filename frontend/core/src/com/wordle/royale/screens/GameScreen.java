@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
+import utils.timer;
 
 public class GameScreen implements Screen {
 
@@ -27,6 +29,9 @@ public class GameScreen implements Screen {
     private TextButton quitGameButton;
 
     private WordleController parent;
+    private utils.timer timer;
+
+    private BitmapFont timerText;
 
     public GameScreen(WordleController parent) {
         this.parent = parent;
@@ -38,6 +43,9 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
+        timer = new timer();
+        timer.start();
+        timerText = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
 
 
 
@@ -52,9 +60,12 @@ public class GameScreen implements Screen {
         quitGameButton.setPosition(Gdx.graphics.getWidth() /2f - quitGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
 
+
+
         quitGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                timer.stop();
                 parent.changeScreens(WordleController.MENU);
             }
         });
@@ -72,7 +83,10 @@ public class GameScreen implements Screen {
         // camera.update();
 
 
-
+        if (timer.getInterval().equals("0:00")) {
+            timer.stop();
+            parent.changeScreens(WordleController.MENU);
+        }
 
         batch.begin();
 //        batch.setProjectionMatrix(camera.combined);
@@ -85,6 +99,9 @@ public class GameScreen implements Screen {
 
          */
         stage.draw();
+        timerText.getData().setScale(1.5f, 2.5f);
+        timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2f) - timerText.getXHeight(), Gdx.graphics.getHeight() - 20);
+
 
 
         batch.end();
