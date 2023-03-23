@@ -8,7 +8,7 @@ wordRoutes.get("/", getRandomWord);
 
 // @param {word: number}
 // @param {guess: string}
-// @returns {validWord: boolean, letters {"letter": string, status: number, placement: number}}
+// @returns {validWord: boolean, letters {"letter": string, status: number, placement: number}[]}
 wordRoutes.post("/guess", guessWord);
 
 export default wordRoutes;
