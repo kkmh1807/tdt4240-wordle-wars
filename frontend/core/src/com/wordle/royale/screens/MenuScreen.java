@@ -137,9 +137,6 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // camera.update();
 
-
-
-
         batch.begin();
 //        batch.setProjectionMatrix(camera.combined);
         /*Table table = new Table();

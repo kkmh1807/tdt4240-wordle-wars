@@ -13,6 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
+<<<<<<< Updated upstream
+=======
+import utils.WordleTimer;
+>>>>>>> Stashed changes
 
 public class GameScreen implements Screen {
 
@@ -27,6 +31,12 @@ public class GameScreen implements Screen {
     private TextButton quitGameButton;
 
     private WordleController parent;
+<<<<<<< Updated upstream
+=======
+    private WordleTimer timer;
+
+    private BitmapFont timerText;
+>>>>>>> Stashed changes
 
     public GameScreen(WordleController parent) {
         this.parent = parent;
@@ -38,6 +48,12 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
+<<<<<<< Updated upstream
+=======
+        timer = WordleTimer.getInstance();
+        timer.start();
+        timerText = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
+>>>>>>> Stashed changes
 
 
 
