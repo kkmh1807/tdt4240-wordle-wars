@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,10 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
-<<<<<<< Updated upstream
-=======
 import utils.WordleTimer;
->>>>>>> Stashed changes
 
 public class GameScreen implements Screen {
 
@@ -31,12 +29,9 @@ public class GameScreen implements Screen {
     private TextButton quitGameButton;
 
     private WordleController parent;
-<<<<<<< Updated upstream
-=======
     private WordleTimer timer;
 
     private BitmapFont timerText;
->>>>>>> Stashed changes
 
     public GameScreen(WordleController parent) {
         this.parent = parent;
@@ -48,15 +43,9 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-<<<<<<< Updated upstream
-=======
         timer = WordleTimer.getInstance();
         timer.start();
         timerText = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
->>>>>>> Stashed changes
-
-
-
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
@@ -72,6 +61,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 parent.changeScreens(WordleController.MENU);
+                timer.stop();
             }
         });
 
@@ -87,7 +77,10 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // camera.update();
 
-
+        if (timer.getInterval().equals("0:00")) {
+            timer.stop();
+            parent.changeScreens(WordleController.MENU);
+        }
 
 
         batch.begin();
@@ -100,7 +93,10 @@ public class GameScreen implements Screen {
         table.add(addressText1).width(100);
 
          */
+
         stage.draw();
+        timerText.getData().setScale(1.5f, 2.5f);
+        timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2f) - timerText.getXHeight(), Gdx.graphics.getHeight() - 20);
 
 
         batch.end();

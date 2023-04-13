@@ -42,9 +42,10 @@ public class WordleTimer {
     }
 
     public static int setInterval() {
-        if (interval == 0)
+        if (interval == 0) {
             timer.cancel();
             instance = null;
+        }
         return --interval;
     }
 
