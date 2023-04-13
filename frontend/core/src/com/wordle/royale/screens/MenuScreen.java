@@ -34,6 +34,8 @@ public class MenuScreen implements Screen {
     private TextButton startGameButton;
     private TextButton tutorialButton;
     private TextButton settingsButton;
+
+    private TextButton highScoreButton;
     private WordleController parent;
 
     public MenuScreen(WordleController parent) {
@@ -74,6 +76,22 @@ public class MenuScreen implements Screen {
         settingsButton.setScale(1, 2f);
         settingsButton.setPosition(Gdx.graphics.getWidth() /2f - settingsButton.getWidth()/2f, Gdx.graphics.getHeight()/2f - settingsButton.getHeight()*2);
 
+       //Remember to remove line 80 to 92, used for testing
+        highScoreButton = new TextButton("Highscore", skin, "default");
+
+
+        highScoreButton.pad(20f);
+        highScoreButton.setTransform(true);
+        highScoreButton.setScale(1, 2f);
+        highScoreButton.setPosition(Gdx.graphics.getWidth() /2f - highScoreButton.getWidth()/2f, Gdx.graphics.getHeight()/2f - highScoreButton.getHeight()*4);
+
+        highScoreButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                parent.changeScreens(WordleController.HIGHSCORES);
+            }
+        });
+
         startGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -105,6 +123,7 @@ public class MenuScreen implements Screen {
 
 
 
+        stage.addActor(highScoreButton);
         stage.addActor(startGameButton);
         stage.addActor(tutorialButton);
         stage.addActor(settingsButton);
