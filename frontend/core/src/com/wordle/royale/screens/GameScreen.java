@@ -2,10 +2,13 @@ package com.wordle.royale.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -28,6 +31,9 @@ public class GameScreen implements Screen {
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
     private TextTileGrid textTileGrid;
+    private TextField textField;
+    private TextTile textTile;
+    private ShapeRenderer shapeRenderer;
 
 
 
@@ -37,6 +43,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(WordleController parent) {
         this.parent = parent;
+
     }
 
 
@@ -52,7 +59,7 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
-
+/*
         quitGameButton = new TextButton("Quit Game", skin, "default");
         quitGameButton.setScale(1f, 2f);
         quitGameButton.setTransform(true);
@@ -66,10 +73,43 @@ public class GameScreen implements Screen {
         });
 
 
-        textTileGrid = new TextTileGrid();
-        textTileGrid.draw( new Float[]{1f, 1f},batch,new Float[]{GAME_WORLD_WIDTH/2 -100, GAME_WORLD_HEIGHT});
+ */
+
+        //textTileGrid = new TextTileGrid(stage);
+        textTile = new TextTile(stage);
+
+
+
+
+        //textTileGrid.draw( new Float[]{1f, 1f},batch,new Float[]{GAME_WORLD_WIDTH/2 -100, GAME_WORLD_HEIGHT});
+
+
+
+        //stage.addActor(quitGameButton);
+/*
+        textTile.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.input.setOnscreenKeyboardVisible(true);
+            }
+        });
+
+        textTile.setTextFieldListener(new TextField.TextFieldListener()
+        {
+            @Override
+            public void keyTyped(TextField textField, char key)
+            {
+                if (key == '\n')
+                {
+                    textField.getOnscreenKeyboard().show(false);
+                }
+            }
+        });
+        */
+
+
         Gdx.input.setInputProcessor((stage));
-        stage.addActor(quitGameButton);
+
 
     }
 
@@ -80,6 +120,10 @@ public class GameScreen implements Screen {
 
 
         batch.begin();
+
+
+
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         batch.end();
     }
@@ -114,5 +158,6 @@ public class GameScreen implements Screen {
         batch.dispose();
         stage.dispose();
     }
+
 }
 
