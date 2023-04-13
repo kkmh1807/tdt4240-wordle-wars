@@ -14,7 +14,7 @@ app.use(
     origin: "*",
   })
 );
-const port = process.env.BACKEND_PORT || 3000;
+const port = process.env.BACKEND_PORT || 8080;
 
 mongoConnect();
 

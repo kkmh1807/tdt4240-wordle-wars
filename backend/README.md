@@ -6,11 +6,11 @@ Working example contents:
 
 ```
 COMPOSE_PROJECT_NAME="TDT4240-Wordle"
-BACKEND_PORT=3000
+BACKEND_PORT=8080
 # Database
 # Use DB_URI for running server without docker
-# DB_URI = mongodb://devUser:topSecret@localhost:27017/wordle?authSource=admin
-DOCKER_DATABASE_URI = mongodb://devUser:topSecret@host.docker.internal:27017/wordle?authSource=admin
+# DB_URI = mongodb://devUser:topSecret@localhost:5432/wordle?authSource=admin
+DOCKER_DATABASE_URI = mongodb://devUser:topSecret@host.docker.internal:5432/wordle?authSource=admin
 MONGO_INITDB_ROOT_USERNAME="devUser"
 MONGO_INITDB_ROOT_PASSWORD="topSecret"
 ```
