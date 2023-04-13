@@ -4,14 +4,14 @@ services:
     container_name: wordle-db
     image: mongo:6.0.3
     env_file:
-      - .env
+      - ./Docker/api/api.env
     ports:
       - "27017:27017"
 
   # Initial Seed - Will exit when default data is imported
   mongo-seed:
     env_file:
-      - .env
+      - ./Docker/api/api.env
     build:
       context: ./wordlist-fixtures
       dockerfile: Dockerfile
