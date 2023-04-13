@@ -8,6 +8,7 @@ import highscoreRoutes from "./routes/highscore";
 dotenv.config();
 
 const app: Application = express();
+// Allow all, ok because app is hosted only on eduroam
 app.use(
   cors({
     origin: "*",

@@ -6,7 +6,7 @@ dotenv.config();
 let database: mongoose.Connection;
 mongoose.set("strictQuery", true);
 
-const uri: string = process.env.DB_URI || "";
+const uri: string = process.env.DOCKER_DATABASE_URI || "";
 
 const mongoConnect = async () => {
   console.log("Connecting to MongoDb ...");
