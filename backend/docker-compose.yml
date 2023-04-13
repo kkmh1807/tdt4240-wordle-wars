@@ -19,3 +19,17 @@ services:
         - DATABASE_URI=$DOCKER_DATABASE_URI
         - USERNAME=$MONGO_INITDB_ROOT_USERNAME
         - PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+
+  node-backend:
+    build:
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/home/node/app/src
+      - ./nodemon.json:/home/node/app/nodemon.json
+    container_name: node-backend
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    command: npm run dev
