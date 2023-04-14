@@ -44,7 +44,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("data/0011892.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
         music.setLooping(true);
         music.play();
 
