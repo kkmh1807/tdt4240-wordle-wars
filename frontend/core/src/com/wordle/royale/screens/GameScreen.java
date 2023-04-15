@@ -35,6 +35,9 @@ public class GameScreen implements Screen {
     private TextTile textTile;
     private ShapeRenderer shapeRenderer;
 
+    private float startPointX = Gdx.graphics.getWidth() /4;
+    private float startPointy = Gdx.graphics.getHeight() /2 + 150 + 150 + 150 + 150/3 + 150/3 + (150/3/2);
+
 
 
     private TextButton quitGameButton;
@@ -53,76 +56,21 @@ public class GameScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
-
-
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
-/*
-        quitGameButton = new TextButton("Quit Game", skin, "default");
-        quitGameButton.setScale(1f, 2f);
-        quitGameButton.setTransform(true);
-        quitGameButton.setPosition(Gdx.graphics.getWidth() /2f - quitGameButton.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
-        quitGameButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.MENU);
-            }
-        });
-
-
- */
-
-        //textTileGrid = new TextTileGrid(stage);
-        textTile = new TextTile(stage);
-
-
-
-
-        //textTileGrid.draw( new Float[]{1f, 1f},batch,new Float[]{GAME_WORLD_WIDTH/2 -100, GAME_WORLD_HEIGHT});
-
-
-
-        //stage.addActor(quitGameButton);
-/*
-        textTile.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.input.setOnscreenKeyboardVisible(true);
-            }
-        });
-
-        textTile.setTextFieldListener(new TextField.TextFieldListener()
-        {
-            @Override
-            public void keyTyped(TextField textField, char key)
-            {
-                if (key == '\n')
-                {
-                    textField.getOnscreenKeyboard().show(false);
-                }
-            }
-        });
-        */
-
-
+        TextRow tr = new TextRow(startPointX, startPointy);
+        stage.addActor(tr);
         Gdx.input.setInputProcessor((stage));
-
-
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
         batch.begin();
-
-
-
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         batch.end();

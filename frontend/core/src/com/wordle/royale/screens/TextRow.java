@@ -1,41 +1,61 @@
 package com.wordle.royale.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import java.util.ArrayList;
 
-public class TextRow {
-    private TextTile textTile;
-    private ArrayList<TextTile> textTiles;
+public class TextRow extends Actor {
+    private ArrayList<TextTile> textTiles = new ArrayList<>();
+    private float startPointX;
+    private float startPointY;
 
-    public TextRow(Stage stage) {
-        for(int i = 0; i < 5; i++) {
-            textTiles.add(new TextTile(stage));
+
+    public TextRow(float startPointX, float startPointY) {
+        this.startPointX = startPointX;
+        this.startPointY = startPointY;
+        setTouchable(Touchable.enabled);
+        setX(0);
+        setY(startPointY);
+        setWidth(Gdx.graphics.getWidth());
+        setHeight(150);
+        setBounds(getX(), getY(), getWidth(), getHeight());
+        addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("down");
+                return true;
+            }
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+
+            }
+        });
+        initTiles();
+
+    }
+
+    private void initTiles() {
+        float currentX = startPointX;
+        for (int i = 0; i < 5; i++) {
+            TextTile tt = new TextTile(currentX, startPointY);
+            textTiles.add(tt);
+            currentX += 110;
         }
     }
 
-    /*public void draw(Float[] scale, Batch batch, Float[] positions) {
-        setPosition(positions[0], positions[1]);
-        setScale(scale[0], scale[1]);
-        for(TextTile textTile: textTiles) {
-            textTile.draw(scale, batch, positions);
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        for(TextTile tt : textTiles) {
+            tt.draw(batch, parentAlpha);
         }
     }
 
-    public void setPosition(float v, float v1) {
-        for(TextTile textTile: textTiles) {
-            textTile.setPosition(v, v1);
-        }
-    }
-
-    public void setScale(float v, float v1) {
-        for(TextTile textTile: textTiles) {
-            textTile.setScale(v, v1);
-        }
-    }
-
-*/
 }
 
 
