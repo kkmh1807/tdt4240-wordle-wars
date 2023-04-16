@@ -5,16 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.WordleController;
+import com.wordle.royale.ScreenController;
+import com.wordle.royale.controller.WordleController;
 import com.wordle.royale.models.Keyboard;
-import com.wordle.royale.models.KeyboardButton;
 
 public class GameScreen implements Screen {
 
@@ -23,27 +21,11 @@ public class GameScreen implements Screen {
     private Viewport viewport;
     private OrthographicCamera camera;
     protected Skin skin;
-    private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
-    private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
-    private TextTileGrid textTileGrid;
-    private TextField textField;
-    private TextTile textTile;
-    private ShapeRenderer shapeRenderer;
+    public final static float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
 
-    private float startPointX = Gdx.graphics.getWidth() /4;
-    private float startPointy = Gdx.graphics.getHeight() /2 + 150 + 150 + 150 + 150/3 + 150/3 + (150/3/2);
-
-
-
-    private TextButton quitGameButton;
-    private WordleController parent;
-
-
-    public GameScreen(WordleController parent) {
-        this.parent = parent;
+    public GameScreen() {
 
     }
-
 
     @Override
     public void show() {
@@ -51,20 +33,14 @@ public class GameScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
-        float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
+        viewport = new StretchViewport(ScreenController.GAME_WORLD_WIDTH * aspectRatio, ScreenController.GAME_WORLD_HEIGHT, camera);
         viewport.apply();
+        Gdx.input.setInputProcessor(stage);
+    }
 
-        KeyboardButton btn = new KeyboardButton('C', Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f, 60, 80);
-        KeyboardButton btn2 = new KeyboardButton('A', Gdx.graphics.getWidth()/2f + 20, Gdx.graphics.getHeight()/2f+ 20, 60, 80);
-        Keyboard kb = new Keyboard();
-        stage.addActor(kb);
-
-        WordRow tr = new WordRow(startPointX, startPointy);
-        stage.addActor(tr);
-
-        Gdx.input.setInputProcessor((stage));
+    public void addActor(Actor actor) {
+        this.stage.addActor(actor);
     }
 
     @Override
@@ -103,7 +79,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
         batch.dispose();
         stage.dispose();
     }

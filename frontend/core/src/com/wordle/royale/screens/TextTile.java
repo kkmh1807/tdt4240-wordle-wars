@@ -19,33 +19,36 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 public class TextTile extends Actor {
     private final float width = Gdx.graphics.getWidth()/10;
     private final float height = Gdx.graphics.getHeight()/10;
-    private String chr;
+    private Character chr;
     private TextField textField;
     private Skin skin;
     private BitmapFont character;
     private Sprite tile;
     private Stage stage;
+    private int index;
 
-    public TextTile(float x, float y) {
+    public TextTile(int index, float x, float y) {
+        this.index = index;
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         character = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
         tile = new Sprite(new Texture("craftacular/raw/slider.9.png"));
-        character.getData().setScale(1.5f, 2.5f);
+        character.getData().setScale(2.5f, 2.5f);
         setTouchable(Touchable.enabled);
         setX(x);
         setY(y);
-        setWidth(100);
-        setHeight(150);
+        setWidth(250);
+        setHeight(250);
         setBounds(getX(), getY(), getWidth(), getHeight());
-        chr = "y";
+        chr = ' ';
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(tile,getX(),getY(), getWidth(), getHeight());
-        character.draw(batch, chr,getX() + getWidth()/2, getY() + getHeight());
+        character.draw(batch, chr.toString(),getX() + getWidth()/2- (character.getXHeight()/4), getY() + getHeight()/2+(character.getXHeight()/2));
     }
 
-    public void setCharacter(String c) {
+    public void setCharacter(Character c) {
         this.chr = c;
     }
 

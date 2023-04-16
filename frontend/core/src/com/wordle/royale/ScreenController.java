@@ -3,23 +3,21 @@ package com.wordle.royale;
 
 import com.badlogic.gdx.Game;
 
+import com.wordle.royale.controller.WordleController;
 import com.wordle.royale.screens.GameScreen;
 import com.wordle.royale.screens.HighScoreScreen;
 import com.wordle.royale.screens.MenuScreen;
 import com.wordle.royale.screens.SettingsScreen;
 import com.wordle.royale.screens.TutorialScreen;
 
-import com.wordle.royale.screens.SettingsScreen;
-import com.wordle.royale.screens.TutorialScreen;
 
-
-public class WordleController extends Game {
+public class ScreenController extends Game {
 
 
     //private LoadingScreen loadingScreen;
     //private PreferencesScreen preferencesScreen;
     private MenuScreen menu;
-    private GameScreen game;
+    private WordleController game;
     private SettingsScreen settings;
     private HighScoreScreen highScore;
     private TutorialScreen tutorial;
@@ -35,8 +33,11 @@ public class WordleController extends Game {
     public final static int TUTORIAL = 3;
     public final static int HIGHSCORES = 4;
 
+
     public final static float GAME_WORLD_WIDTH = 1280;
     public final static float GAME_WORLD_HEIGHT = 720;
+
+
     @Override
     public void create() {
 
@@ -51,8 +52,7 @@ public class WordleController extends Game {
                 break;
 
             case GAME:
-                if(game == null) game = new GameScreen(this); //added (this)
-                this.setScreen(game);
+                if(game == null) game = new WordleController(this);
                 break;
 
             case SETTINGS:

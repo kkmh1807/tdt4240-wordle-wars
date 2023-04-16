@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class WordleRoyale extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+
 	
 	@Override
 	public void create () {

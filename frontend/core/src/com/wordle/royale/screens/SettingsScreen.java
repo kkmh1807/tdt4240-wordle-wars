@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.WordleController;
+import com.wordle.royale.ScreenController;
 
 public class SettingsScreen implements Screen {
 
@@ -26,9 +26,9 @@ public class SettingsScreen implements Screen {
 
     private TextButton mainMenu;
 
-    private WordleController parent;
+    private ScreenController parent;
 
-    public SettingsScreen(WordleController parent) {
+    public SettingsScreen(ScreenController parent) {
         this.parent = parent;
     }
 
@@ -55,7 +55,7 @@ public class SettingsScreen implements Screen {
         mainMenu.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.MENU);
+                parent.changeScreens(ScreenController.MENU);
             }
         });
 

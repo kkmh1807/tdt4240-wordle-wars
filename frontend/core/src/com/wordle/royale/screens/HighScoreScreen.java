@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.WordleController;
+import com.wordle.royale.ScreenController;
 
 public class HighScoreScreen implements Screen {
 
@@ -27,9 +27,9 @@ public class HighScoreScreen implements Screen {
     private TextButton backToMenu;
     private TextButton playAgain;
 
-    private WordleController parent;
+    private ScreenController parent;
 
-    public HighScoreScreen(WordleController parent) {
+    public HighScoreScreen(ScreenController parent) {
         this.parent = parent;
     }
 
@@ -63,14 +63,14 @@ public class HighScoreScreen implements Screen {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(WordleController.GAME);
+                parent.changeScreens(ScreenController.GAME);
             }
         }));
 
         backToMenu.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.MENU);
+                parent.changeScreens(ScreenController.MENU);
             }
         });
 

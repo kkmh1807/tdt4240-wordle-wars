@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.WordleController;
+import com.wordle.royale.ScreenController;
 
 public class MenuScreen implements Screen {
     private SpriteBatch batch;
@@ -34,9 +34,9 @@ public class MenuScreen implements Screen {
     private TextButton startGameButton;
     private TextButton tutorialButton;
     private TextButton settingsButton;
-    private WordleController parent;
+    private ScreenController parent;
 
-    public MenuScreen(WordleController parent) {
+    public MenuScreen(ScreenController parent) {
         this.parent = parent;
     }
 
@@ -77,21 +77,21 @@ public class MenuScreen implements Screen {
         startGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.GAME);
+                parent.changeScreens(ScreenController.GAME);
             }
         });
 
         tutorialButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.TUTORIAL);
+                parent.changeScreens(ScreenController.TUTORIAL);
             }
         });
 
         settingsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(WordleController.SETTINGS);
+                parent.changeScreens(ScreenController.SETTINGS);
 
             }
 

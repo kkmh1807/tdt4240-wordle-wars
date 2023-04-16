@@ -13,6 +13,7 @@ public class WordRow extends Actor {
     private ArrayList<TextTile> textTiles = new ArrayList<>();
     private float startPointX;
     private float startPointY;
+    private int index = 0;
 
 
     public WordRow(float startPointX, float startPointY) {
@@ -35,24 +36,27 @@ public class WordRow extends Actor {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.input.setOnscreenKeyboardVisible(true);
             }
-
-            @Override
-            public boolean keyDown (InputEvent event, int keyCode) {
-                System.out.println("event" + event + " Key=" + keyCode);
-                return super.keyUp(event, keyCode);
-            }
-
         });
         initTiles();
+    }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void handleCharacterChange(Character character) {
+        if(index < 5) {
+            textTiles.get(index).setCharacter(character);
+            index += 1;
+        }
     }
 
     private void initTiles() {
         float currentX = startPointX;
         for (int i = 0; i < 5; i++) {
-            TextTile tt = new TextTile(currentX, startPointY);
+            TextTile tt = new TextTile(i, currentX, startPointY);
             textTiles.add(tt);
-            currentX += 110;
+            currentX += 270;
         }
     }
 
