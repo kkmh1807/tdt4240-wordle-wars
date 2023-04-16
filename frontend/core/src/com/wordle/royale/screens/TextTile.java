@@ -37,17 +37,6 @@ public class TextTile extends Actor {
         setWidth(100);
         setHeight(150);
         setBounds(getX(), getY(), getWidth(), getHeight());
-        addListener(new InputListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("down");
-                return true;
-            }
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("up");
-            }
-        });
         chr = "y";
     }
     @Override

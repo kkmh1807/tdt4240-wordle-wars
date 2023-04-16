@@ -2,24 +2,19 @@ package com.wordle.royale.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.wordle.royale.models.Keyboard;
+import com.wordle.royale.models.KeyboardButton;
 
 public class GameScreen implements Screen {
 
@@ -61,8 +56,14 @@ public class GameScreen implements Screen {
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
-        TextRow tr = new TextRow(startPointX, startPointy);
+        KeyboardButton btn = new KeyboardButton('C', Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f, 60, 80);
+        KeyboardButton btn2 = new KeyboardButton('A', Gdx.graphics.getWidth()/2f + 20, Gdx.graphics.getHeight()/2f+ 20, 60, 80);
+        Keyboard kb = new Keyboard();
+        stage.addActor(kb);
+
+        WordRow tr = new WordRow(startPointX, startPointy);
         stage.addActor(tr);
+
         Gdx.input.setInputProcessor((stage));
     }
 

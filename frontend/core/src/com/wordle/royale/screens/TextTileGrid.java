@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import java.util.ArrayList;
 
 public class TextTileGrid extends Actor {
-    private ArrayList<TextRow> textTileGrid = new ArrayList<>();
+    private ArrayList<WordRow> textTileGrid = new ArrayList<>();
     private Group textRowGroup;
     private float startPointX = Gdx.graphics.getWidth() /4;
     private float startPointy = Gdx.graphics.getHeight() /2 + 150 + 150 + 150 + 150/3 + 150/3 + (150/3/2);
@@ -18,14 +18,14 @@ public class TextTileGrid extends Actor {
         textRowGroup = new Group();
         float currentY = startPointy;
         for (int i = 0; i < 5; i++) {
-            TextRow tr = new TextRow(startPointX, currentY);
+            WordRow tr = new WordRow(startPointX, currentY);
             textTileGrid.add(tr);
             currentY -= 200;
             textRowGroup.addActor(tr);
         }
     }
 
-    public ArrayList<TextRow> getTextRows() {
+    public ArrayList<WordRow> getTextRows() {
         return textTileGrid;
     }
 
@@ -35,7 +35,7 @@ public class TextTileGrid extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        for(TextRow tr : textTileGrid) {
+        for(WordRow tr : textTileGrid) {
             tr.draw(batch, parentAlpha);
         }
     }
