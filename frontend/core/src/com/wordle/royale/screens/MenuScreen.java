@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
+import com.wordle.royale.models.guessedWord;
+import com.wordle.royale.network.ApiService;
 
 public class MenuScreen implements Screen {
     private SpriteBatch batch;
@@ -38,8 +40,36 @@ public class MenuScreen implements Screen {
     private TextButton highScoreButton;
     private WordleController parent;
 
+    private ApiService api = new ApiService();
+
     public MenuScreen(WordleController parent) {
         this.parent = parent;
+
+        // Get a word
+        api.getNewWord(new ApiService.CallbackNewWord<Integer>() {
+            @Override
+            public void onSuccess(Integer wordID) {
+                System.out.println("Your wordID:  "+ wordID);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Failed to connect to API");
+            }
+        });
+        // Guess word
+        api.guessWord("first", 100, new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
+            @Override
+            public void onSuccess(Boolean valid, guessedWord guessedWord) {
+                System.out.println("Is a valid word:  "+ valid);
+                guessedWord.printGuess();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Failed to connect to API");
+            }
+        });
     }
 
 
@@ -48,8 +78,6 @@ public class MenuScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-
-
 
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
