@@ -21,17 +21,28 @@ public class Keyboard extends Group{
         initializeKeyboardButtons();
     }
 
+    //index 19
+    //bredde 1,5 knapp
+
     private void initializeKeyboardButtons() {
         for (int i = 0; i < characters.length; i++) {
             if(i <= 9) {
-                this.addActor(new KeyboardButton(controller, characters[i], 50+(i*140), 460, 120, 160));
+                this.addActor(new KeyboardButton(controller, "" + characters[i], 50+(i*140), 410, 120, 160));
             }
             if(i > 9 && i <= 18) {
-                this.addActor(new KeyboardButton(controller, characters[i], 50+60+((i-10)*140), 280, 120, 160));
+                this.addActor(new KeyboardButton(controller, "" + characters[i], 50+60+((i-10)*140), 230, 120, 160));
             }
             if(i > 18) {
-                this.addActor(new KeyboardButton(controller, characters[i], 50+180+((i-19)*140), 100, 120, 160));
+                if(i == 19) {
+                    KeyboardButton btn = new KeyboardButton(controller, "Enter", 50, 50, 180, 160);
+                    btn.setTextScale(1.5f,2.5f);
+                    this.addActor(btn);
+                }
+                this.addActor(new KeyboardButton(controller, "" + characters[i], 50+200+((i-19)*140), 50, 120, 160));
             }
         }
+        KeyboardButton del = new KeyboardButton(controller, "Del", 50+200+((characters.length-19)*140), 50, 180, 160);
+        del.setTextScale(1.5f, 2.5f);
+        this.addActor(del);
     }
 }

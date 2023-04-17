@@ -34,7 +34,6 @@ public class WordRow extends Actor {
             }
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.input.setOnscreenKeyboardVisible(true);
             }
         });
         initTiles();
@@ -44,11 +43,22 @@ public class WordRow extends Actor {
         return index;
     }
 
-    public void handleCharacterChange(Character character) {
+    public void handleCharacterChange(String s) {
         if(index < 5) {
-            textTiles.get(index).setCharacter(character);
-            index += 1;
+            System.out.println(index);
+            textTiles.get(index).setCharacter(s);
+            index+=1;
+            System.out.println(index);
+
         }
+    }
+
+    public void removeCharacter() {
+        if (index == 0) {
+            return;
+        }
+        textTiles.get(index-1).setCharacter(" ");
+        index -= 1;
     }
 
     private void initTiles() {

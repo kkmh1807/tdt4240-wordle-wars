@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 public class TextTile extends Actor {
     private final float width = Gdx.graphics.getWidth()/10;
     private final float height = Gdx.graphics.getHeight()/10;
-    private Character chr;
+    private String chr;
     private TextField textField;
     private Skin skin;
     private BitmapFont character;
@@ -39,7 +39,7 @@ public class TextTile extends Actor {
         setWidth(250);
         setHeight(250);
         setBounds(getX(), getY(), getWidth(), getHeight());
-        chr = ' ';
+        chr = " ";
     }
 
     @Override
@@ -48,8 +48,8 @@ public class TextTile extends Actor {
         character.draw(batch, chr.toString(),getX() + getWidth()/2- (character.getXHeight()/4), getY() + getHeight()/2+(character.getXHeight()/2));
     }
 
-    public void setCharacter(Character c) {
-        this.chr = c;
+    public void setCharacter(String s) {
+        this.chr = s;
     }
 
 }

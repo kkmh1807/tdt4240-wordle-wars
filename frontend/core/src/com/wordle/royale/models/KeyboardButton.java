@@ -12,12 +12,12 @@ import com.wordle.royale.controller.WordleController;
 
 public class KeyboardButton extends Actor {
 
-    private char character;
+    private String character;
     private TextButton button;
     private Skin skin;
     private WordleController controller;
 
-    public KeyboardButton(final WordleController controller, final Character character, float x, float y, float width, float height) {
+    public KeyboardButton(final WordleController controller, final String character, float x, float y, float width, float height) {
         this.controller = controller;
         this.character = character;
         this.skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
@@ -42,6 +42,9 @@ public class KeyboardButton extends Actor {
         });
     }
 
+    public void setTextScale(float x, float y) {
+        this.button.getLabel().setFontScale(x, y);
+    }
     @Override
     public void draw(Batch batch, float parentAlpha) {
         button.draw(batch, parentAlpha);
