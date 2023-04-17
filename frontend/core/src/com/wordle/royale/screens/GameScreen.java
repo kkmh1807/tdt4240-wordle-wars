@@ -44,9 +44,11 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-        music.setLooping(true);
-        music.play();
+        if (parent.getPreferences().getMusic()) {
+            music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
+            music.setLooping(true);
+            music.play();
+        }
 
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
