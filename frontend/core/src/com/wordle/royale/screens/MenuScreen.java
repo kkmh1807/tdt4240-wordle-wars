@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.WordleController;
+import com.wordle.royale.network.ApiService;
 
 public class MenuScreen implements Screen {
     private SpriteBatch batch;
@@ -38,8 +39,16 @@ public class MenuScreen implements Screen {
     private TextButton highScoreButton;
     private WordleController parent;
 
+    private ApiService api = new ApiService();
+
     public MenuScreen(WordleController parent) {
         this.parent = parent;
+        try {
+            Integer wordID = api.sendHttpRequest();
+            System.out.println("Your word ID is: "+ wordID);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
 
@@ -48,8 +57,6 @@ public class MenuScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-
-
 
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
