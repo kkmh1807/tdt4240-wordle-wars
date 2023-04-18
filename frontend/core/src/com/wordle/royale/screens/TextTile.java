@@ -17,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class TextTile extends Actor {
-    private final float width = Gdx.graphics.getWidth()/10;
-    private final float height = Gdx.graphics.getHeight()/10;
     private String chr;
     private TextField textField;
     private Skin skin;
@@ -27,7 +25,7 @@ public class TextTile extends Actor {
     private Stage stage;
     private int index;
 
-    public TextTile(int index, float x, float y) {
+    public TextTile(int index, float x, float y, float width, float height) {
         this.index = index;
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         character = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
@@ -36,8 +34,8 @@ public class TextTile extends Actor {
         setTouchable(Touchable.enabled);
         setX(x);
         setY(y);
-        setWidth(250);
-        setHeight(250);
+        setWidth(width);
+        setHeight(height);
         setBounds(getX(), getY(), getWidth(), getHeight());
         chr = " ";
     }

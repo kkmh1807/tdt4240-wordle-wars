@@ -54,16 +54,19 @@ public class MenuScreen implements Screen {
             }
         });
         // Guess word
-        api.guessWord("first", 100, new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
+        api.guessWord("horse", 5, new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 System.out.println("Is a valid word:  " + valid);
                 guessedWord.printGuess();
+
+                // Gets placement-status for first letter
+                System.out.println(guessedWord.getGuessLetters().get(0).getPlacement());
             }
 
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("Failed to connect to API");
+                System.out.println("Word not in list");
             }
         });
     }

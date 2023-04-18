@@ -13,29 +13,16 @@ public class WordRow extends Actor {
     private ArrayList<TextTile> textTiles = new ArrayList<>();
     private float startPointX;
     private float startPointY;
+    private float width;
+    private float height;
     private int index = 0;
 
 
-    public WordRow(float startPointX, float startPointY) {
+    public WordRow(float startPointX, float startPointY, float width, float height) {
+        this.height = height;
+        this.width = width;
         this.startPointX = startPointX;
         this.startPointY = startPointY;
-        setTouchable(Touchable.enabled);
-        setX(0);
-        setY(startPointY);
-        setWidth(Gdx.graphics.getWidth());
-        setHeight(150);
-        setBounds(getX(), getY(), getWidth(), getHeight());
-        addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("down");
-                return true;
-            }
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            }
-        });
         initTiles();
     }
 
@@ -64,9 +51,9 @@ public class WordRow extends Actor {
     private void initTiles() {
         float currentX = startPointX;
         for (int i = 0; i < 5; i++) {
-            TextTile tt = new TextTile(i, currentX, startPointY);
+            TextTile tt = new TextTile(i, currentX, startPointY, width, height);
             textTiles.add(tt);
-            currentX += 270;
+            currentX += width + 25;
         }
     }
 

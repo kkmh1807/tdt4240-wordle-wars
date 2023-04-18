@@ -22,14 +22,14 @@ public class WordleController {
         gameScreen = new GameScreen();
         parent.setScreen(gameScreen);
         keyboard = new Keyboard(this);
-        textTileGrid = new TextTileGrid(50, 600);
+        textTileGrid = new TextTileGrid(25, 600);
         //wordRow = new WordRow(50, 800);
         gameScreen.addActor(keyboard);
         gameScreen.addActor(textTileGrid);
     }
 
     public void handleKeyBoardInput(String s) {
-        if (textTileGrid.getActiveRow().getIndex() == 5 && s.equals("Enter")) {
+        if (textTileGrid.getActiveRow().getIndex() == 5 && s.equals("OK")) {
             this.textTileGrid.nextRow();
             return;
         }
@@ -40,7 +40,7 @@ public class WordleController {
         }
 
         if (textTileGrid.getActiveRow().getIndex() < 5) {
-            if (s.equals("Enter")) {
+            if (s.equals("OK")) {
                 return;
             }
             this.textTileGrid.getActiveRow().handleCharacterChange(s);
