@@ -2,11 +2,13 @@ import express, { Application } from "express";
 import mongoConnect from "./utils/db";
 import dotenv from "dotenv";
 import cors from "cors";
-import routes from "./routes/hello";
+import wordRoutes from "./routes/word";
+import highscoreRoutes from "./routes/highscore";
 
 dotenv.config();
 
 const app: Application = express();
+// Allow all, ok because app is hosted only on eduroam
 app.use(
   cors({
     origin: "*",
@@ -20,7 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // App routes
-app.use("/", routes);
+app.use("/word", wordRoutes);
+app.use("/highscore", highscoreRoutes);
 
 try {
   app.listen(port, (): void => {

@@ -6,7 +6,7 @@ dotenv.config();
 let database: mongoose.Connection;
 mongoose.set("strictQuery", true);
 
-const uri: string = process.env.DB_URI || "";
+const uri: string = process.env.DOCKER_DATABASE_URI || "";
 
 const mongoConnect = async () => {
   console.log("Connecting to MongoDb ...");
@@ -18,7 +18,7 @@ const mongoConnect = async () => {
 
   database = mongoose.connection;
   database.once("open", async () => {
-    console.log("Connected to WordleDB (MongoDB) 💾");
+    console.log("Connected to WordleDB (MongoDB) 🪴");
   });
 
   // In case of any error while running

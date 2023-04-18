@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.ScreenController;
+import com.wordle.royale.HighScore;
 
 public class HighScoreScreen implements Screen {
 
@@ -28,11 +29,11 @@ public class HighScoreScreen implements Screen {
     private TextButton playAgain;
 
     private ScreenController parent;
+    private HighScore highScore;
 
     public HighScoreScreen(ScreenController parent) {
         this.parent = parent;
     }
-
 
     @Override
     public void show() {
@@ -40,9 +41,7 @@ public class HighScoreScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
-
-
-        float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
+        float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
@@ -50,16 +49,15 @@ public class HighScoreScreen implements Screen {
         backToMenu = new TextButton("To main menu", skin, "default");
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
-        backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, Gdx.graphics.getHeight()/2f);
-
+        backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
 
         playAgain = new TextButton("To main menu", skin, "default");
         playAgain.setScale(1f, 2f);
         playAgain.setTransform(true);
-        playAgain.setPosition(Gdx.graphics.getWidth() /2f - playAgain.getWidth()/2f, Gdx.graphics.getHeight()/2f - playAgain.getHeight()*2);
+        playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
+                Gdx.graphics.getHeight() / 2f - playAgain.getHeight() * 2);
 
-
-        playAgain.addListener((new ClickListener(){
+        playAgain.addListener((new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -67,13 +65,12 @@ public class HighScoreScreen implements Screen {
             }
         }));
 
-        backToMenu.addListener(new ClickListener(){
+        backToMenu.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 parent.changeScreens(ScreenController.MENU);
             }
         });
-
 
         Gdx.input.setInputProcessor((stage));
         stage.addActor(backToMenu);
@@ -82,25 +79,24 @@ public class HighScoreScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        highScore = new HighScore();
         // camera.update();
 
-
-
-
         batch.begin();
-//        batch.setProjectionMatrix(camera.combined);
-        /*Table table = new Table();
-        table.add(label1);
-        table.add(name1).width(100);
-        table.row();
-        table.add(addressLabel1);
-        table.add(addressText1).width(100);
-
+        highScore.render(batch);
+        // batch.setProjectionMatrix(camera.combined);
+        /*
+         * Table table = new Table();
+         * table.add(label1);
+         * table.add(name1).width(100);
+         * table.row();
+         * table.add(addressLabel1);
+         * table.add(addressText1).width(100);
+         * 
          */
         stage.draw();
-
 
         batch.end();
     }
@@ -111,8 +107,6 @@ public class HighScoreScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
     }
-
-
 
     @Override
     public void pause() {
@@ -136,5 +130,3 @@ public class HighScoreScreen implements Screen {
         stage.dispose();
     }
 }
-
-
