@@ -10,14 +10,17 @@ import com.wordle.royale.models.letter;
 
 public class ApiService {
     private final String BASE_URL = "http://10.212.25.104:8080";
+
     public interface CallbackNewWord<T> {
         void onSuccess(T result);
+
         void onFailure(Throwable t);
     }
+
     public void getNewWord(final CallbackNewWord<Integer> callback) {
         String endpoint = "/word";
 
-        String url = BASE_URL+endpoint;
+        String url = BASE_URL + endpoint;
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
         httpRequestBuilder.newRequest();
         httpRequestBuilder.method(Net.HttpMethods.GET);
@@ -49,18 +52,20 @@ public class ApiService {
 
     public interface CallbackGuessWord<T, U> {
         void onSuccess(T validWord, U guessedWord);
+
         void onFailure(Throwable t);
     }
+
     public void guessWord(String guess, Integer wordID, final CallbackGuessWord<Boolean, guessedWord> callback) {
         String endpoint = "/word/guess";
 
-        String url = BASE_URL+endpoint;
+        String url = BASE_URL + endpoint;
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
         httpRequestBuilder.newRequest();
         httpRequestBuilder.method(Net.HttpMethods.POST);
         httpRequestBuilder.url(url);
         httpRequestBuilder.header("Content-Type", "application/json");
-        httpRequestBuilder.content("{\"wordIndex\": "+ wordID +",\"guess\": \""+ guess +"\"}");
+        httpRequestBuilder.content("{\"wordIndex\": " + wordID + ",\"guess\": \"" + guess + "\"}");
         Net.HttpResponseListener listener = new Net.HttpResponseListener() {
             @Override
             public void handleHttpResponse(Net.HttpResponse response) {
@@ -76,8 +81,7 @@ public class ApiService {
                         letter letter = new letter(
                                 lettersArray.get(i).getString("letter"),
                                 lettersArray.get(i).getInt("status"),
-                                lettersArray.get(i).getInt("placement")
-                        );
+                                lettersArray.get(i).getInt("placement"));
                         guessedWord.insertLetter(letter);
                     }
                 }
