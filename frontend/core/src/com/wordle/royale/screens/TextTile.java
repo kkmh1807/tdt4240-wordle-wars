@@ -2,6 +2,7 @@ package com.wordle.royale.screens;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,9 +25,11 @@ public class TextTile extends Actor {
     private Sprite tile;
     private Stage stage;
     private int index;
+    private Color color;
 
     public TextTile(int index, float x, float y, float width, float height) {
         this.index = index;
+        this.color = new Color(Color.WHITE.cpy());
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         character = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
         tile = new Sprite(new Texture("craftacular/raw/slider.9.png"));
@@ -42,12 +45,25 @@ public class TextTile extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(color);
         batch.draw(tile,getX(),getY(), getWidth(), getHeight());
-        character.draw(batch, chr.toString(),getX() + getWidth()/2- (character.getXHeight()/4), getY() + getHeight()/2+(character.getXHeight()/2));
+        character.draw(batch, chr,getX() + getWidth()/2- (character.getXHeight()/4), getY() + getHeight()/2+(character.getXHeight()/2));
+        batch.setColor(Color.WHITE);
+    }
+
+    public void setColor(Color color) {
+        this.color =  color.cpy();
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     public void setCharacter(String s) {
         this.chr = s;
     }
 
+    public String getChr() {
+        return chr;
+    }
 }

@@ -1,11 +1,13 @@
 package com.wordle.royale.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.wordle.royale.models.letter;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,10 @@ public class WordRow extends Actor {
         return index;
     }
 
+    public String getChar(int index) {
+        return textTiles.get(index).getChr();
+    }
+
     public void handleCharacterChange(String s) {
         if(index < 5) {
             System.out.println(index);
@@ -46,6 +52,16 @@ public class WordRow extends Actor {
         }
         textTiles.get(index-1).setCharacter(" ");
         index -= 1;
+    }
+
+    public void updateTileXColor(int index, int place, int exists) {
+        if (exists == 1) {
+             textTiles.get(index).setColor(new Color(Color.ORANGE.cpy()));
+             if (place == 1) {
+                 textTiles.get(index).setColor(new Color(Color.GREEN.cpy()));
+             }
+        }
+
     }
 
     private void initTiles() {
