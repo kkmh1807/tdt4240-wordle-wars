@@ -1,13 +1,10 @@
 package com.wordle.royale.controller;
 
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.wordle.royale.ScreenController;
 import com.wordle.royale.models.Keyboard;
 import com.wordle.royale.models.guessedWord;
-import com.wordle.royale.network.ApiService;
+import com.wordle.royale.network.WordApiService;
 import com.wordle.royale.screens.GameScreen;
 import com.wordle.royale.screens.TextTileGrid;
 import com.wordle.royale.screens.WordRow;
@@ -20,7 +17,7 @@ public class WordleController {
     private GameScreen gameScreen;
     private TextTileGrid textTileGrid;
 
-    private ApiService api = new ApiService();
+    private WordApiService api = new WordApiService();
     private int word_id;
 
     public WordleController(ScreenController parent) {
@@ -37,7 +34,7 @@ public class WordleController {
     }
 
     public void getWord() {
-        api.getNewWord(new ApiService.CallbackNewWord<Integer>() {
+        api.getNewWord(new WordApiService.CallbackNewWord<Integer>() {
             @Override
             public void onSuccess(Integer wordID) {
                 setWord_id(wordID);
@@ -81,7 +78,7 @@ public class WordleController {
         }
     }
     public void guess(String word) {
-        api.guessWord(word, getWord_id(), new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
+        api.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
 

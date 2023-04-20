@@ -5,20 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.ScreenController;
-import com.wordle.royale.models.guessedWord;
-import com.wordle.royale.network.ApiService;
+import com.wordle.royale.models.highscores;
+import com.wordle.royale.network.ScoreApiService;
 
 public class MenuScreen implements Screen {
     private SpriteBatch batch;
@@ -36,37 +32,21 @@ public class MenuScreen implements Screen {
     private TextButton highScoreButton;
     private ScreenController parent;
 
-    private ApiService api = new ApiService();
+    private ScoreApiService api = new ScoreApiService();
 
     public MenuScreen(ScreenController parent) {
         this.parent = parent;
 
-        // Get a word
-        api.getNewWord(new ApiService.CallbackNewWord<Integer>() {
+        // Submit score and print top 10
+        api.submitScore("Bob", 1, new ScoreApiService.CallbackPostScore<highscores>() {
             @Override
-            public void onSuccess(Integer wordID) {
-                System.out.println("Your wordID:  " + wordID);
+            public void onSuccess(highscores highscores) {
+                highscores.printScores();
             }
 
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("Failed to connect to API");
-            }
-        });
-        // Guess word
-        api.guessWord("horse", 5, new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
-            @Override
-            public void onSuccess(Boolean valid, guessedWord guessedWord) {
-                System.out.println("Is a valid word:  " + valid);
-                guessedWord.printGuess();
-
-                // Gets placement-status for first letter
-                System.out.println(guessedWord.getGuessLetters().get(0).getPlacement());
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println("Word not in list");
+                System.out.println("Failed to post score");
             }
         });
     }

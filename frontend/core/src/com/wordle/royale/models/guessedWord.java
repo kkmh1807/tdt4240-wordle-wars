@@ -5,12 +5,23 @@ import java.util.ArrayList;
 public class guessedWord {
     ArrayList<letter> guessLetters;
 
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
+    }
+
+    Boolean isCorrect;
+
     public ArrayList<letter> getGuessLetters() {
         return guessLetters;
     }
 
     public guessedWord(){
         guessLetters = new ArrayList<letter>();
+        isCorrect = false;
     }
 
     public void insertLetter(letter letter){
