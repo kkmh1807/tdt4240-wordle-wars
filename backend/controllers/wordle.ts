@@ -25,7 +25,7 @@ export const guessWord = async (req: Request, res: Response) => {
   const result = [];
 
   for (let i = 0; i < word.length; i++) {
-    if (word[i] == guess[i]) {
+    if (word[i] === guess[i]) {
       // Remove correct guesses to avoid wrong feedback when there is words with more instances of the same letter.
       // New word without correct guesses.
       for (let x = 0; x < wordWithoutCorrect.length; x++) {
@@ -41,10 +41,19 @@ export const guessWord = async (req: Request, res: Response) => {
         status: 1,
         placement: 1,
       });
-    } else if (wordWithoutCorrect.includes(guess[i])) {
-      result.push({ letter: guess[i], status: 1, placement: 0 });
     } else {
       result.push({ letter: guess[i], status: 0, placement: 0 });
+    }
+  }
+
+  // Check for correct letters with wrong placement after knowing which one has correct placement.
+  for (let i = 0; i < word.length; i++) {
+    if (word[i] !== guess[i]) {
+      if (wordWithoutCorrect.includes(guess[i])) {
+        result[i] = { letter: guess[i], status: 1, placement: 0 };
+      } else {
+        result[i] = { letter: guess[i], status: 0, placement: 0 };
+      }
     }
   }
 
