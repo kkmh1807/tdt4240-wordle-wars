@@ -77,19 +77,8 @@ public class GameScreen implements Screen {
 
         if (timer.getInterval().equals("0:00")) {
             timer.stop();
-            music.stop();
+            //music.stop();
             parent.changeScreens(ScreenController.MENU);
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (music.isPlaying()) {
-
-                music.pause();
-                System.out.println(music.isPlaying());
-            } else {
-                music.play();
-                System.out.println(music.isPlaying());
-            }
         }
 
         batch.begin();

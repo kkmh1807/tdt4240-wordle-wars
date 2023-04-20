@@ -1,11 +1,13 @@
 package com.wordle.royale.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.wordle.royale.models.letter;
 
 import java.util.ArrayList;
 
@@ -13,34 +15,25 @@ public class WordRow extends Actor {
     private ArrayList<TextTile> textTiles = new ArrayList<>();
     private float startPointX;
     private float startPointY;
+    private float width;
+    private float height;
     private int index = 0;
 
 
-    public WordRow(float startPointX, float startPointY) {
+    public WordRow(float startPointX, float startPointY, float width, float height) {
+        this.height = height;
+        this.width = width;
         this.startPointX = startPointX;
         this.startPointY = startPointY;
-        setTouchable(Touchable.enabled);
-        setX(0);
-        setY(startPointY);
-        setWidth(Gdx.graphics.getWidth());
-        setHeight(150);
-        setBounds(getX(), getY(), getWidth(), getHeight());
-        addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("down");
-                return true;
-            }
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            }
-        });
         initTiles();
     }
 
     public int getIndex() {
         return index;
+    }
+
+    public String getChar(int index) {
+        return textTiles.get(index).getChr();
     }
 
     public void handleCharacterChange(String s) {
@@ -61,12 +54,22 @@ public class WordRow extends Actor {
         index -= 1;
     }
 
+    public void updateTileXColor(int index, int place, int exists) {
+        if (exists == 1) {
+             textTiles.get(index).setColor(new Color(Color.ORANGE.cpy()));
+             if (place == 1) {
+                 textTiles.get(index).setColor(new Color(Color.GREEN.cpy()));
+             }
+        }
+
+    }
+
     private void initTiles() {
         float currentX = startPointX;
         for (int i = 0; i < 5; i++) {
-            TextTile tt = new TextTile(i, currentX, startPointY);
+            TextTile tt = new TextTile(i, currentX, startPointY, width, height);
             textTiles.add(tt);
-            currentX += 270;
+            currentX += width + 25;
         }
     }
 
