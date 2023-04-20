@@ -6,9 +6,9 @@ const highscoreRoutes = Router();
 // @returns {username: string, score: number}[]
 highscoreRoutes.get("/", getHighscore);
 
-
 // @param {username: string}
 // @param {score: number}
+// @returns {username: string, score: number}[]
 highscoreRoutes.post("/add", addHighscore);
 
 export default highscoreRoutes;

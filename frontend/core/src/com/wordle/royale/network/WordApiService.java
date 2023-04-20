@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.wordle.royale.models.guessedWord;
 import com.wordle.royale.models.letter;
 
-public class ApiService {
+public class WordApiService {
     private final String BASE_URL = "http://10.212.25.104:8080";
 
     public interface CallbackNewWord<T> {
@@ -75,9 +75,13 @@ public class ApiService {
                 Boolean validWord = json.getBoolean("validWord");
 
                 guessedWord guessedWord = new guessedWord();
+                Boolean correct = true;
                 JsonValue lettersArray = json.get("letters");
                 if (lettersArray != null) {
                     for (int i = 0; i < 5; i++) {
+                        if(lettersArray.get(i).getInt("placement")  == 0){
+                            correct = false;
+                        }
                         letter letter = new letter(
                                 lettersArray.get(i).getString("letter"),
                                 lettersArray.get(i).getInt("status"),
@@ -85,6 +89,7 @@ public class ApiService {
                         guessedWord.insertLetter(letter);
                     }
                 }
+                guessedWord.setCorrect(correct);
                 System.out.println(validWord);
                 callback.onSuccess(validWord, guessedWord);
             }
