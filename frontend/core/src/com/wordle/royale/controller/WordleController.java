@@ -30,7 +30,6 @@ public class WordleController {
         getWord();
         gameScreen.addActor(keyboard);
         gameScreen.addActor(textTileGrid);
-
     }
 
     public void getWord() {
@@ -77,18 +76,14 @@ public class WordleController {
             this.textTileGrid.getActiveRow().handleCharacterChange(s);
         }
     }
-    public void guess(String word) {
+    public void guess(final String word) {
         api.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
 
-                for (int i = 0; i < 5; i++) {
-                    int place = guessedWord.getGuessLetters().get(i).getPlacement();
-                    int exists = guessedWord.getGuessLetters().get(i).getStatus();
-                    textTileGrid.getActiveRow().updateTileXColor(i, place, exists);
-                }
+                colorTiles(guessedWord);
 
-                if (textTileGrid.getActiveRowIndex() == 0) {
+                if (textTileGrid.getActiveRowIndex() == 0 || guessedWord.getCorrect()) {
                     resetGame();
                 }
 
@@ -105,7 +100,15 @@ public class WordleController {
             }
         });
     }
-    public void resetGame() {
+
+    public void colorTiles(guessedWord guessedWord) {
+        for (int i = 0; i < 5; i++) {
+            int place = guessedWord.getGuessLetters().get(i).getPlacement();
+            int exists = guessedWord.getGuessLetters().get(i).getStatus();
+            textTileGrid.getActiveRow().updateTileXColor(i, place, exists);
+        }
+    }
+     public void resetGame() {
         for (int i = 0; i < 6; i++) {
             this.textTileGrid.setActiveRowIndex(i);
             this.textTileGrid.getActiveRow().setIndex(0);
@@ -115,6 +118,7 @@ public class WordleController {
 
         }
         this.textTileGrid.setActiveRowIndex(6);
+        getWord();
 
     }
 }
