@@ -4,8 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.Keyboard;
 import com.wordle.royale.v2.model.guessedWord;
-import com.wordle.royale.v2.model.network.ApiService;
+import com.wordle.royale.v2.model.network.WordApiService;
 import com.wordle.royale.v2.model.other.ScreenController;
+import com.wordle.royale.v2.model.utils.WordleTimer;
 import com.wordle.royale.v2.view.screens.GameScreen;
 import com.wordle.royale.v2.view.TextTileGrid;
 import com.wordle.royale.v2.view.WordRow;
@@ -19,12 +20,13 @@ public class GameScreenPresenter {
     private TextTileGrid textTileGrid;
     private Stage stage;
 
-    private ApiService api = new ApiService();
+    private WordApiService api;
     private int word_id;
 
     public GameScreenPresenter(ScreenController parentScreen, Stage stage) {
         this.stage = stage;
         this.parentScreen = parentScreen;
+        this.api = new WordApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
         //wordRow = new WordRow(50, 800);
@@ -43,7 +45,7 @@ public class GameScreenPresenter {
     public void addActor(Actor actor) {
         this.stage.addActor(actor);
     }
-    public boolean checkTimer(utils.WordleTimer timer) {
+    public boolean checkTimer(WordleTimer timer) {
         if(timer.getInterval().equals("0:00")) {
             timer.stop();
             //music.stop();
@@ -53,7 +55,7 @@ public class GameScreenPresenter {
         return false;
     }
     public void getWord() {
-        api.getNewWord(new ApiService.CallbackNewWord<Integer>() {
+        api.getNewWord(new WordApiService.CallbackNewWord<Integer>() {
             @Override
             public void onSuccess(Integer wordID) {
                 setWord_id(wordID);
@@ -98,7 +100,7 @@ public class GameScreenPresenter {
     }
 
     public void guess(String word) {
-        api.guessWord(word, getWord_id(), new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
+        api.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 System.out.println("Is a valid word:  " + valid);

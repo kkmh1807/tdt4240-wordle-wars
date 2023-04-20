@@ -1,11 +1,11 @@
-package com.wordle.royale.network;
+package com.wordle.royale.v2.model.network;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.wordle.royale.models.highscores;
+import com.wordle.royale.v2.model.highscores;
 
 public class ScoreApiService {
     private final String BASE_URL = "http://10.212.25.104:8080";
@@ -16,7 +16,7 @@ public class ScoreApiService {
         void onFailure(Throwable t);
     }
 
-    public void submitScore(String username, Integer score, final ScoreApiService.CallbackPostScore<highscores> callback) {
+    public void submitScore(String username, Integer score, final CallbackPostScore<highscores> callback) {
         String endpoint = "/highscore/add";
         System.out.println("Username: "+ username);
         System.out.println("Score: "+ score);

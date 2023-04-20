@@ -1,4 +1,4 @@
-package com.wordle.royale.models;
+package com.wordle.royale.v2.model;
 
 public class score {
     public int getScore() {

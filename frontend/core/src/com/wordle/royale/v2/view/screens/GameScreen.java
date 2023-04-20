@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
 
-import utils.WordleTimer;
+import com.wordle.royale.v2.model.utils.WordleTimer;
 
 public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
 

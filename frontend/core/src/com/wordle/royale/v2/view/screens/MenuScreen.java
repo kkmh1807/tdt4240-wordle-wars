@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
-import com.wordle.royale.v2.model.guessedWord;
-import com.wordle.royale.v2.model.network.ApiService;
 import com.wordle.royale.v2.presenter.MenuScreenPresenter;
 
 public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
@@ -35,39 +33,13 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
     private ScreenController parent;
     private MenuScreenPresenter presenter;
 
-    private ApiService api = new ApiService();
 
     public MenuScreen(ScreenController parent) {
         this.parent = parent;
 
-        // Get a word
-        api.getNewWord(new ApiService.CallbackNewWord<Integer>() {
-            @Override
-            public void onSuccess(Integer wordID) {
-                System.out.println("Your wordID:  " + wordID);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println("Failed to connect to API");
-            }
-        });
         // Guess word
-        api.guessWord("horse", 5, new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
-            @Override
-            public void onSuccess(Boolean valid, guessedWord guessedWord) {
-                System.out.println("Is a valid word:  " + valid);
-                guessedWord.printGuess();
 
-                // Gets placement-status for first letter
-                System.out.println(guessedWord.getGuessLetters().get(0).getPlacement());
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println("Word not in list");
-            }
-        });
     }
 
     @Override

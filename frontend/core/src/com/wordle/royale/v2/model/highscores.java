@@ -1,4 +1,6 @@
-package com.wordle.royale.models;
+package com.wordle.royale.v2.model;
+
+import com.wordle.royale.v2.model.score;
 
 import java.util.ArrayList;
 

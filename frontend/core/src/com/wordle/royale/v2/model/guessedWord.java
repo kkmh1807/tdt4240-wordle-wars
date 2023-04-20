@@ -3,14 +3,25 @@ package com.wordle.royale.v2.model;
 import java.util.ArrayList;
 
 public class guessedWord {
-    ArrayList<letter> guessLetters;
+    ArrayList<com.wordle.royale.v2.model.letter> guessLetters;
+
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
+    }
+
+    Boolean isCorrect;
 
     public ArrayList<letter> getGuessLetters() {
         return guessLetters;
     }
 
     public guessedWord(){
-        guessLetters = new ArrayList<letter>();
+        guessLetters = new ArrayList<com.wordle.royale.v2.model.letter>();
+        isCorrect = false;
     }
 
     public void insertLetter(letter letter){
