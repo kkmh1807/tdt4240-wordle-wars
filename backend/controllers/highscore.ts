@@ -3,49 +3,61 @@ import { Highscore } from "../models/highscore";
 import { ResponseHighscoreType } from "../types/highscore";
 
 export const getHighscore = async (req: Request, res: Response) => {
+  const importHighscoreList = await Highscore.find()
+    .limit(10)
+    .sort({ score: -1, username: 1 });
 
-    const importHighscoreList = await Highscore.find().limit(10).sort({score: -1, username: 1})
+  let highscoreList: ResponseHighscoreType[] = [];
 
-    let highscoreList: ResponseHighscoreType[] = []; 
+  importHighscoreList.forEach(function (highscore) {
+    const newResponseHighscore: ResponseHighscoreType = {
+      username: highscore.username,
+      score: highscore.score,
+    };
+    highscoreList.push(newResponseHighscore);
+  });
 
-    importHighscoreList.forEach(function (highscore) {
-        const newResponseHighscore: ResponseHighscoreType = {
-            username: highscore.username, 
-            score: highscore.score
-        }
-        highscoreList.push(newResponseHighscore)
-    }) 
-
-    return res.status(200).json(highscoreList);
+  return res.status(200).json(highscoreList);
 };
 
-
 export const addHighscore = async (req: Request, res: Response) => {
+  const username = req.body.username;
+  const score = req.body.score;
 
-    const username = req.body.username; 
-    const score = req.body.score; 
+  if (!username) {
+    return res.status(400).json({ message: "Missing username" });
+  }
 
-    if (!username) {
-        return res.status(400).json({message: "Missing username"});
-    }
+  if (!score) {
+    return res.status(400).json({ message: "Missing score" });
+  } else if (!Number.isInteger(score)) {
+    return res.status(400).json({ message: "Score is wrong type" });
+  }
 
-    if (!score) {
-        return res.status(400).json({message: "Missing score"});
-    } else if (!Number.isInteger(score)) {
-        return res.status(400).json({message: "Score is wrong type"});
-    }
+  const newHighscore = new Highscore({
+    username: username,
+    score: score,
+  });
 
-    const newHighscore = new Highscore({
-        username: username, 
-        score: score
-    })
+  const feedback = await Highscore.create(newHighscore);
 
-    const feedback = await Highscore.create(newHighscore); 
+  if (feedback.id) {
+    const importHighscoreList = await Highscore.find()
+      .limit(10)
+      .sort({ score: -1, username: 1 });
 
-    if (feedback.id) {
-        return res.status(200).json({message: "Highscore succefully added"});
-    } else {
-        return res.status(400).json({message: "Something went wrong"});
-    }
+    let highscoreList: ResponseHighscoreType[] = [];
 
-  };
+    importHighscoreList.forEach(function (highscore) {
+      const newResponseHighscore: ResponseHighscoreType = {
+        username: highscore.username,
+        score: highscore.score,
+      };
+      highscoreList.push(newResponseHighscore);
+    });
+
+    return res.status(200).json(highscoreList);
+  } else {
+    return res.status(400).json({ message: "Something went wrong" });
+  }
+};
