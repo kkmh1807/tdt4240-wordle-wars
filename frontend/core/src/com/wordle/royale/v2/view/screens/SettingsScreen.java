@@ -1,4 +1,4 @@
-package com.wordle.royale.v2.screens;
+package com.wordle.royale.v2.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,15 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.v2.model.other.HighScore;
 import com.wordle.royale.v2.model.other.ScreenController;
 
-public class HighScoreScreen implements Screen {
-
+public class SettingsScreen implements Screen {
     private SpriteBatch batch;
     private Stage stage;
     private Viewport viewport;
@@ -25,13 +24,12 @@ public class HighScoreScreen implements Screen {
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
 
-    private TextButton backToMenu;
-    private TextButton playAgain;
+    private TextButton mainMenu;
 
     private ScreenController parent;
-    private HighScore highScore;
+    private TextButton toggleMusic;
 
-    public HighScoreScreen(ScreenController parent) {
+    public SettingsScreen(ScreenController parent) {
         this.parent = parent;
     }
 
@@ -41,31 +39,21 @@ public class HighScoreScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
+        Table table = new Table();
+        table.setFillParent(true);
+        stage.addActor(table);
+
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
-        backToMenu = new TextButton("To main menu", skin, "default");
-        backToMenu.setScale(1f, 2f);
-        backToMenu.setTransform(true);
-        backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
+        mainMenu = new TextButton("To main Menu", skin, "default");
+        mainMenu.setScale(1f, 2f);
+        mainMenu.setTransform(true);
+        mainMenu.setPosition(Gdx.graphics.getWidth() / 2f - mainMenu.getWidth() / 2f, mainMenu.getHeight());
 
-        playAgain = new TextButton("To main menu", skin, "default");
-        playAgain.setScale(1f, 2f);
-        playAgain.setTransform(true);
-        playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
-                Gdx.graphics.getHeight() / 2f - playAgain.getHeight() * 2);
-
-        playAgain.addListener((new ClickListener() {
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.GAME);
-            }
-        }));
-
-        backToMenu.addListener(new ClickListener() {
+        mainMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 parent.changeScreens(ScreenController.MENU);
@@ -73,7 +61,25 @@ public class HighScoreScreen implements Screen {
         });
 
         Gdx.input.setInputProcessor((stage));
-        stage.addActor(backToMenu);
+        stage.addActor(mainMenu);
+
+        if (parent.getPreferences().getMusic()) {
+            toggleMusic = new TextButton("Music is enabled", skin, "default");
+        } else {
+            toggleMusic = new TextButton("Music is disabled", skin, "default");
+        }
+        toggleMusic.setScale(1f, 2f);
+        toggleMusic.setTransform(true);
+
+        toggleMusic.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                boolean musicEnabled = parent.getPreferences().getMusic();
+                parent.getPreferences().setMusic(!musicEnabled);
+            }
+        });
+
+        table.add(toggleMusic);
 
     }
 
@@ -81,11 +87,15 @@ public class HighScoreScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        highScore = new HighScore();
         // camera.update();
 
+        if (parent.getPreferences().getMusic()) {
+            toggleMusic.setText("Music is enabled");
+        } else {
+            toggleMusic.setText("Music is disabled");
+        }
+
         batch.begin();
-        highScore.render(batch);
         // batch.setProjectionMatrix(camera.combined);
         /*
          * Table table = new Table();

@@ -1,4 +1,4 @@
-package com.wordle.royale.v2.screens;
+package com.wordle.royale.v2.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

@@ -1,4 +1,4 @@
-package com.wordle.royale.v2.model;
+package com.wordle.royale.v2.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -10,14 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
 
-public class KeyboardButton extends Actor {
+public class KeyboardButton extends Actor implements GameScreenPresenter.keyboardButton{
 
     private String character;
     private TextButton button;
     private Skin skin;
     private GameScreenPresenter presenter;
 
-    public KeyboardButton(final GameScreenPresenter presenter, final String character, float x, float y, float width, float height) {
+    public KeyboardButton(final GameScreenPresenter presenter, final String character, float x, float y, float width, float height)  {
         this.presenter = presenter;
         this.character = character;
         this.skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
@@ -34,12 +34,8 @@ public class KeyboardButton extends Actor {
         setWidth(this.button.getWidth());
         setBounds(getX(), getY(), getWidth(), getHeight());
         this.button.setScale(1, 1);
-        addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                presenter.handleKeyBoardInput(character);
-            }
-        });
+
+        handleKeyBoardInput();
     }
 
     public void setTextScale(float x, float y) {
@@ -48,5 +44,16 @@ public class KeyboardButton extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         button.draw(batch, parentAlpha);
+    }
+
+    @Override
+    public void handleKeyBoardInput() {
+        //Use presenter interface for ui input
+        addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                presenter.handleKeyBoardInput(character);
+            }
+        });
     }
 }

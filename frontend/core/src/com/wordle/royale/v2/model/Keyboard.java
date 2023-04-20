@@ -3,6 +3,7 @@ package com.wordle.royale.v2.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
+import com.wordle.royale.v2.view.KeyboardButton;
 
 public class Keyboard extends Group{
 

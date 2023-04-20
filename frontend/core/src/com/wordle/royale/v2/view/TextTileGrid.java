@@ -1,7 +1,8 @@
-package com.wordle.royale.v2.screens;
+package com.wordle.royale.v2.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.wordle.royale.v2.view.WordRow;
 
 public class TextTileGrid extends Group {
     //private ArrayList<WordRow> textTileGrid = new ArrayList<>();

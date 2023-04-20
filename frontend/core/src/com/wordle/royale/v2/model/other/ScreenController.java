@@ -2,12 +2,11 @@
 package com.wordle.royale.v2.model.other;
 
 import com.badlogic.gdx.Game;
-import com.wordle.royale.v2.presenter.GameScreenPresenter;
-import com.wordle.royale.v2.screens.GameScreen;
-import com.wordle.royale.v2.screens.HighScoreScreen;
-import com.wordle.royale.v2.screens.MenuScreen;
-import com.wordle.royale.v2.screens.SettingsScreen;
-import com.wordle.royale.v2.screens.TutorialScreen;
+import com.wordle.royale.v2.view.screens.GameScreen;
+import com.wordle.royale.v2.view.screens.HighScoreScreen;
+import com.wordle.royale.v2.view.screens.MenuScreen;
+import com.wordle.royale.v2.view.screens.SettingsScreen;
+import com.wordle.royale.v2.view.screens.TutorialScreen;
 
 public class ScreenController extends Game {
 

@@ -6,9 +6,9 @@ import com.wordle.royale.v2.model.Keyboard;
 import com.wordle.royale.v2.model.guessedWord;
 import com.wordle.royale.v2.model.network.ApiService;
 import com.wordle.royale.v2.model.other.ScreenController;
-import com.wordle.royale.v2.screens.GameScreen;
-import com.wordle.royale.v2.screens.TextTileGrid;
-import com.wordle.royale.v2.screens.WordRow;
+import com.wordle.royale.v2.view.screens.GameScreen;
+import com.wordle.royale.v2.view.TextTileGrid;
+import com.wordle.royale.v2.view.WordRow;
 
 public class GameScreenPresenter {
 
@@ -129,4 +129,10 @@ public class GameScreenPresenter {
     public interface gameScreenView {
         void handleKeyBoardInput(String s);
     }
+
+    public interface keyboardButton {
+        void handleKeyBoardInput();
+    }
+
+
 }
