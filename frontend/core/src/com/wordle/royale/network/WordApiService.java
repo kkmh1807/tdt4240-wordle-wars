@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.wordle.royale.models.guessedWord;
 import com.wordle.royale.models.letter;
 
-public class ApiService {
+public class WordApiService {
     private final String BASE_URL = "http://10.212.25.104:8080";
 
     public interface CallbackNewWord<T> {
