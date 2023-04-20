@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,8 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
+import com.wordle.royale.v2.presenter.SettingsPresenter;
 
-public class SettingsScreen implements Screen {
+public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen {
     private SpriteBatch batch;
     private Stage stage;
     private Viewport viewport;
@@ -28,6 +30,7 @@ public class SettingsScreen implements Screen {
 
     private ScreenController parent;
     private TextButton toggleMusic;
+    private SettingsPresenter presenter;
 
     public SettingsScreen(ScreenController parent) {
         this.parent = parent;
@@ -38,6 +41,9 @@ public class SettingsScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
+
+        presenter = new SettingsPresenter(parent, stage);
+
 
         Table table = new Table();
         table.setFillParent(true);
@@ -53,15 +59,10 @@ public class SettingsScreen implements Screen {
         mainMenu.setTransform(true);
         mainMenu.setPosition(Gdx.graphics.getWidth() / 2f - mainMenu.getWidth() / 2f, mainMenu.getHeight());
 
-        mainMenu.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.MENU);
-            }
-        });
+        changeScreens(ScreenController.MENU);
 
         Gdx.input.setInputProcessor((stage));
-        stage.addActor(mainMenu);
+        addActor(mainMenu);
 
         if (parent.getPreferences().getMusic()) {
             toggleMusic = new TextButton("Music is enabled", skin, "default");
@@ -71,13 +72,7 @@ public class SettingsScreen implements Screen {
         toggleMusic.setScale(1f, 2f);
         toggleMusic.setTransform(true);
 
-        toggleMusic.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                boolean musicEnabled = parent.getPreferences().getMusic();
-                parent.getPreferences().setMusic(!musicEnabled);
-            }
-        });
+
 
         table.add(toggleMusic);
 
@@ -89,7 +84,7 @@ public class SettingsScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // camera.update();
 
-        if (parent.getPreferences().getMusic()) {
+        if (musicStatus()) {
             toggleMusic.setText("Music is enabled");
         } else {
             toggleMusic.setText("Music is disabled");
@@ -104,7 +99,7 @@ public class SettingsScreen implements Screen {
          * table.row();
          * table.add(addressLabel1);
          * table.add(addressText1).width(100);
-         * 
+         *
          */
         stage.draw();
 
@@ -138,5 +133,30 @@ public class SettingsScreen implements Screen {
 
         batch.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void addActor(Actor actor) {
+        presenter.addActor(actor);
+    }
+
+    @Override
+    public void changeScreens(int i) {
+        presenter.changeScreensFunc(i);
+    }
+
+    @Override
+    public void toggleMusic() {
+        toggleMusic.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.toggleMusic();
+            }
+        });
+    }
+
+    @Override
+    public boolean musicStatus() {
+        return presenter.musicStatus();
     }
 }

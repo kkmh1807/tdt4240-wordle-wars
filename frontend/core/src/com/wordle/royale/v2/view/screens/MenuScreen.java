@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,8 +16,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.model.guessedWord;
 import com.wordle.royale.v2.model.network.ApiService;
+import com.wordle.royale.v2.presenter.MenuScreenPresenter;
 
-public class MenuScreen implements Screen {
+public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
     private SpriteBatch batch;
     private Stage stage;
     private Viewport viewport;
@@ -31,6 +33,7 @@ public class MenuScreen implements Screen {
 
     private TextButton highScoreButton;
     private ScreenController parent;
+    private MenuScreenPresenter presenter;
 
     private ApiService api = new ApiService();
 
@@ -73,6 +76,8 @@ public class MenuScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
+        presenter = new MenuScreenPresenter(parent, stage);
+
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
@@ -109,42 +114,24 @@ public class MenuScreen implements Screen {
         highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth() / 2f,
                 Gdx.graphics.getHeight() / 2f - highScoreButton.getHeight() * 4);
 
-        highScoreButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.HIGHSCORES);
-            }
-        });
 
-        startGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.GAME);
-            }
-        });
 
-        tutorialButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.TUTORIAL);
-            }
-        });
 
-        settingsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.SETTINGS);
 
-            }
 
-        });
+
+
+        changeToGameScreen();
+        changeToHighscoreScreen();
+        changeToSettings();
+        changeToTutorialScreen();
 
         Gdx.input.setInputProcessor(stage);
 
-        stage.addActor(highScoreButton);
-        stage.addActor(startGameButton);
-        stage.addActor(tutorialButton);
-        stage.addActor(settingsButton);
+        addActor(highScoreButton);
+        addActor(startGameButton);
+        addActor(tutorialButton);
+        addActor(settingsButton);
         // stage.addActor(label1);
 
     }
@@ -198,5 +185,54 @@ public class MenuScreen implements Screen {
 
         batch.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void changeToTutorialScreen() {
+        tutorialButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.TUTORIAL);
+            }
+        });
+    }
+
+    @Override
+    public void changeToGameScreen() {
+        startGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.GAME);
+            }
+        });
+
+    }
+
+    @Override
+    public void changeToHighscoreScreen() {
+        highScoreButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                parent.changeScreens(ScreenController.HIGHSCORES);
+            }
+        });
+    }
+
+    @Override
+    public void changeToSettings() {
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.SETTINGS);
+
+            }
+
+        });
+
+    }
+
+    @Override
+    public void addActor(Actor actor) {
+        presenter.addActor(actor);
     }
 }

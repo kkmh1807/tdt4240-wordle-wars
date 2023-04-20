@@ -14,8 +14,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.HighScore;
 import com.wordle.royale.v2.model.other.ScreenController;
+import com.wordle.royale.v2.presenter.HighScorePresenter;
 
-public class HighScoreScreen implements Screen {
+public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens {
 
     private SpriteBatch batch;
     private Stage stage;
@@ -30,6 +31,7 @@ public class HighScoreScreen implements Screen {
 
     private ScreenController parent;
     private HighScore highScore;
+    private HighScorePresenter presenter;
 
     public HighScoreScreen(ScreenController parent) {
         this.parent = parent;
@@ -41,6 +43,8 @@ public class HighScoreScreen implements Screen {
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
 
+
+        presenter = new HighScorePresenter(parent);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
@@ -57,20 +61,9 @@ public class HighScoreScreen implements Screen {
         playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
                 Gdx.graphics.getHeight() / 2f - playAgain.getHeight() * 2);
 
-        playAgain.addListener((new ClickListener() {
 
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.GAME);
-            }
-        }));
-
-        backToMenu.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.MENU);
-            }
-        });
+        setupChangeToGame();
+        setupChangeToMenu();
 
         Gdx.input.setInputProcessor((stage));
         stage.addActor(backToMenu);
@@ -128,5 +121,27 @@ public class HighScoreScreen implements Screen {
 
         batch.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void setupChangeToMenu() {
+        backToMenu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.MENU);
+            }
+        });
+    }
+
+    @Override
+    public void setupChangeToGame() {
+        playAgain.addListener((new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.GAME);
+            }
+        }));
+
     }
 }

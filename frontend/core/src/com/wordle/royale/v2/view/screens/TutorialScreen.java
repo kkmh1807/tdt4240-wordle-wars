@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,8 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
+import com.wordle.royale.v2.presenter.TutorialPresenter;
 
-public class TutorialScreen implements Screen {
+public class TutorialScreen implements Screen, TutorialPresenter.TutorialScreen {
 
     private SpriteBatch batch;
     private BitmapFont tutorialText;
@@ -29,6 +31,7 @@ public class TutorialScreen implements Screen {
     private TextButton backToMenu;
 
     private ScreenController parent;
+    private TutorialPresenter presenter;
 
     public TutorialScreen(ScreenController parent) {
         this.parent = parent;
@@ -40,6 +43,8 @@ public class TutorialScreen implements Screen {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
+
+        presenter = new TutorialPresenter(parent, stage);
         tutorialText = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"), false);
 
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
@@ -53,16 +58,12 @@ public class TutorialScreen implements Screen {
         backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, backToMenu.getHeight()*2);
 
 
-        backToMenu.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                parent.changeScreens(ScreenController.MENU);
-            }
-        });
+
 
 
         Gdx.input.setInputProcessor((stage));
-        stage.addActor(backToMenu);
+
+        addActor(backToMenu);
 
     }
 
@@ -123,6 +124,21 @@ public class TutorialScreen implements Screen {
 
         batch.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void addActor(Actor actor) {
+        presenter.addActor(actor);
+    }
+
+    @Override
+    public void changeScreens() {
+        backToMenu.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                presenter.changeScreensFunc(ScreenController.MENU);
+            }
+        });
     }
 }
 
