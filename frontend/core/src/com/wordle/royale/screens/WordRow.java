@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -32,34 +33,68 @@ public class WordRow extends Actor {
         return index;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public String getChar(int index) {
         return textTiles.get(index).getChr();
     }
 
     public void handleCharacterChange(String s) {
         if(index < 5) {
-            System.out.println(index);
+
             textTiles.get(index).setCharacter(s);
             index+=1;
-            System.out.println(index);
+
 
         }
+    }
+
+    public ArrayList<TextTile> getTextTiles() {
+        return textTiles;
     }
 
     public void removeCharacter() {
         if (index == 0) {
             return;
         }
+
         textTiles.get(index-1).setCharacter(" ");
         index -= 1;
     }
 
+    public void removeCharacters() {
+        for (int i = 4; i > -1; i--) {
+            if (i == -1) {
+                return;
+            }
+            textTiles.get(i).setCharacter(" ");
+        }
+
+
+
+    }
+
     public void updateTileXColor(int index, int place, int exists) {
         if (exists == 1) {
-             textTiles.get(index).setColor(new Color(Color.ORANGE.cpy()));
+             textTiles.get(index).setColor(new Color(Color.YELLOW.cpy()));
              if (place == 1) {
                  textTiles.get(index).setColor(new Color(Color.GREEN.cpy()));
              }
+        }
+        else {
+            textTiles.get(index).setColor(new Color(Color.LIGHT_GRAY.cpy()));
+        }
+
+    }
+
+    public void resetTileXColor() {
+        for (int i = 4; i > -1; i--) {
+            if (i == -1) {
+                return;
+            }
+            textTiles.get(i).setColor(new Color(Color.WHITE.cpy()));
         }
 
     }

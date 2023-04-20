@@ -68,6 +68,10 @@ public class GameScreen implements Screen {
         this.stage.addActor(actor);
     }
 
+    public void removeActors() {
+        this.stage.clear();
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);

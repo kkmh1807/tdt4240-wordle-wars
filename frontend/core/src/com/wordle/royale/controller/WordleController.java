@@ -84,13 +84,17 @@ public class WordleController {
         api.guessWord(word, getWord_id(), new ApiService.CallbackGuessWord<Boolean, guessedWord>() {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
-                System.out.println("Is a valid word:  " + valid);
-                guessedWord.printGuess();
+
                 for (int i = 0; i < 5; i++) {
                     int place = guessedWord.getGuessLetters().get(i).getPlacement();
                     int exists = guessedWord.getGuessLetters().get(i).getStatus();
                     textTileGrid.getActiveRow().updateTileXColor(i, place, exists);
                 }
+
+                if (textTileGrid.getActiveRowIndex() == 0) {
+                    resetGame();
+                }
+
                 textTileGrid.nextRow();
 
                 // Gets placement-status for first letter
@@ -99,8 +103,21 @@ public class WordleController {
 
             @Override
             public void onFailure(Throwable t) {
+                //Should show user that the word is not in the list
                 System.out.println("Word not in list");
             }
         });
+    }
+    public void resetGame() {
+        for (int i = 0; i < 6; i++) {
+            this.textTileGrid.setActiveRowIndex(i);
+            this.textTileGrid.getActiveRow().setIndex(0);
+
+            this.textTileGrid.getActiveRow().removeCharacters();
+            this.textTileGrid.getActiveRow().resetTileXColor();
+
+        }
+        this.textTileGrid.setActiveRowIndex(6);
+
     }
 }

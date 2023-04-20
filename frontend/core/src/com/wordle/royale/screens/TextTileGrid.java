@@ -25,12 +25,19 @@ public class TextTileGrid extends Group {
         return (WordRow) this.getChildren().get(activeRowIndex);
     }
 
+    public int getActiveRowIndex() {
+        return activeRowIndex;
+    }
+
+    public void setActiveRowIndex(int index) {
+        this.activeRowIndex = index;
+    }
+
     public void nextRow() {
         if(activeRowIndex > 0) {
             activeRowIndex--;
         }
     }
-
 
 }
 
