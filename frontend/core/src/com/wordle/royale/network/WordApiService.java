@@ -75,9 +75,13 @@ public class WordApiService {
                 Boolean validWord = json.getBoolean("validWord");
 
                 guessedWord guessedWord = new guessedWord();
+                Boolean correct = true;
                 JsonValue lettersArray = json.get("letters");
                 if (lettersArray != null) {
                     for (int i = 0; i < 5; i++) {
+                        if(lettersArray.get(i).getInt("placement")  == 0){
+                            correct = false;
+                        }
                         letter letter = new letter(
                                 lettersArray.get(i).getString("letter"),
                                 lettersArray.get(i).getInt("status"),
@@ -85,6 +89,7 @@ public class WordApiService {
                         guessedWord.insertLetter(letter);
                     }
                 }
+                guessedWord.setCorrect(correct);
                 System.out.println(validWord);
                 callback.onSuccess(validWord, guessedWord);
             }
