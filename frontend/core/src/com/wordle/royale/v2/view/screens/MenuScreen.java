@@ -24,11 +24,9 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
     protected Skin skin;
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
-
     private TextButton startGameButton;
     private TextButton tutorialButton;
     private TextButton settingsButton;
-
     private TextButton highScoreButton;
     private ScreenController parent;
     private MenuScreenPresenter presenter;
@@ -36,10 +34,6 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
 
     public MenuScreen(ScreenController parent) {
         this.parent = parent;
-
-        // Guess word
-
-
     }
 
     @Override
@@ -47,9 +41,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-
         presenter = new MenuScreenPresenter(parent, stage);
-
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
@@ -86,13 +78,6 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth() / 2f,
                 Gdx.graphics.getHeight() / 2f - highScoreButton.getHeight() * 4);
 
-
-
-
-
-
-
-
         changeToGameScreen();
         changeToHighscoreScreen();
         changeToSettings();
@@ -104,7 +89,6 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         addActor(startGameButton);
         addActor(tutorialButton);
         addActor(settingsButton);
-        // stage.addActor(label1);
 
     }
 
@@ -112,19 +96,9 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // camera.update();
 
         batch.begin();
-        // batch.setProjectionMatrix(camera.combined);
-        /*
-         * Table table = new Table();
-         * table.add(label1);
-         * table.add(name1).width(100);
-         * table.row();
-         * table.add(addressLabel1);
-         * table.add(addressText1).width(100);
-         * 
-         */
+
         stage.draw();
 
         batch.end();

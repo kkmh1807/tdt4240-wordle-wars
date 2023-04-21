@@ -10,24 +10,16 @@ import com.wordle.royale.v2.view.screens.TutorialScreen;
 
 public class ScreenController extends Game {
 
-    // private LoadingScreen loadingScreen;
-    // private PreferencesScreen preferencesScreen;
     private MenuScreen menu;
     private GameScreen game;
     private SettingsScreen settings;
     private HighScoreScreen highScore;
     private TutorialScreen tutorial;
-
-    // private modeGetFucked = mode
-    // private MainScreen mainScreen;
-    // private EndScreen endScreen;
-
     public final static int MENU = 0;
     public final static int GAME = 1;
     public final static int SETTINGS = 2;
     public final static int TUTORIAL = 3;
     public final static int HIGHSCORES = 4;
-
     public final static float GAME_WORLD_WIDTH = 1280;
     public final static float GAME_WORLD_HEIGHT = 720;
 

@@ -29,7 +29,6 @@ public class GameScreenPresenter {
         this.api = new WordApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
-        //wordRow = new WordRow(50, 800);
         getWord();
         this.addActor(keyboard);
         this.addActor(textTileGrid);
@@ -45,6 +44,7 @@ public class GameScreenPresenter {
     public void addActor(Actor actor) {
         this.stage.addActor(actor);
     }
+
     public boolean checkTimer(WordleTimer timer) {
         if(timer.getInterval().equals("0:00")) {
             timer.stop();
@@ -54,6 +54,7 @@ public class GameScreenPresenter {
         }
         return false;
     }
+
     public void getWord() {
         api.getNewWord(new WordApiService.CallbackNewWord<Integer>() {
             @Override
@@ -103,17 +104,13 @@ public class GameScreenPresenter {
         api.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
-                System.out.println("Is a valid word:  " + valid);
-                guessedWord.printGuess();
-                for (int i = 0; i < 5; i++) {
-                    int place = guessedWord.getGuessLetters().get(i).getPlacement();
-                    int exists = guessedWord.getGuessLetters().get(i).getStatus();
-                    textTileGrid.getActiveRow().updateTileXColor(i, place, exists);
-                }
-                textTileGrid.nextRow();
+                colorTiles(guessedWord);
 
-                // Gets placement-status for first letter
-                // System.out.println(guessedWord.getGuessLetters().get(0).getPlacement());
+                if(textTileGrid.getActiveRowIndex() == 0 || guessedWord.getCorrect()) {
+                    resetGame();
+                }
+
+                textTileGrid.nextRow();
             }
 
             @Override
@@ -125,6 +122,27 @@ public class GameScreenPresenter {
 
     public void musicControls() {
 
+    }
+
+    public void resetGame() {
+        for (int i = 0; i < 6; i++) {
+            this.textTileGrid.setActiveRowIndex(i);
+            this.textTileGrid.getActiveRow().setIndex(0);
+
+            this.textTileGrid.getActiveRow().removeCharacters();
+            this.textTileGrid.getActiveRow().resetTileXColor();
+        }
+        this.textTileGrid.setActiveRowIndex(6);
+        getWord();
+
+    }
+
+    public void colorTiles(guessedWord guessedWord) {
+        for (int i = 0; i < 5; i++) {
+            int place = guessedWord.getGuessLetters().get(i).getPlacement();
+            int exists = guessedWord.getGuessLetters().get(i).getStatus();
+            textTileGrid.getActiveRow().updateTileXColor(i, place, exists);
+        }
     }
 
 

@@ -25,10 +25,8 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
     protected Skin skin;
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
-
     private TextButton backToMenu;
     private TextButton playAgain;
-
     private ScreenController parent;
     private HighScore highScore;
     private HighScorePresenter presenter;
@@ -42,29 +40,22 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-
-
         presenter = new HighScorePresenter(parent);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
-
         backToMenu = new TextButton("To main menu", skin, "default");
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
         backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
-
         playAgain = new TextButton("To main menu", skin, "default");
         playAgain.setScale(1f, 2f);
         playAgain.setTransform(true);
         playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
                 Gdx.graphics.getHeight() / 2f - playAgain.getHeight() * 2);
-
-
         setupChangeToGame();
         setupChangeToMenu();
-
         Gdx.input.setInputProcessor((stage));
         stage.addActor(backToMenu);
 
@@ -75,20 +66,10 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         highScore = new HighScore();
-        // camera.update();
 
         batch.begin();
+
         highScore.render(batch);
-        // batch.setProjectionMatrix(camera.combined);
-        /*
-         * Table table = new Table();
-         * table.add(label1);
-         * table.add(name1).width(100);
-         * table.row();
-         * table.add(addressLabel1);
-         * table.add(addressText1).width(100);
-         * 
-         */
         stage.draw();
 
         batch.end();
@@ -118,7 +99,6 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
     @Override
     public void dispose() {
-
         batch.dispose();
         stage.dispose();
     }
