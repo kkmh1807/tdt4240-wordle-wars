@@ -26,24 +26,16 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
     private OrthographicCamera camera;
     protected Skin skin;
     public final static float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
-
-
     private ScreenController parent;
     private WordleTimer timer;
-
     private BitmapFont timerText;
     private GameScreenPresenter presenter;
 
     public GameScreen(ScreenController parent) {
         this.parent = parent;
     }
-
     @Override
     public void show() {
-
-
-
-
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
@@ -70,9 +62,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
             presenter.checkTimer(timer);
 
         }
-
-
-
         batch.begin();
 
         stage.draw();

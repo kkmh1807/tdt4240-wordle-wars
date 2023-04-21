@@ -27,7 +27,5 @@ public class MenuScreenPresenter {
         void changeToHighscoreScreen();
         void changeToSettings();
         void addActor(Actor actor);
-
-
     }
 }

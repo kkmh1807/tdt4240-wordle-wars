@@ -32,14 +32,19 @@ public class WordRow extends Actor {
         return textTiles.get(index).getChr();
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public void handleCharacterChange(String s) {
         if(index < 5) {
-            System.out.println(index);
             textTiles.get(index).setCharacter(s);
             index+=1;
-            System.out.println(index);
-
         }
+    }
+
+    public ArrayList<TextTile> getTextTiles() {
+        return textTiles;
     }
 
     public void removeCharacter() {
@@ -50,12 +55,29 @@ public class WordRow extends Actor {
         index -= 1;
     }
 
+    public void removeCharacters() {
+        for (int i = 4; i > -1; i--) {
+            textTiles.get(i).setCharacter(" ");
+        }
+
+    }
+
     public void updateTileXColor(int index, int place, int exists) {
         if (exists == 1) {
-             textTiles.get(index).setColor(new Color(Color.ORANGE.cpy()));
-             if (place == 1) {
-                 textTiles.get(index).setColor(new Color(Color.GREEN.cpy()));
-             }
+            textTiles.get(index).setColor(new Color(Color.YELLOW.cpy()));
+            if (place == 1) {
+                textTiles.get(index).setColor(new Color(Color.GREEN.cpy()));
+            }
+        }
+        else {
+            textTiles.get(index).setColor(new Color(Color.LIGHT_GRAY.cpy()));
+        }
+
+    }
+
+    public void resetTileXColor() {
+        for (int i = 4; i > -1; i--) {
+            textTiles.get(i).setColor(new Color(Color.WHITE.cpy()));
         }
 
     }
