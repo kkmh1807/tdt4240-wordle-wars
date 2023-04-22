@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,6 +33,9 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
     private ScreenController parent;
     private MenuScreenPresenter presenter;
 
+    private BitmapFont title;
+    private GlyphLayout layout;
+
 
     public MenuScreen(ScreenController parent) {
         this.parent = parent;
@@ -41,6 +46,12 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
+
+
+        title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        title.getData().setScale(.7f, 2f);
+        layout = new GlyphLayout(title, "Wordle Wars");
+
         presenter = new MenuScreenPresenter(parent, stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
@@ -98,6 +109,8 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+
+        title.draw(batch, "Wordle Wars", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
 
         stage.draw();
 
@@ -159,7 +172,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         highScoreButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.HIGHSCORES);
+                presenter.changeScreensFunc(ScreenController.HIGHSCORES);
             }
         });
     }

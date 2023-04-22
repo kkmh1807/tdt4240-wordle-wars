@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,6 +31,8 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
     private TextButton playAgain;
     private ScreenController parent;
     private HighScore highScore;
+    private BitmapFont title;
+    private GlyphLayout layout;
     private HighScorePresenter presenter;
 
     public HighScoreScreen(ScreenController parent) {
@@ -37,6 +41,9 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
     @Override
     public void show() {
+        title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        title.getData().setScale(.7f, 2f);
+        layout = new GlyphLayout(title, "Top 5 Legends");
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
@@ -68,6 +75,7 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         highScore = new HighScore();
 
         batch.begin();
+        title.draw(batch, "Top 5 Legends", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
 
         highScore.render(batch);
         stage.draw();
