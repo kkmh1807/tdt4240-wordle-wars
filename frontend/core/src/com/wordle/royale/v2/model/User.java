@@ -1,27 +1,28 @@
 package com.wordle.royale.v2.model;
 
-import com.wordle.royale.v2.model.UserTemplate;
+public abstract class User {
 
-public class User extends UserTemplate {
-
-    private String userName;
-    private int score;
-
+    protected String userName;
+    protected int score;
 
     public User(String userName) {
-        super(userName);
+        this.userName = userName;
+        this.score = 0;
     }
 
-    @Override
-    public void setUserName(String name) {
-        this.userName = name;
 
-    }
 
-    @Override
+
+    public String getName() {
+        return userName;
+    };
+
     public void setScore(int score) {
         this.score = score;
-    }
+    };
+
+    public int getScore() {
+        return score;
+    };
+
 }
-
-

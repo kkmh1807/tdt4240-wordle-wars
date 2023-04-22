@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.MenuScreenPresenter;
 
@@ -35,6 +36,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
 
     private BitmapFont title;
     private GlyphLayout layout;
+    private Player player;
 
 
     public MenuScreen(ScreenController parent) {
@@ -46,7 +48,8 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-
+        player = new Player("Jakob");
+        System.out.println(player.getName());
 
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         title.getData().setScale(.7f, 2f);

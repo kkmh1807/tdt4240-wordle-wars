@@ -40,7 +40,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
     private GameScreenPresenter presenter;
 
     private TextButton exitButton;
-
     public GameScreen(ScreenController parent) {
         this.parent = parent;
     }
@@ -72,6 +71,8 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
             }
         });
         presenter.addActor(exitButton);
+
+
 
 
 
