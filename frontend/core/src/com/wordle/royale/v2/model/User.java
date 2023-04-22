@@ -5,12 +5,10 @@ public abstract class User {
     protected String userName;
     protected int score;
 
-    public User(String userName) {
-        this.userName = userName;
+    public User() {
+        this.userName = "";
         this.score = 0;
     }
-
-
 
 
     public String getName() {
