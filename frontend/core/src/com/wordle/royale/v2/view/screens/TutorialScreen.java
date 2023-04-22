@@ -57,12 +57,8 @@ public class TutorialScreen implements Screen, TutorialPresenter.TutorialScreen 
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
         backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, backToMenu.getHeight()*2);
+
         changeScreens();
-
-
-
-
-
         Gdx.input.setInputProcessor((stage));
 
         addActor(backToMenu);

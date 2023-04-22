@@ -72,6 +72,13 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         toggleMusic.setScale(1f, 2f);
         toggleMusic.setTransform(true);
 
+        toggleMusic.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                boolean musicEnabled = parent.getPreferences().getMusic();
+                parent.getPreferences().setMusic(!musicEnabled);
+            }
+        });
 
 
         table.add(toggleMusic);
