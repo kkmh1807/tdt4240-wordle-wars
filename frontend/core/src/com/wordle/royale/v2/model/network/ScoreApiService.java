@@ -60,4 +60,45 @@ public class ScoreApiService {
         };
         Gdx.net.sendHttpRequest(httpRequestBuilder.build(), listener);
     }
+
+    public void getHigscores(final CallbackPostScore<highscores> callback) {
+        String endpoint = "/highscore";
+
+        String url = BASE_URL + endpoint;
+        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder();
+        httpRequestBuilder.newRequest();
+        httpRequestBuilder.method(Net.HttpMethods.GET);
+        httpRequestBuilder.url(url);
+        Net.HttpResponseListener listener = new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse response) {
+                JsonReader jsonReader = new JsonReader();
+                System.out.println("Sending..");
+                JsonValue json = jsonReader.parse(response.getResultAsString());
+
+                highscores highscores = new highscores();
+                Integer i = 0;
+                while (json.get(i) != null) {
+                    highscores.addHighscore(
+                            json.get(i).getString("username"),
+                            json.get(i).getInt("score"));
+                    i++;
+                }
+                callback.onSuccess(highscores);
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                System.out.println("An error occurred");
+                System.out.println(t);
+                callback.onFailure(t);
+            }
+
+            @Override
+            public void cancelled() {
+                System.out.println("An error occurred");
+            }
+        };
+        Gdx.net.sendHttpRequest(httpRequestBuilder.build(), listener);
+    }
 }
