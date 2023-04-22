@@ -61,7 +61,7 @@ public class GameScreenPresenter {
         if(timer.getInterval().equals("0:00")) {
             timer.stop();
             //music.stop();
-            parentScreen.changeScreens(ScreenController.MENU);
+            parentScreen.changeScreens(ScreenController.GAMEOVER);
             return true;
         }
         return false;

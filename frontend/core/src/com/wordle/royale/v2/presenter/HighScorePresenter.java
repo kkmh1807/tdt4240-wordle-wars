@@ -44,6 +44,5 @@ public class HighScorePresenter {
 
     public interface changeScreens {
         void setupChangeToMenu();
-        void setupChangeToGame();
     }
 }

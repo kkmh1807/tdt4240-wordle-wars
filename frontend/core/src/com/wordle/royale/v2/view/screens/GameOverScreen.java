@@ -14,11 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.v2.model.other.HighScore;
 import com.wordle.royale.v2.model.other.ScreenController;
+import com.wordle.royale.v2.presenter.GameOverPresenter;
 import com.wordle.royale.v2.presenter.HighScorePresenter;
 
-public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens {
+public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
 
     private SpriteBatch batch;
     private Stage stage;
@@ -28,13 +28,14 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
     private TextButton backToMenu;
+    private TextButton playAgain;
     private ScreenController parent;
     private BitmapFont title;
     private GlyphLayout layout;
     private BitmapFont font;
     private HighScorePresenter presenter;
 
-    public HighScoreScreen(ScreenController parent) {
+    public GameOverScreen(ScreenController parent) {
         this.parent = parent;
     }
 
@@ -57,9 +58,16 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
         backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
+        playAgain = new TextButton("Play again", skin, "default");
+        playAgain.setScale(1f, 2f);
+        playAgain.setTransform(true);
+        playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
+                Gdx.graphics.getHeight() / 3f - playAgain.getHeight() * 2f);
         setupChangeToMenu();
+        changeToGameScreen();
         Gdx.input.setInputProcessor((stage));
         stage.addActor(backToMenu);
+        stage.addActor(playAgain);
 
     }
 
@@ -69,16 +77,7 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        title.draw(batch, "Top 10 Legends", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
-
-        for (int i = 0; i < presenter.getHighScore().getHighscoreList().size(); i++) {
-            float xPos = Gdx.graphics.getWidth() / 2.5f;
-            float yPos = Gdx.graphics.getHeight() / 1.5f - (i * 75);
-            String name = presenter.getHighScore().getHighscoreList().get(i).getUsername();
-            Integer score = presenter.getHighScore().getHighscoreList().get(i).getScore();
-            String text = i + 1 + ". " + name + " : " + score + " points";
-            font.draw(batch, text, xPos, yPos);
-        }
+        title.draw(batch, "Game over", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
 
         stage.draw();
 
@@ -121,5 +120,16 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
                 presenter.changeScreensFunc(ScreenController.MENU);
             }
         });
+    }
+
+    @Override
+    public void changeToGameScreen() {
+        playAgain.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.GAME);
+            }
+        });
+
     }
 }
