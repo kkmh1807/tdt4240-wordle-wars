@@ -59,7 +59,7 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         mainMenu.setTransform(true);
         mainMenu.setPosition(Gdx.graphics.getWidth() / 2f - mainMenu.getWidth() / 2f, mainMenu.getHeight());
 
-        changeScreens(ScreenController.MENU);
+        changeScreens();
 
         Gdx.input.setInputProcessor((stage));
         addActor(mainMenu);
@@ -91,16 +91,7 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         }
 
         batch.begin();
-        // batch.setProjectionMatrix(camera.combined);
-        /*
-         * Table table = new Table();
-         * table.add(label1);
-         * table.add(name1).width(100);
-         * table.row();
-         * table.add(addressLabel1);
-         * table.add(addressText1).width(100);
-         *
-         */
+
         stage.draw();
 
         batch.end();
@@ -141,8 +132,13 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
     }
 
     @Override
-    public void changeScreens(int i) {
-        presenter.changeScreensFunc(i);
+    public void changeScreens() {
+        mainMenu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreensFunc(ScreenController.MENU);
+            }
+        });
     }
 
     @Override

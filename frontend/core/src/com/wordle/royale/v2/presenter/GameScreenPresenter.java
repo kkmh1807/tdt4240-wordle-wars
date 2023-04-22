@@ -1,7 +1,10 @@
 package com.wordle.royale.v2.presenter;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.wordle.royale.v2.model.Keyboard;
 import com.wordle.royale.v2.model.guessedWord;
 import com.wordle.royale.v2.model.network.WordApiService;
@@ -20,6 +23,10 @@ public class GameScreenPresenter {
     private TextTileGrid textTileGrid;
     private Stage stage;
 
+    private String feedback;
+
+    private TextButton exitButton;
+
     private WordApiService api;
     private int word_id;
 
@@ -29,6 +36,7 @@ public class GameScreenPresenter {
         this.api = new WordApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
+        feedback = " ";
         getWord();
         this.addActor(keyboard);
         this.addActor(textTileGrid);
@@ -43,6 +51,10 @@ public class GameScreenPresenter {
 
     public void addActor(Actor actor) {
         this.stage.addActor(actor);
+    }
+
+    private void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
     public boolean checkTimer(WordleTimer timer) {
@@ -101,12 +113,19 @@ public class GameScreenPresenter {
     }
 
     public void guess(String word) {
+        setFeedback(" ");
         api.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
+
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
-
-                if(textTileGrid.getActiveRowIndex() == 0 || guessedWord.getCorrect()) {
+                if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
+                    if (guessedWord.getCorrect()) {
+                        setFeedback("     Correct!     \nHere is a new word");
+                    }
+                    else {
+                        setFeedback("  No more tries  \nhere is a new word");
+                    }
                     resetGame();
                 }
 
@@ -115,7 +134,7 @@ public class GameScreenPresenter {
 
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("Word not in list");
+                setFeedback("\nWord not in list");
             }
         });
     }
@@ -145,9 +164,18 @@ public class GameScreenPresenter {
         }
     }
 
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void changeToMainScreen() {
+
+        parentScreen.changeScreens(ScreenController.MENU);
+    }
 
     public interface gameScreenView {
         void handleKeyBoardInput(String s);
+        String getFeedbackFunc();
     }
 
     public interface keyboardButton {

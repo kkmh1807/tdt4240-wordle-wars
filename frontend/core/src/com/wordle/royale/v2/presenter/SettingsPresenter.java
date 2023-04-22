@@ -35,7 +35,7 @@ public class SettingsPresenter {
 
     public interface SettingsScreen {
         void addActor(Actor actor);
-        void changeScreens(int i);
+        void changeScreens();
         void toggleMusic();
         boolean musicStatus();
     }
