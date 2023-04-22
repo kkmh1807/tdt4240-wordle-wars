@@ -40,13 +40,6 @@ public class GameScreenPresenter {
         getWord();
         this.addActor(keyboard);
         this.addActor(textTileGrid);
-        /*
-         * if (parent.getPreferences().getMusic()) {
-         * music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-         * music.setLooping(true);
-         * music.play();
-         * }
-         */
     }
 
     public void addActor(Actor actor) {

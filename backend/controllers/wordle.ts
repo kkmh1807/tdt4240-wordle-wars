@@ -51,6 +51,14 @@ export const guessWord = async (req: Request, res: Response) => {
     if (word[i] !== guess[i]) {
       if (wordWithoutCorrect.includes(guess[i])) {
         result[i] = { letter: guess[i], status: 1, placement: 0 };
+
+        for (let x = 0; x < wordWithoutCorrect.length; x++) {
+          if (wordWithoutCorrect[x] == guess[i]) {
+            wordWithoutCorrect =
+              wordWithoutCorrect.slice(0, x) + wordWithoutCorrect.slice(x + 1);
+            break;
+          }
+        }
       } else {
         result[i] = { letter: guess[i], status: 0, placement: 0 };
       }
