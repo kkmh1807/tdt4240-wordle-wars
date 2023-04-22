@@ -100,7 +100,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         addActor(startGameButton);
         addActor(tutorialButton);
         addActor(settingsButton);
-
+        presenter.musicEnabled();
     }
 
     @Override

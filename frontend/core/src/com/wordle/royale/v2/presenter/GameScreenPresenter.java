@@ -1,6 +1,7 @@
 package com.wordle.royale.v2.presenter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -53,7 +54,6 @@ public class GameScreenPresenter {
     public boolean checkTimer(WordleTimer timer) {
         if(timer.getInterval().equals("0:00")) {
             timer.stop();
-            //music.stop();
             parentScreen.changeScreens(ScreenController.GAMEOVER);
             return true;
         }
@@ -130,10 +130,6 @@ public class GameScreenPresenter {
                 setFeedback("\nWord not in list");
             }
         });
-    }
-
-    public void musicControls() {
-
     }
 
     public void resetGame() {

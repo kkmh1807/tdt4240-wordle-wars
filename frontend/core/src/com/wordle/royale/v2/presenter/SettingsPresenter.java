@@ -29,6 +29,9 @@ public class SettingsPresenter {
         parent.getPreferences().setMusic(!musicEnabled);
     }
 
+    public boolean getMusicPreferences() {
+        return parent.getPreferences().getMusic();
+    }
     public boolean musicStatus() {
         return parent.getPreferences().getMusic();
     }
@@ -38,5 +41,6 @@ public class SettingsPresenter {
         void changeScreens();
         void toggleMusic();
         boolean musicStatus();
+
     }
 }

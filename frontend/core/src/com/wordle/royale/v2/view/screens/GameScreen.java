@@ -24,7 +24,7 @@ import com.wordle.royale.v2.model.utils.WordleTimer;
 public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
 
     private SpriteBatch batch;
-    private Music music;
+
     private Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
@@ -65,7 +65,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 timer.stop();
-                music.stop();
                 timer = null;
                 presenter.changeToMainScreen();
             }
@@ -78,12 +77,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
                 ScreenController.GAME_WORLD_HEIGHT, camera);
         viewport.apply();
         Gdx.input.setInputProcessor(stage);
-
-          if (parent.getPreferences().getMusic()) {
-            music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-            music.setLooping(true);
-            music.play();
-          }
 
     }
 
