@@ -8,27 +8,37 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.Keyboard;
 import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.guessedWord;
+import com.wordle.royale.v2.model.other.HighScore;
+import com.wordle.royale.v2.model.network.ScoreApiService;
 import com.wordle.royale.v2.model.network.WordApiService;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.model.utils.WordleTimer;
 import com.wordle.royale.v2.view.TextTileGrid;
 
-public class GameScreenPresenter extends AbstractPresenter implements IKeyboard {
+public class GameScreenPresenter extends AbstractPresenter implements IKeyboard, ITimerObserver {
 
     private Keyboard keyboard;
     private TextTileGrid textTileGrid;
     private String feedback;
-
-
-    private WordApiService api;
+    private WordApiService wordApi;
+    private ScoreApiService scoreApi;
     private int word_id;
 
     private int score;
 
+    public boolean isTimeUp() {
+        return timeUp;
+    }
+
+    private boolean timeUp;
+
     public GameScreenPresenter(ScreenController screenController, Stage stage) {
         super(stage, screenController);
+        WordleTimer.getInstance().addObserver(this);
         score = 0;
-        this.api = new WordApiService();
+        timeUp = false;
+        this.wordApi = new WordApiService();
+        this.scoreApi = new ScoreApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
         feedback = " ";
@@ -59,7 +69,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     }
 
     public void getWord() {
-        api.getNewWord(new WordApiService.CallbackNewWord<Integer>() {
+        wordApi.getNewWord(new WordApiService.CallbackNewWord<Integer>() {
             @Override
             public void onSuccess(Integer wordID) {
                 setWord_id(wordID);
@@ -106,16 +116,16 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
 
     public void guess(String word) {
         setFeedback(" ");
-        api.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
+        wordApi.guessWord(word, getWord_id(), new WordApiService.CallbackGuessWord<Boolean, guessedWord>() {
 
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
-                score = (guessedWord.getGreen()*10) + (guessedWord.getYellow()*5);
+                score = (guessedWord.getGreen() * 10) + (guessedWord.getYellow() * 5);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
                         setFeedback("     Correct!     \nHere is a new word");
-                        Player.getInstance().setScore(50+(25*(textTileGrid.getActiveRowIndex())));
+                        Player.getInstance().setScore(50 + (25 * (textTileGrid.getActiveRowIndex())));
                     } else {
                         setFeedback("  No more tries  \nhere is a new word");
                         Player.getInstance().setScore(score);
@@ -125,7 +135,6 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
                 textTileGrid.nextRow();
                 System.out.println(Player.getInstance().getScore());
             }
-
 
             @Override
             public void onFailure(Throwable t) {
@@ -155,9 +164,26 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
         }
     }
 
-
     public String getFeedback() {
         return feedback;
+    }
+
+    @Override
+    public void timeUp(Boolean timeUp) {
+        this.timeUp = timeUp;
+        Player.getInstance().setScore(score);
+        scoreApi.submitScore(Player.getInstance().getName(), Player.getInstance().getScore(),
+                new ScoreApiService.CallbackPostScore<HighScore>() {
+                    @Override
+                    public void onSuccess(HighScore highscores) {
+                        System.out.println("Score Submitted");
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        System.out.println("Network error");
+                    }
+                });
     }
 
     public interface gameScreenView {
