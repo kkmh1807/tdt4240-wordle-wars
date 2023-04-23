@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
 

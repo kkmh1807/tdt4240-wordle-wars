@@ -2,6 +2,7 @@ package com.wordle.royale.v2.presenter;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.Keyboard;
+import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.guessedWord;
 import com.wordle.royale.v2.model.network.WordApiService;
 import com.wordle.royale.v2.model.other.ScreenController;
@@ -15,9 +16,14 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     private String feedback;
     private WordApiService api;
     private int word_id;
+    Player user;
+
+    private int score;
 
     public GameScreenPresenter(ScreenController screenController, Stage stage) {
         super(stage, screenController);
+        score = 0;
+        user = Player.getInstance();
         this.api = new WordApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
@@ -41,6 +47,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     public boolean checkTimer(WordleTimer timer) {
         if (timer.getInterval().equals("0:00")) {
             timer.stop();
+            user.setScore(score);
             // music.stop();
             screenController.changeScreens(ScreenController.MENU);
             return true;
@@ -101,15 +108,17 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
+                score = (guessedWord.getGreen()*50) + (guessedWord.getYellow()*25);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
                         setFeedback("     Correct!     \nHere is a new word");
+                        user.setScore(50+(25*(6-textTileGrid.getActiveRowIndex())));
                     } else {
                         setFeedback("  No more tries  \nhere is a new word");
+                        user.setScore(score);
                     }
                     resetGame();
                 }
-
                 textTileGrid.nextRow();
             }
 
@@ -144,6 +153,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
             textTileGrid.getActiveRow().updateTileXColor(i, place, exists);
         }
     }
+
 
     public String getFeedback() {
         return feedback;

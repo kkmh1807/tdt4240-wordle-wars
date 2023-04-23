@@ -15,7 +15,7 @@ public abstract class User {
     };
 
     public void setScore(int score) {
-        this.score = score;
+        this.score += score;
     };
 
     public int getScore() {
