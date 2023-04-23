@@ -44,6 +44,8 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
 
         presenter = new SettingsPresenter(parent, stage);
 
+        presenter.musicEnable();
+
 
         Table table = new Table();
         table.setFillParent(true);
@@ -73,7 +75,6 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         toggleMusic.setTransform(true);
 
         toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth() / 2f, Gdx.graphics.getHeight()/2f);
-
 
         addActor(toggleMusic);
 
@@ -139,6 +140,7 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         mainMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                presenter.stopMusic();
                 presenter.changeScreensFunc(ScreenController.MENU);
             }
         });
@@ -156,6 +158,6 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
 
     @Override
     public boolean musicStatus() {
-        return presenter.musicStatus();
+        return presenter.getMusicPreferences();
     }
 }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.ScreenController;
-import com.wordle.royale.v2.view.screens.MenuScreen;
+
 
 public class MenuScreenPresenter {
     private ScreenController parent;
@@ -23,15 +23,27 @@ public class MenuScreenPresenter {
         parent.changeScreens(i);
 
     }
-
-    public void musicEnabled() {
-        if(parent.getPreferences().getMusic()){
-            music.play();
-        }
+    public boolean getMusicPreferences() {
+        return parent.getPreferences().getMusic();
     }
+
+
     public void addActor(Actor actor) {
         stage.addActor(actor);
     }
+
+
+    public void musicEnable() {
+        if(getMusicPreferences()) {
+            music.play();
+        } else {
+            music.stop();
+        }
+    }
+    public void stopMusic() {
+        music.stop();
+    }
+
     public interface changeScreens {
         void changeToTutorialScreen();
         void changeToGameScreen();
