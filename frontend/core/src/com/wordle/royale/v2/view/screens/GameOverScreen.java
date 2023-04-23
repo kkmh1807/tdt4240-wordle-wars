@@ -50,10 +50,10 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         font.getData().setScale(2f, 4f);
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         title.getData().setScale(.7f, 2f);
-        userScore = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"));
-        userName = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"));
-        userScore.getData().setScale(2f, 2f);
-        userName.getData().setScale(2f, 2f);
+        userScore = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        userName = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        userScore.getData().setScale(.5f, 1f);
+        userName.getData().setScale(.5f, 1f);
         userNameLayout = new GlyphLayout(userName, Player.getInstance().getName());
         userScoreLayout = new GlyphLayout(userScore, "Score: " + Player.getInstance().getScore());
 

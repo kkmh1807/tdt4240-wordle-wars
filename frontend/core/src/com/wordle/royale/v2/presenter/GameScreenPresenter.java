@@ -58,16 +58,6 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
         this.feedback = feedback;
     }
 
-    public boolean checkTimer(WordleTimer timer) {
-        if (timer.getInterval().equals("0:00")) {
-            timer.stop();
-            Player.getInstance().setScore(score);
-            screenController.changeScreens(ScreenController.GAMEOVER);
-            return true;
-        }
-        return false;
-    }
-
     public void getWord() {
         wordApi.getNewWord(new WordApiService.CallbackNewWord<Integer>() {
             @Override

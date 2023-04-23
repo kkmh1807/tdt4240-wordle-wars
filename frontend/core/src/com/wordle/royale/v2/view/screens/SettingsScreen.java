@@ -68,7 +68,7 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         toggleMusic.setScale(2f, 2f);
         toggleMusic.setTransform(true);
 
-        toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth() / 2f,
+        toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth(),
                 Gdx.graphics.getHeight() / 2f);
         stage.addActor(toggleMusic);
         toggleMusic.addListener(new ClickListener() {

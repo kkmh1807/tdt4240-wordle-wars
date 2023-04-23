@@ -95,10 +95,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore());
 
-        if (presenter != null && timer != null) {
-            presenter.checkTimer(timer);
-
-        }
         batch.begin();
 
         if (presenter.isTimeUp()) {

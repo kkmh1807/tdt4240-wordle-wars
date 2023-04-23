@@ -33,6 +33,8 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
     private BitmapFont title;
     private GlyphLayout layout;
     private BitmapFont font;
+    private GlyphLayout fontLayout;
+
     private HighScorePresenter presenter;
     private TextButton playAgain;
 
@@ -42,8 +44,9 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
     @Override
     public void show() {
-        font = new BitmapFont();
-        font.getData().setScale(2f, 4f);
+        font = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        font.getData().setScale(.8f, .8f);
+        fontLayout = new GlyphLayout(font, "");
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         title.getData().setScale(1f, 2f);
         layout = new GlyphLayout(title, "Top 5 Legends");
@@ -76,11 +79,13 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         title.draw(batch, "Top 10 Legends", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
 
         for (int i = 0; i < presenter.getHighScore().getHighscoreList().size(); i++) {
-            float xPos = Gdx.graphics.getWidth() / 2.5f;
-            float yPos = Gdx.graphics.getHeight() / 1.5f - (i * 75);
+
             String name = presenter.getHighScore().getHighscoreList().get(i).getUsername();
             Integer score = presenter.getHighScore().getHighscoreList().get(i).getScore();
             String text = i + 1 + ". " + name + " : " + score + " points";
+            fontLayout.setText(font, text);
+            float xPos = Gdx.graphics.getWidth() / 2f - fontLayout.width/2;
+            float yPos = Gdx.graphics.getHeight() / 2.5f - (i * 75);
             font.draw(batch, text, xPos, yPos);
         }
 
