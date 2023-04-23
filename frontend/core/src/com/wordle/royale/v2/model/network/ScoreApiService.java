@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.wordle.royale.v2.model.highscores;
 
 public class ScoreApiService {
-    private final String BASE_URL = "http://10.0.2.2:3000";
+    private final String BASE_URL = "http://10.212.25.104:8080";
 
     public interface CallbackPostScore<T> {
         void onSuccess(T highscores);

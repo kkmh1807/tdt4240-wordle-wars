@@ -95,11 +95,11 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (presenter != null) {
-            presenter.checkTimer(timer);
-
-        }
         batch.begin();
+
+        if(presenter.isTimeUp()){
+            presenter.changeScreens(ScreenController.MENU);
+        }
 
         stage.draw();
         feedback.draw(batch, getFeedbackFunc(), (Gdx.graphics.getWidth() / 2f) - layout.width / 2,
