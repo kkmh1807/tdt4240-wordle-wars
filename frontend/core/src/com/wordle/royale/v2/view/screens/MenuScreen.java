@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.MenuScreenPresenter;
@@ -51,34 +52,34 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         presenter = new MenuScreenPresenter(parent, stage);
 
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
-        title.getData().setScale(.7f, 2f);
+        title.getData().setScale(1.5f, 2f);
         layout = new GlyphLayout(title, "Wordle Wars");
 
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
+        viewport = new StretchViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
         startGameButton = new TextButton("Start Game", skin, "default");
-        startGameButton.setScale(1f, 2f);
+        startGameButton.setScale(2f,2f);
         startGameButton.setTransform(true);
-        startGameButton.setPosition(Gdx.graphics.getWidth() / 2f - startGameButton.getWidth() / 2f,
+        startGameButton.setPosition(Gdx.graphics.getWidth() / 2f - startGameButton.getWidth(),
                 Gdx.graphics.getHeight() / 2f + startGameButton.getHeight() * 2);
 
         tutorialButton = new TextButton("Tutorial", skin, "default");
 
         tutorialButton.pad(20f);
         tutorialButton.setTransform(true);
-        tutorialButton.setScale(1, 2f);
-        tutorialButton.setPosition(Gdx.graphics.getWidth() / 2f - tutorialButton.getWidth() / 2f,
+        tutorialButton.setScale(2f, 2f);
+        tutorialButton.setPosition(Gdx.graphics.getWidth() / 2f - tutorialButton.getWidth(),
                 Gdx.graphics.getHeight() / 2f);
 
         settingsButton = new TextButton("Settings", skin, "default");
 
         settingsButton.pad(20f);
         settingsButton.setTransform(true);
-        settingsButton.setScale(1, 2f);
-        settingsButton.setPosition(Gdx.graphics.getWidth() / 2f - settingsButton.getWidth() / 2f,
+        settingsButton.setScale(2f, 2f);
+        settingsButton.setPosition(Gdx.graphics.getWidth() / 2f - settingsButton.getWidth(),
                 Gdx.graphics.getHeight() / 2f - settingsButton.getHeight() * 2);
 
         // Remember to remove line 80 to 92, used for testing
@@ -86,14 +87,8 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
 
         highScoreButton.pad(20f);
         highScoreButton.setTransform(true);
-        highScoreButton.setScale(1, 2f);
-        highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth() / 2f,
-                Gdx.graphics.getHeight() / 2f - highScoreButton.getHeight() * 4);
-
-        highScoreButton.pad(20f);
-        highScoreButton.setTransform(true);
-        highScoreButton.setScale(1, 2f);
-        highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth() / 2f,
+        highScoreButton.setScale(2f, 2f);
+        highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth(),
                 Gdx.graphics.getHeight() / 2f - highScoreButton.getHeight() * 4);
 
         changeToGameScreen();

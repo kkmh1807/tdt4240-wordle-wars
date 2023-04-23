@@ -124,7 +124,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
                 score = (guessedWord.getGreen() * 10) + (guessedWord.getYellow() * 5);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
-                        setFeedback("     Correct!     \nHere is a new word");
+                        setFeedback("        Correct!\nHere is a new word");
                         Player.getInstance().setScore(50 + (25 * (textTileGrid.getActiveRowIndex())));
                     } else {
                         setFeedback("  No more tries  \nhere is a new word");

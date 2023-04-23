@@ -14,6 +14,12 @@ public class Player extends User {
         return  player;
     }
 
+    public void destroyUser() {
+        if (player != null) {
+            player = null;
+        }
+    }
+
     public Player setName(String name) {
         player.userName = name;
         return player;

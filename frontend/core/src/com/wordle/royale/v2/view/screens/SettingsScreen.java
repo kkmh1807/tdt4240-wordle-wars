@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.SettingsPresenter;
@@ -44,19 +45,15 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
 
         presenter = new SettingsPresenter(parent, stage);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
-
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
+        viewport = new StretchViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
         mainMenu = new TextButton("To main Menu", skin, "default");
-        mainMenu.setScale(1f, 2f);
+        mainMenu.setScale(2f, 2f);
         mainMenu.setTransform(true);
-        mainMenu.setPosition(Gdx.graphics.getWidth() / 2f - mainMenu.getWidth() / 2f, mainMenu.getHeight());
+        mainMenu.setPosition(Gdx.graphics.getWidth() / 2f - mainMenu.getWidth(), mainMenu.getHeight());
 
         changeScreens();
 
@@ -68,14 +65,21 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         } else {
             toggleMusic = new TextButton("Music is disabled", skin, "default");
         }
-        toggleMusic.setScale(1f, 2f);
+        toggleMusic.setScale(2f, 2f);
         toggleMusic.setTransform(true);
 
-        toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth() / 2f, Gdx.graphics.getHeight()/2f);
+        toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth() / 2f,
+                Gdx.graphics.getHeight() / 2f);
+        stage.addActor(toggleMusic);
+        toggleMusic.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                boolean musicEnabled = parent.getPreferences().getMusic();
+                parent.getPreferences().setMusic(!musicEnabled);
+            }
+        });
 
         addActor(toggleMusic);
-
-        toggleMusic();
 
     }
 
