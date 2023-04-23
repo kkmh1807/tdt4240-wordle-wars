@@ -1,5 +1,9 @@
 package com.wordle.royale.v2.presenter;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.Keyboard;
 import com.wordle.royale.v2.model.Player;
@@ -14,6 +18,8 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     private Keyboard keyboard;
     private TextTileGrid textTileGrid;
     private String feedback;
+
+
     private WordApiService api;
     private int word_id;
 
@@ -46,8 +52,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
         if (timer.getInterval().equals("0:00")) {
             timer.stop();
             Player.getInstance().setScore(score);
-            // music.stop();
-            screenController.changeScreens(ScreenController.MENU);
+            screenController.changeScreens(ScreenController.GAMEOVER);
             return true;
         }
         return false;
@@ -129,10 +134,6 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
         });
     }
 
-    public void musicControls() {
-
-    }
-
     public void resetGame() {
         for (int i = 0; i < 6; i++) {
             this.textTileGrid.setActiveRowIndex(i);
@@ -160,7 +161,6 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     }
 
     public interface gameScreenView {
-        void handleKeyBoardInput(String s);
 
         String getFeedbackFunc();
     }
