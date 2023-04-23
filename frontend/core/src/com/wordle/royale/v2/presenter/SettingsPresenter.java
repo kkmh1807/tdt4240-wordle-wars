@@ -1,5 +1,7 @@
 package com.wordle.royale.v2.presenter;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.AppPreferences;
@@ -16,14 +18,17 @@ public class SettingsPresenter extends AbstractPresenter{
         screenController.getPreferences().setMusic(!musicEnabled);
     }
 
-    public boolean musicStatus() {
+    public boolean getMusicPreferences() {
         return screenController.getPreferences().getMusic();
     }
+
+
 
     public interface SettingsScreen {
         void addActor(Actor actor);
         void changeScreens();
         void toggleMusic();
         boolean musicStatus();
+
     }
 }

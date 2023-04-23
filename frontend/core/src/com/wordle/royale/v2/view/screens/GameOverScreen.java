@@ -1,9 +1,11 @@
-package com.wordle.royale.screens;
+package com.wordle.royale.v2.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,8 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wordle.royale.v2.model.other.ScreenController;
+import com.wordle.royale.v2.presenter.GameOverPresenter;
+import com.wordle.royale.v2.presenter.HighScorePresenter;
 
-public class HighScoreScreen implements Screen {
+public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
 
     private SpriteBatch batch;
     private Stage stage;
@@ -22,56 +27,47 @@ public class HighScoreScreen implements Screen {
     protected Skin skin;
     private final float GAME_WORLD_WIDTH = Gdx.graphics.getWidth();
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
-
     private TextButton backToMenu;
     private TextButton playAgain;
-
     private ScreenController parent;
-    private HighScore highScore;
+    private BitmapFont title;
+    private GlyphLayout layout;
+    private BitmapFont font;
+    private HighScorePresenter presenter;
 
-    public HighScoreScreen(ScreenController parent) {
+    public GameOverScreen(ScreenController parent) {
         this.parent = parent;
     }
 
     @Override
     public void show() {
+        font = new BitmapFont();
+        font.getData().setScale(2f, 4f);
+        title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        title.getData().setScale(.7f, 2f);
+        layout = new GlyphLayout(title, "Game over");
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-
+        presenter = new HighScorePresenter(parent,stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
-
         backToMenu = new TextButton("To main menu", skin, "default");
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
         backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
-
-        playAgain = new TextButton("To main menu", skin, "default");
+        playAgain = new TextButton("Play again", skin, "default");
         playAgain.setScale(1f, 2f);
         playAgain.setTransform(true);
         playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
-                Gdx.graphics.getHeight() / 2f - playAgain.getHeight() * 2);
-
-        playAgain.addListener((new ClickListener() {
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.GAME);
-            }
-        }));
-
-        backToMenu.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                parent.changeScreens(ScreenController.MENU);
-            }
-        });
-
+                Gdx.graphics.getHeight() / 3f - playAgain.getHeight() * 2f);
+        setupChangeToMenu();
+        changeToGameScreen();
         Gdx.input.setInputProcessor((stage));
         stage.addActor(backToMenu);
+        stage.addActor(playAgain);
 
     }
 
@@ -79,21 +75,10 @@ public class HighScoreScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        highScore = new HighScore();
-        // camera.update();
 
         batch.begin();
-        highScore.render(batch);
-        // batch.setProjectionMatrix(camera.combined);
-        /*
-         * Table table = new Table();
-         * table.add(label1);
-         * table.add(name1).width(100);
-         * table.row();
-         * table.add(addressLabel1);
-         * table.add(addressText1).width(100);
-         * 
-         */
+        title.draw(batch, "Game over", Gdx.graphics.getWidth()/2f - (layout.width/2), Gdx.graphics.getHeight()- layout.height*2);
+
         stage.draw();
 
         batch.end();
@@ -123,8 +108,28 @@ public class HighScoreScreen implements Screen {
 
     @Override
     public void dispose() {
-
         batch.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void setupChangeToMenu() {
+        backToMenu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreens(ScreenController.MENU);
+            }
+        });
+    }
+
+    @Override
+    public void changeToGameScreen() {
+        playAgain.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.changeScreens(ScreenController.GAME);
+            }
+        });
+
     }
 }

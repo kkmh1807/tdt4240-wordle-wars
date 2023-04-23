@@ -24,7 +24,7 @@ import com.wordle.royale.v2.model.utils.WordleTimer;
 public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
 
     private SpriteBatch batch;
-    private Music music;
+
     private Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
@@ -72,7 +72,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 timer.stop();
-                music.stop();
                 timer = null;
                 Player.getInstance().destroyUser();
                 presenter.changeScreens(ScreenController.MENU);
@@ -88,12 +87,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         viewport.apply();
         Gdx.input.setInputProcessor(stage);
 
-        if (parent.getPreferences().getMusic()) {
-            music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-            music.setLooping(true);
-            music.play();
-        }
-
     }
 
     @Override
@@ -102,11 +95,15 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore());
 
-        if (presenter != null) {
+        if (presenter != null && timer != null) {
             presenter.checkTimer(timer);
 
         }
         batch.begin();
+
+        if (presenter.isTimeUp()) {
+            presenter.changeScreens(ScreenController.MENU);
+        }
 
         stage.draw();
         feedback.draw(batch, getFeedbackFunc(), (Gdx.graphics.getWidth() / 2f) - layout.width / 2,
@@ -147,11 +144,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
     public void dispose() {
         batch.dispose();
         stage.dispose();
-    }
-
-    @Override
-    public void handleKeyBoardInput(String s) {
-        presenter.handleKeyBoardInput(s);
     }
 
     @Override

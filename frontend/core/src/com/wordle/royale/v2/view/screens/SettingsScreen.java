@@ -60,14 +60,14 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         Gdx.input.setInputProcessor((stage));
         addActor(mainMenu);
 
-        if (parent.getPreferences().getMusic()) {
+        if (presenter.getMusicPreferences()) {
             toggleMusic = new TextButton("Music is enabled", skin, "default");
         } else {
             toggleMusic = new TextButton("Music is disabled", skin, "default");
         }
         toggleMusic.setScale(2f, 2f);
         toggleMusic.setTransform(true);
-        toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth(), Gdx.graphics.getHeight()/2f);
+        toggleMusic.setPosition(Gdx.graphics.getWidth() / 2f - toggleMusic.getWidth() / 2f, Gdx.graphics.getHeight()/2f);
         stage.addActor(toggleMusic);
         toggleMusic.addListener(new ClickListener() {
             @Override
@@ -78,7 +78,9 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         });
 
 
+        addActor(toggleMusic);
 
+        toggleMusic();
 
     }
 
@@ -157,6 +159,6 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
 
     @Override
     public boolean musicStatus() {
-        return presenter.musicStatus();
+        return presenter.getMusicPreferences();
     }
 }
