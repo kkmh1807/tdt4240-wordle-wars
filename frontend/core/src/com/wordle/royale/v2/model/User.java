@@ -10,7 +10,6 @@ public abstract class User {
         this.score = 0;
     }
 
-
     public String getName() {
         return userName;
     };

@@ -5,22 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.view.screens.MenuScreen;
 
-public class MenuScreenPresenter {
-    private ScreenController parent;
-    private Stage stage;
+public class MenuScreenPresenter extends AbstractPresenter{
 
-    public MenuScreenPresenter(ScreenController parent, Stage stage) {
-        this.parent = parent;
-        this.stage = stage;
+    public MenuScreenPresenter(ScreenController screenController, Stage stage) {
+        super(stage, screenController);
     }
 
-    public void changeScreensFunc(int i) {
-        parent.changeScreens(i);
-
-    }
-    public void addActor(Actor actor) {
-        stage.addActor(actor);
-    }
     public interface changeScreens {
         void changeToTutorialScreen();
         void changeToGameScreen();

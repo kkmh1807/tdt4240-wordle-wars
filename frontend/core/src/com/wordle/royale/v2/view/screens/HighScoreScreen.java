@@ -47,15 +47,17 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-        presenter = new HighScorePresenter(parent);
+        presenter = new HighScorePresenter(parent, stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
+
         backToMenu = new TextButton("To main menu", skin, "default");
         backToMenu.setScale(1f, 2f);
         backToMenu.setTransform(true);
         backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
+
         playAgain = new TextButton("To main menu", skin, "default");
         playAgain.setScale(1f, 2f);
         playAgain.setTransform(true);
@@ -65,7 +67,6 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         setupChangeToMenu();
         Gdx.input.setInputProcessor((stage));
         stage.addActor(backToMenu);
-
     }
 
     @Override
@@ -116,7 +117,7 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         backToMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.MENU);
+                presenter.changeScreens(ScreenController.MENU);
             }
         });
     }
@@ -127,9 +128,8 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.GAME);
+                presenter.changeScreens(ScreenController.GAME);
             }
         }));
-
     }
 }

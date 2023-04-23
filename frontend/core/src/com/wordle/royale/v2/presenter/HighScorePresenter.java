@@ -1,19 +1,13 @@
 package com.wordle.royale.v2.presenter;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.ScreenController;
 
-public class HighScorePresenter {
-    private ScreenController parent;
+public class HighScorePresenter extends AbstractPresenter{
 
-
-    public HighScorePresenter(ScreenController parent) {
-        this.parent = parent;
+    public HighScorePresenter(ScreenController screenController, Stage stage) {
+        super(stage, screenController);
     }
-
-    public void changeScreensFunc(int i) {
-        parent.changeScreens(i);
-    }
-
 
     public interface changeScreens {
         void setupChangeToMenu();

@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.MenuScreenPresenter;
 
@@ -37,7 +36,6 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
     private BitmapFont title;
     private GlyphLayout layout;
 
-
     public MenuScreen(ScreenController parent) {
         this.parent = parent;
     }
@@ -47,12 +45,12 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
+        presenter = new MenuScreenPresenter(parent, stage);
 
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         title.getData().setScale(.7f, 2f);
         layout = new GlyphLayout(title, "Wordle Wars");
 
-        presenter = new MenuScreenPresenter(parent, stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
@@ -89,6 +87,12 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth() / 2f,
                 Gdx.graphics.getHeight() / 2f - highScoreButton.getHeight() * 4);
 
+        highScoreButton.pad(20f);
+        highScoreButton.setTransform(true);
+        highScoreButton.setScale(1, 2f);
+        highScoreButton.setPosition(Gdx.graphics.getWidth() / 2f - highScoreButton.getWidth() / 2f,
+                Gdx.graphics.getHeight() / 2f - highScoreButton.getHeight() * 4);
+
         changeToGameScreen();
         changeToHighscoreScreen();
         changeToSettings();
@@ -110,7 +114,8 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
 
         batch.begin();
 
-        title.draw(batch, "Wordle Wars", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
+        title.draw(batch, "Wordle Wars", Gdx.graphics.getWidth() / 2f - layout.width / 2,
+                Gdx.graphics.getHeight() - layout.height * 2);
 
         stage.draw();
 
@@ -151,7 +156,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         tutorialButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.TUTORIAL);
+                presenter.changeScreens(ScreenController.TUTORIAL);
             }
         });
     }
@@ -161,7 +166,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         startGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.GAME);
+                presenter.changeScreens(ScreenController.LOBBY);
             }
         });
 
@@ -172,7 +177,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         highScoreButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.HIGHSCORES);
+                presenter.changeScreens(ScreenController.HIGHSCORES);
             }
         });
     }
@@ -182,8 +187,7 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.SETTINGS);
-
+                presenter.changeScreens(ScreenController.SETTINGS);
             }
 
         });

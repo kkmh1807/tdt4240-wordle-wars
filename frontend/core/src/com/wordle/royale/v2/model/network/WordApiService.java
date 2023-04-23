@@ -9,7 +9,7 @@ import com.wordle.royale.v2.model.letter;
 import com.wordle.royale.v2.model.guessedWord;
 
 public class WordApiService {
-    private final String BASE_URL = "http://10.212.25.104:8080";
+    private final String BASE_URL = "localhost:3000";
 
     public interface CallbackNewWord<T> {
         void onSuccess(T result);
