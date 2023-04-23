@@ -1,25 +1,20 @@
 package com.wordle.royale.v2.presenter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.network.ScoreApiService;
 import com.wordle.royale.v2.model.other.HighScore;
 import com.wordle.royale.v2.model.other.ScreenController;
 
 
-public class HighScorePresenter {
+public class HighScorePresenter extends AbstractPresenter{
     private ScoreApiService ScoreAPI;
-    private ScreenController parent;
     HighScore highScore;
 
 
-    public HighScore getHighScore() {
-        return highScore;
-    }
 
-    public HighScorePresenter(ScreenController parent) {
-        this.parent = parent;
+
+    public HighScorePresenter(ScreenController screenController, Stage stage) {
+        super(stage, screenController);
         highScore = new HighScore();
 
         ScoreAPI = new ScoreApiService();
@@ -38,11 +33,12 @@ public class HighScorePresenter {
         });
     }
 
-    public void changeScreensFunc(int i) {
-        parent.changeScreens(i);
+    public HighScore getHighScore() {
+        return highScore;
     }
 
     public interface changeScreens {
         void setupChangeToMenu();
+        void setupChangeToGame();
     }
 }

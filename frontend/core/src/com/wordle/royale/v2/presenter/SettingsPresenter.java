@@ -7,33 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.AppPreferences;
 import com.wordle.royale.v2.model.other.ScreenController;
 
-public class SettingsPresenter {
-    ScreenController parent;
-    Stage stage;
+public class SettingsPresenter extends AbstractPresenter{
 
-    public SettingsPresenter(ScreenController parent, Stage stage) {
-        this.parent = parent;
-        this.stage = stage;
-    }
-
-
-    public void addActor(Actor actor) {
-        this.stage.addActor(actor);
-    }
-
-
-    public void changeScreensFunc(int i) {
-        parent.changeScreens(i);
+    public SettingsPresenter(ScreenController screenController, Stage stage) {
+        super(stage, screenController);
     }
 
     public void toggleMusic() {
-        boolean musicEnabled = parent.getPreferences().getMusic();
-        parent.getPreferences().setMusic(!musicEnabled);
+        boolean musicEnabled = screenController.getPreferences().getMusic();
+        screenController.getPreferences().setMusic(!musicEnabled);
     }
 
     public boolean getMusicPreferences() {
-        return parent.getPreferences().getMusic();
+        return screenController.getPreferences().getMusic();
     }
+
 
 
     public interface SettingsScreen {

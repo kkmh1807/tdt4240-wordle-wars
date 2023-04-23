@@ -9,15 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
+import com.wordle.royale.v2.presenter.IKeyboard;
 
 public class KeyboardButton extends Actor implements GameScreenPresenter.keyboardButton{
 
     private String character;
     private TextButton button;
     private Skin skin;
-    private GameScreenPresenter presenter;
+    private IKeyboard presenter;
 
-    public KeyboardButton(final GameScreenPresenter presenter, final String character, float x, float y, float width, float height)  {
+    public KeyboardButton(final IKeyboard presenter, final String character, float x, float y, float width, float height)  {
         this.presenter = presenter;
         this.character = character;
         this.skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
@@ -34,7 +35,6 @@ public class KeyboardButton extends Actor implements GameScreenPresenter.keyboar
         setWidth(this.button.getWidth());
         setBounds(getX(), getY(), getWidth(), getHeight());
         this.button.setScale(1, 1);
-
         handleKeyBoardInput();
     }
 

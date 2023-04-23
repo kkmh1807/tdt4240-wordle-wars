@@ -8,7 +8,7 @@ public class WordleTimer {
     private static WordleTimer instance = null;
 
     private WordleTimer() {
-        interval = 5;
+        interval = 5*60;
     }
 
 

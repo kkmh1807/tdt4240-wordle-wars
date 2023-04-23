@@ -45,11 +45,11 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         font.getData().setScale(2f, 4f);
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         title.getData().setScale(.7f, 2f);
-        layout = new GlyphLayout(title, "Top 5 Legends");
+        layout = new GlyphLayout(title, "Game over");
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         stage = new Stage();
-        presenter = new HighScorePresenter(parent);
+        presenter = new HighScorePresenter(parent,stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
         viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
@@ -77,7 +77,7 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        title.draw(batch, "Game over", Gdx.graphics.getWidth()/2f - layout.width/2, Gdx.graphics.getHeight()- layout.height*2);
+        title.draw(batch, "Game over", Gdx.graphics.getWidth()/2f - (layout.width/2), Gdx.graphics.getHeight()- layout.height*2);
 
         stage.draw();
 
@@ -117,7 +117,7 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         backToMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.MENU);
+                presenter.changeScreens(ScreenController.MENU);
             }
         });
     }
@@ -127,7 +127,7 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         playAgain.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.GAME);
+                presenter.changeScreens(ScreenController.GAME);
             }
         });
 

@@ -6,22 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.ScreenController;
 
 
-public class MenuScreenPresenter {
-    private ScreenController parent;
-    private Stage stage;
+public class MenuScreenPresenter extends AbstractPresenter{
 
-    public MenuScreenPresenter(ScreenController parent, Stage stage) {
-        this.parent = parent;
-        this.stage = stage;
-
+    public MenuScreenPresenter(ScreenController screenController, Stage stage) {
+        super(stage, screenController);
     }
 
-    public void changeScreensFunc(int i) {
-        parent.changeScreens(i);
 
-    }
     public boolean getMusicPreferences() {
-        return parent.getPreferences().getMusic();
+        return screenController.getPreferences().getMusic();
     }
 
 
@@ -30,11 +23,13 @@ public class MenuScreenPresenter {
     }
 
     public void startMusicOn() {
-        parent.startMusic();
+        screenController.startMusic();
     }
     public void stopMusic() {
-        parent.stopMusic();
+        screenController.stopMusic();
     }
+
+
 
 
 
