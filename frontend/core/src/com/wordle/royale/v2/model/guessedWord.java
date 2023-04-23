@@ -40,9 +40,12 @@ public class guessedWord {
     public int getYellow() {
         int yellow = 0;
         for (int i = 0; i < guessLetters.size(); i++) {
-
-            int status = guessLetters.get(i).getStatus();
-            yellow += status;
+            if (guessLetters.get(i).getPlacement() == 1) {
+                continue;
+            }
+            else {
+                yellow += guessLetters.get(i).getStatus();
+            }
         }
         return yellow;
     }
@@ -50,8 +53,7 @@ public class guessedWord {
     public int getGreen(){
         int green = 0;
         for (int i = 0; i < guessLetters.size(); i++) {
-            int placement = guessLetters.get(i).getPlacement();
-            green += placement;
+            green += guessLetters.get(i).getPlacement();;
         }
         return green;
     }

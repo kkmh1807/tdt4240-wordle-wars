@@ -16,14 +16,12 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     private String feedback;
     private WordApiService api;
     private int word_id;
-    Player user;
 
     private int score;
 
     public GameScreenPresenter(ScreenController screenController, Stage stage) {
         super(stage, screenController);
         score = 0;
-        user = Player.getInstance();
         this.api = new WordApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
@@ -47,7 +45,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
     public boolean checkTimer(WordleTimer timer) {
         if (timer.getInterval().equals("0:00")) {
             timer.stop();
-            user.setScore(score);
+            Player.getInstance().setScore(score);
             // music.stop();
             screenController.changeScreens(ScreenController.MENU);
             return true;
@@ -108,19 +106,21 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard 
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
-                score = (guessedWord.getGreen()*50) + (guessedWord.getYellow()*25);
+                score = (guessedWord.getGreen()*10) + (guessedWord.getYellow()*5);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
                         setFeedback("     Correct!     \nHere is a new word");
-                        user.setScore(50+(25*(6-textTileGrid.getActiveRowIndex())));
+                        Player.getInstance().setScore(50+(25*(textTileGrid.getActiveRowIndex())));
                     } else {
                         setFeedback("  No more tries  \nhere is a new word");
-                        user.setScore(score);
+                        Player.getInstance().setScore(score);
                     }
                     resetGame();
                 }
                 textTileGrid.nextRow();
+                System.out.println(Player.getInstance().getScore());
             }
+
 
             @Override
             public void onFailure(Throwable t) {
