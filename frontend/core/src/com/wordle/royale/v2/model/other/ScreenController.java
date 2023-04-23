@@ -2,6 +2,9 @@
 package com.wordle.royale.v2.model.other;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.wordle.royale.v2.view.screens.GameOverScreen;
 import com.wordle.royale.v2.view.screens.GameScreen;
 import com.wordle.royale.v2.view.screens.HighScoreScreen;
 import com.wordle.royale.v2.view.screens.LobbyScreen;
@@ -16,13 +19,16 @@ public class ScreenController extends Game {
     private SettingsScreen settings;
     private HighScoreScreen highScore;
     private TutorialScreen tutorial;
+    private GameOverScreen gameOver;
+    private Music music;
     private LobbyScreen lobby;
     public final static int MENU = 0;
     public final static int GAME = 1;
     public final static int SETTINGS = 2;
     public final static int TUTORIAL = 3;
     public final static int HIGHSCORES = 4;
-    public final static int LOBBY = 5;
+    public final static int GAMEOVER = 5;
+    public final static int LOBBY = 6;
     public final static float GAME_WORLD_WIDTH = 1280;
     public final static float GAME_WORLD_HEIGHT = 720;
 
@@ -33,7 +39,11 @@ public class ScreenController extends Game {
         preferences = new AppPreferences();
         menu = new MenuScreen(this);
         setScreen(menu);
+        music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
+        music.setLooping(true);
+
     }
+
 
     public void changeScreens(int screen) {
         switch (screen) {
@@ -67,6 +77,11 @@ public class ScreenController extends Game {
                 this.setScreen(highScore);
                 break;
 
+            case GAMEOVER:
+                if (gameOver == null)
+                    gameOver = new GameOverScreen(this); // added (this)
+                this.setScreen(gameOver);
+                break;
             case LOBBY:
                 if (lobby == null)
                     lobby = new LobbyScreen(this); // added (this)
@@ -78,6 +93,23 @@ public class ScreenController extends Game {
 
     public AppPreferences getPreferences() {
         return preferences;
+    }
+    public void stopMusic() {
+        if(music != null) {
+            music.stop();
+        }
+
+    }
+
+    public void startMusic() {
+
+        if(music != null) {
+            if(!music.isPlaying()) {
+                music.play();
+            }
+        }
+
+
     }
 
 }

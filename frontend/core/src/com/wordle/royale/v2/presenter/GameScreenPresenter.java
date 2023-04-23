@@ -1,10 +1,14 @@
 package com.wordle.royale.v2.presenter;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.Keyboard;
 import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.guessedWord;
-import com.wordle.royale.v2.model.highscores;
+import com.wordle.royale.v2.model.other.HighScore;
 import com.wordle.royale.v2.model.network.ScoreApiService;
 import com.wordle.royale.v2.model.network.WordApiService;
 import com.wordle.royale.v2.model.other.ScreenController;
@@ -52,6 +56,16 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
 
     private void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public boolean checkTimer(WordleTimer timer) {
+        if (timer.getInterval().equals("0:00")) {
+            timer.stop();
+            Player.getInstance().setScore(score);
+            screenController.changeScreens(ScreenController.GAMEOVER);
+            return true;
+        }
+        return false;
     }
 
     public void getWord() {
@@ -107,11 +121,11 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
-                score = (guessedWord.getGreen()*10) + (guessedWord.getYellow()*5);
+                score = (guessedWord.getGreen() * 10) + (guessedWord.getYellow() * 5);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
                         setFeedback("     Correct!     \nHere is a new word");
-                        Player.getInstance().setScore(50+(25*(textTileGrid.getActiveRowIndex())));
+                        Player.getInstance().setScore(50 + (25 * (textTileGrid.getActiveRowIndex())));
                     } else {
                         setFeedback("  No more tries  \nhere is a new word");
                         Player.getInstance().setScore(score);
@@ -122,16 +136,11 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
                 System.out.println(Player.getInstance().getScore());
             }
 
-
             @Override
             public void onFailure(Throwable t) {
                 setFeedback("\nWord not in list");
             }
         });
-    }
-
-    public void musicControls() {
-
     }
 
     public void resetGame() {
@@ -155,7 +164,6 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
         }
     }
 
-
     public String getFeedback() {
         return feedback;
     }
@@ -164,21 +172,21 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
     public void timeUp(Boolean timeUp) {
         this.timeUp = timeUp;
         Player.getInstance().setScore(score);
-        scoreApi.submitScore(Player.getInstance().getName(), Player.getInstance().getScore(), new ScoreApiService.CallbackPostScore<highscores>() {
-            @Override
-            public void onSuccess(highscores highscores) {
-                System.out.println("Score Submitted");
-            }
+        scoreApi.submitScore(Player.getInstance().getName(), Player.getInstance().getScore(),
+                new ScoreApiService.CallbackPostScore<HighScore>() {
+                    @Override
+                    public void onSuccess(HighScore highscores) {
+                        System.out.println("Score Submitted");
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println("Network error");
-            }
-        });
+                    @Override
+                    public void onFailure(Throwable t) {
+                        System.out.println("Network error");
+                    }
+                });
     }
 
     public interface gameScreenView {
-        void handleKeyBoardInput(String s);
 
         String getFeedbackFunc();
     }

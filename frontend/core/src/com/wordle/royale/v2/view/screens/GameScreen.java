@@ -24,7 +24,7 @@ import com.wordle.royale.v2.model.utils.WordleTimer;
 public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
 
     private SpriteBatch batch;
-    private Music music;
+
     private Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
@@ -67,7 +67,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 timer.stop();
-                music.stop();
                 timer = null;
                 presenter.changeScreens(ScreenController.MENU);
 
@@ -82,12 +81,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         viewport.apply();
         Gdx.input.setInputProcessor(stage);
 
-        if (parent.getPreferences().getMusic()) {
-            music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-            music.setLooping(true);
-            music.play();
-        }
-
     }
 
     @Override
@@ -95,9 +88,13 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if (presenter != null && timer != null) {
+            presenter.checkTimer(timer);
+
+        }
         batch.begin();
 
-        if(presenter.isTimeUp()){
+        if (presenter.isTimeUp()) {
             presenter.changeScreens(ScreenController.MENU);
         }
 
@@ -138,11 +135,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
     public void dispose() {
         batch.dispose();
         stage.dispose();
-    }
-
-    @Override
-    public void handleKeyBoardInput(String s) {
-        presenter.handleKeyBoardInput(s);
     }
 
     @Override
