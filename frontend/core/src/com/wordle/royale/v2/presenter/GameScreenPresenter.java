@@ -17,16 +17,13 @@ import com.wordle.royale.v2.view.WordRow;
 
 public class GameScreenPresenter {
 
-    private WordRow wordRow;
     private Keyboard keyboard;
     private ScreenController parentScreen;
-    private GameScreen gameScreen;
     private TextTileGrid textTileGrid;
     private Stage stage;
 
     private String feedback;
 
-    private TextButton exitButton;
 
     private WordApiService api;
     private int word_id;
@@ -163,7 +160,6 @@ public class GameScreenPresenter {
     }
 
     public interface gameScreenView {
-        void handleKeyBoardInput(String s);
         String getFeedbackFunc();
     }
 

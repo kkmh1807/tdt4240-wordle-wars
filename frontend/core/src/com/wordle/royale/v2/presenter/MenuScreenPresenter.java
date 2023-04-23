@@ -1,7 +1,6 @@
 package com.wordle.royale.v2.presenter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.wordle.royale.v2.model.other.ScreenController;
@@ -10,13 +9,11 @@ import com.wordle.royale.v2.model.other.ScreenController;
 public class MenuScreenPresenter {
     private ScreenController parent;
     private Stage stage;
-    private Music music;
 
     public MenuScreenPresenter(ScreenController parent, Stage stage) {
         this.parent = parent;
         this.stage = stage;
-        music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-        music.setLooping(true);
+
     }
 
     public void changeScreensFunc(int i) {
@@ -32,17 +29,14 @@ public class MenuScreenPresenter {
         stage.addActor(actor);
     }
 
-
-    public void musicEnable() {
-        if(getMusicPreferences()) {
-            music.play();
-        } else {
-            music.stop();
-        }
+    public void startMusicOn() {
+        parent.startMusic();
     }
     public void stopMusic() {
-        music.stop();
+        parent.stopMusic();
     }
+
+
 
     public interface changeScreens {
         void changeToTutorialScreen();

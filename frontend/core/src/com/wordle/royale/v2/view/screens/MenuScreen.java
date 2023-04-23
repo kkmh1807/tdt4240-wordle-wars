@@ -102,8 +102,12 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         addActor(startGameButton);
         addActor(tutorialButton);
         addActor(settingsButton);
-
-        presenter.musicEnable();
+        presenter.startMusicOn();
+        if(presenter.getMusicPreferences()) {
+            presenter.startMusicOn();
+        } else {
+            presenter.stopMusic();
+        }
     }
 
     @Override
@@ -186,7 +190,6 @@ public class MenuScreen implements Screen, MenuScreenPresenter.changeScreens {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.stopMusic();
                 presenter.changeScreensFunc(ScreenController.SETTINGS);
 
             }

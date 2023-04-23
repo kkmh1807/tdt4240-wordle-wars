@@ -44,9 +44,6 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
 
         presenter = new SettingsPresenter(parent, stage);
 
-        presenter.musicEnable();
-
-
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
@@ -140,7 +137,6 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         mainMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.stopMusic();
                 presenter.changeScreensFunc(ScreenController.MENU);
             }
         });

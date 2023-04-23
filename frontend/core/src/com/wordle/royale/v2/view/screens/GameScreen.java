@@ -133,11 +133,6 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
     }
 
     @Override
-    public void handleKeyBoardInput(String s) {
-        presenter.handleKeyBoardInput(s);
-    }
-
-    @Override
     public String getFeedbackFunc() {
         timerLayout = new GlyphLayout(timerText, timer.getInterval());
         layout.setText(feedback, presenter.getFeedback());
