@@ -36,4 +36,25 @@ public class guessedWord {
             System.out.println("Letter: "+letter+" Placement: "+ placement + " Word includes letter: " +status);
         }
     }
+
+    public int getYellow() {
+        int yellow = 0;
+        for (int i = 0; i < guessLetters.size(); i++) {
+            if (guessLetters.get(i).getPlacement() == 1) {
+                continue;
+            }
+            else {
+                yellow += guessLetters.get(i).getStatus();
+            }
+        }
+        return yellow;
+    }
+
+    public int getGreen(){
+        int green = 0;
+        for (int i = 0; i < guessLetters.size(); i++) {
+            green += guessLetters.get(i).getPlacement();;
+        }
+        return green;
+    }
 }

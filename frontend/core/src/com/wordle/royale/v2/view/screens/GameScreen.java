@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
 
 import com.wordle.royale.v2.model.utils.WordleTimer;
 
-public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
+public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
 
     private SpriteBatch batch;
     private Music music;
@@ -36,13 +36,15 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
 
     private BitmapFont feedback;
     private GlyphLayout layout;
-    private  GlyphLayout timerLayout;
+    private GlyphLayout timerLayout;
     private GameScreenPresenter presenter;
 
     private TextButton exitButton;
+
     public GameScreen(ScreenController parent) {
         this.parent = parent;
     }
+
     @Override
     public void show() {
         stage = new Stage();
@@ -50,7 +52,7 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         feedback = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"));
-        feedback.getData().setScale(2f,2f);
+        feedback.getData().setScale(2f, 2f);
         layout = new GlyphLayout(feedback, " ");
         timer = WordleTimer.getInstance();
         timer.start();
@@ -60,14 +62,15 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
         exitButton.setWidth(125);
         exitButton.setHeight(100);
         exitButton.setPosition(25,
-                Gdx.graphics.getHeight() - exitButton.getHeight()-40);
-        exitButton.addListener(new ClickListener(){
+                Gdx.graphics.getHeight() - exitButton.getHeight() - 40);
+        exitButton.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 timer.stop();
                 music.stop();
                 timer = null;
-                presenter.changeToMainScreen();
+                presenter.changeScreens(ScreenController.MENU);
+
             }
         });
         presenter.addActor(exitButton);
@@ -79,32 +82,30 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView{
         viewport.apply();
         Gdx.input.setInputProcessor(stage);
 
-          if (parent.getPreferences().getMusic()) {
+        if (parent.getPreferences().getMusic()) {
             music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
             music.setLooping(true);
             music.play();
-          }
+        }
 
     }
-
-
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(presenter != null) {
+        if (presenter != null) {
             presenter.checkTimer(timer);
 
         }
         batch.begin();
 
         stage.draw();
-        feedback.draw(batch, getFeedbackFunc(),(Gdx.graphics.getWidth() / 2f) - layout.width/2,
+        feedback.draw(batch, getFeedbackFunc(), (Gdx.graphics.getWidth() / 2f) - layout.width / 2,
                 Gdx.graphics.getHeight() - layout.height);
         timerText.getData().setScale(1.5f, 2.5f);
-        timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2f) - timerLayout.width/2,
+        timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2f) - timerLayout.width / 2,
                 Gdx.graphics.getHeight() - timerLayout.height);
         stage.act();
 

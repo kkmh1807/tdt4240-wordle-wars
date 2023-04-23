@@ -10,13 +10,12 @@ public abstract class User {
         this.score = 0;
     }
 
-
     public String getName() {
         return userName;
     };
 
     public void setScore(int score) {
-        this.score = score;
+        this.score += score;
     };
 
     public int getScore() {

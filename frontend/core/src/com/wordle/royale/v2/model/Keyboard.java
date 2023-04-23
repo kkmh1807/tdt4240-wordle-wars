@@ -3,15 +3,16 @@ package com.wordle.royale.v2.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.wordle.royale.v2.presenter.GameScreenPresenter;
+import com.wordle.royale.v2.presenter.IKeyboard;
 import com.wordle.royale.v2.view.KeyboardButton;
 
 public class Keyboard extends Group{
 
     private char[] characters;
-    private GameScreenPresenter presenter;
+    private IKeyboard presenter;
 
 
-    public Keyboard(GameScreenPresenter presenter) {
+    public Keyboard(IKeyboard presenter) {
         this.presenter = presenter;
         this.characters = "QWERTYUIOPASDFGHJKLZXCVBNM".toCharArray();
         initializeKeyboardButtons();

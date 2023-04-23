@@ -60,7 +60,6 @@ public class TutorialScreen implements Screen, TutorialPresenter.TutorialScreen 
 
         changeScreens();
         Gdx.input.setInputProcessor((stage));
-
         addActor(backToMenu);
 
     }
@@ -134,7 +133,7 @@ public class TutorialScreen implements Screen, TutorialPresenter.TutorialScreen 
         backToMenu.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                presenter.changeScreensFunc(ScreenController.MENU);
+                presenter.changeScreens(ScreenController.MENU);
             }
         });
     }

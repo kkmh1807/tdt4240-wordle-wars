@@ -143,7 +143,7 @@ public class SettingsScreen implements Screen, SettingsPresenter.SettingsScreen 
         mainMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreensFunc(ScreenController.MENU);
+                presenter.changeScreens(ScreenController.MENU);
             }
         });
     }

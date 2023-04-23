@@ -1,49 +1,41 @@
 package com.wordle.royale.v2.presenter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.wordle.royale.v2.model.Keyboard;
+import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.guessedWord;
 import com.wordle.royale.v2.model.network.WordApiService;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.model.utils.WordleTimer;
-import com.wordle.royale.v2.view.screens.GameScreen;
 import com.wordle.royale.v2.view.TextTileGrid;
-import com.wordle.royale.v2.view.WordRow;
 
-public class GameScreenPresenter {
+public class GameScreenPresenter extends AbstractPresenter implements IKeyboard {
 
-    private WordRow wordRow;
     private Keyboard keyboard;
-    private ScreenController parentScreen;
-    private GameScreen gameScreen;
     private TextTileGrid textTileGrid;
-    private Stage stage;
-
     private String feedback;
-
-    private TextButton exitButton;
-
     private WordApiService api;
     private int word_id;
 
-    public GameScreenPresenter(ScreenController parentScreen, Stage stage) {
-        this.stage = stage;
-        this.parentScreen = parentScreen;
+    private int score;
+
+    public GameScreenPresenter(ScreenController screenController, Stage stage) {
+        super(stage, screenController);
+        score = 0;
         this.api = new WordApiService();
         keyboard = new Keyboard(this);
         textTileGrid = new TextTileGrid(25, 600);
         feedback = " ";
         getWord();
-        this.addActor(keyboard);
-        this.addActor(textTileGrid);
-    }
-
-    public void addActor(Actor actor) {
-        this.stage.addActor(actor);
+        addActor(keyboard);
+        addActor(textTileGrid);
+        /*
+         * if (parent.getPreferences().getMusic()) {
+         * music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
+         * music.setLooping(true);
+         * music.play();
+         * }
+         */
     }
 
     private void setFeedback(String feedback) {
@@ -51,10 +43,11 @@ public class GameScreenPresenter {
     }
 
     public boolean checkTimer(WordleTimer timer) {
-        if(timer.getInterval().equals("0:00")) {
+        if (timer.getInterval().equals("0:00")) {
             timer.stop();
-            //music.stop();
-            parentScreen.changeScreens(ScreenController.MENU);
+            Player.getInstance().setScore(score);
+            // music.stop();
+            screenController.changeScreens(ScreenController.MENU);
             return true;
         }
         return false;
@@ -74,6 +67,7 @@ public class GameScreenPresenter {
             }
         });
     }
+
     public void setWord_id(int word_id) {
         this.word_id = word_id;
     }
@@ -92,7 +86,7 @@ public class GameScreenPresenter {
             return;
         }
 
-        if(textTileGrid.getActiveRow().getIndex() >= 0 && s.equals("Del")) {
+        if (textTileGrid.getActiveRow().getIndex() >= 0 && s.equals("Del")) {
             this.textTileGrid.getActiveRow().removeCharacter();
             return;
         }
@@ -112,18 +106,21 @@ public class GameScreenPresenter {
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
+                score = (guessedWord.getGreen()*10) + (guessedWord.getYellow()*5);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
                         setFeedback("     Correct!     \nHere is a new word");
-                    }
-                    else {
+                        Player.getInstance().setScore(50+(25*(textTileGrid.getActiveRowIndex())));
+                    } else {
                         setFeedback("  No more tries  \nhere is a new word");
+                        Player.getInstance().setScore(score);
                     }
                     resetGame();
                 }
-
                 textTileGrid.nextRow();
+                System.out.println(Player.getInstance().getScore());
             }
+
 
             @Override
             public void onFailure(Throwable t) {
@@ -157,23 +154,19 @@ public class GameScreenPresenter {
         }
     }
 
+
     public String getFeedback() {
         return feedback;
     }
 
-    public void changeToMainScreen() {
-
-        parentScreen.changeScreens(ScreenController.MENU);
-    }
-
     public interface gameScreenView {
         void handleKeyBoardInput(String s);
+
         String getFeedbackFunc();
     }
 
     public interface keyboardButton {
         void handleKeyBoardInput();
     }
-
 
 }

@@ -4,6 +4,7 @@ package com.wordle.royale.v2.model.other;
 import com.badlogic.gdx.Game;
 import com.wordle.royale.v2.view.screens.GameScreen;
 import com.wordle.royale.v2.view.screens.HighScoreScreen;
+import com.wordle.royale.v2.view.screens.LobbyScreen;
 import com.wordle.royale.v2.view.screens.MenuScreen;
 import com.wordle.royale.v2.view.screens.SettingsScreen;
 import com.wordle.royale.v2.view.screens.TutorialScreen;
@@ -15,11 +16,13 @@ public class ScreenController extends Game {
     private SettingsScreen settings;
     private HighScoreScreen highScore;
     private TutorialScreen tutorial;
+    private LobbyScreen lobby;
     public final static int MENU = 0;
     public final static int GAME = 1;
     public final static int SETTINGS = 2;
     public final static int TUTORIAL = 3;
     public final static int HIGHSCORES = 4;
+    public final static int LOBBY = 5;
     public final static float GAME_WORLD_WIDTH = 1280;
     public final static float GAME_WORLD_HEIGHT = 720;
 
@@ -62,6 +65,12 @@ public class ScreenController extends Game {
                 if (highScore == null)
                     highScore = new HighScoreScreen(this); // added (this)
                 this.setScreen(highScore);
+                break;
+
+            case LOBBY:
+                if (lobby == null)
+                    lobby = new LobbyScreen(this); // added (this)
+                this.setScreen(lobby);
                 break;
 
         }

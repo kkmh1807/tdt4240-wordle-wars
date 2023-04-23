@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class TextTile extends Actor {
     private String chr;
-    private TextField textField;
     private Skin skin;
     private BitmapFont character;
     private Sprite tile;
