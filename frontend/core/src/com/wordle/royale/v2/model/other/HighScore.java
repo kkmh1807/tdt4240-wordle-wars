@@ -19,7 +19,7 @@ public class HighScore {
 
     public HighScore() {
         font = new BitmapFont();
-        font.getData().setScale(2f, 4f);
+        font.getData().setScale(4f, 4f);
         highscores.add(score1);
         highscores.add(score2);
         highscores.add(score3);
@@ -30,7 +30,7 @@ public class HighScore {
     public void render(SpriteBatch batch) {
         Collections.sort(highscores);
         for (int i = 0; i < highscores.size(); i++) {
-            float xPos = Gdx.graphics.getWidth() / 2.5f;
+            float xPos = Gdx.graphics.getWidth() / 4f;
             float yPos = Gdx.graphics.getHeight() / 1.5f  - (i*75);
             String text = (i + 1) + ". " + highscores.get(i).toString();
             font.draw(batch, text, xPos, yPos);

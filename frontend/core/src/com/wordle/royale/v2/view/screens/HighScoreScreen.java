@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.HighScore;
 import com.wordle.royale.v2.model.other.ScreenController;
@@ -42,7 +43,7 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
     @Override
     public void show() {
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
-        title.getData().setScale(.7f, 2f);
+        title.getData().setScale(1f, 2f);
         layout = new GlyphLayout(title, "Top 5 Legends");
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
@@ -50,19 +51,14 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
         presenter = new HighScorePresenter(parent, stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
+        viewport = new StretchViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
         backToMenu = new TextButton("To main menu", skin, "default");
-        backToMenu.setScale(1f, 2f);
+        backToMenu.setScale(2f, 2f);
         backToMenu.setTransform(true);
-        backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
+        backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth(), backToMenu.getHeight());
 
-        playAgain = new TextButton("To main menu", skin, "default");
-        playAgain.setScale(1f, 2f);
-        playAgain.setTransform(true);
-        playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
-                Gdx.graphics.getHeight() / 2f - playAgain.getHeight() * 2);
         setupChangeToGame();
         setupChangeToMenu();
         Gdx.input.setInputProcessor((stage));
@@ -124,12 +120,6 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
     @Override
     public void setupChangeToGame() {
-        playAgain.addListener((new ClickListener() {
 
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                presenter.changeScreens(ScreenController.GAME);
-            }
-        }));
     }
 }

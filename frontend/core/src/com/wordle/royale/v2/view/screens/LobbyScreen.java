@@ -62,7 +62,7 @@ public class LobbyScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
-        layout = new GlyphLayout(textTitle, "Enter your legend name");
+        layout = new GlyphLayout(textTitle, "Enter your name");
 
         gameButton = new TextButton("Start Game", skin, "default");
         gameButton.pad(20f);
@@ -89,7 +89,7 @@ public class LobbyScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        textTitle.draw(batch, "Enter your legend name", (Gdx.graphics.getWidth()/2f) - layout.width / 2, Gdx.graphics.getHeight() - layout.height * 2f);
+        textTitle.draw(batch, "Enter your name", (Gdx.graphics.getWidth()/2f) - layout.width / 2, Gdx.graphics.getHeight() - layout.height * 2f);
         stage.draw();
 
         batch.end();
