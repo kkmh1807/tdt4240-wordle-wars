@@ -67,8 +67,8 @@ public class LobbyScreen implements Screen {
         gameButton = new TextButton("Start Game", skin, "default");
         gameButton.pad(20f);
         gameButton.setTransform(true);
-        gameButton.setScale(1, 2f);
-        gameButton.setPosition(Gdx.graphics.getWidth() / 2f - gameButton.getWidth() / 2f,
+        gameButton.setScale(2f, 2f);
+        gameButton.setPosition(Gdx.graphics.getWidth() / 2f - gameButton.getWidth(),
                 Gdx.graphics.getHeight() / 2f - gameButton.getHeight() * 4);
         gameButton.addListener(new ClickListener() {
             @Override

@@ -27,22 +27,16 @@ public class UserNameActor extends Actor {
     }
 
     public void updateUsername(String s) {
-        if(userName.length() >= 15) {
+        if(userName.length() >= 10) {
             return;
         }
         userName += s;
-        if(userName.length() > 13) {
-            userInput.getData().scale(-0.09f);
-        }
         layout.setText(userInput, userName);
     }
 
     public void removeCharacter() {
         if(userName.length() > 0) {
             userName = userName.substring(0, userName.length() - 1);
-        }
-        if(userName.length() > 13) {
-            userInput.getData().scale(0.09f);
         }
         layout.setText(userInput, userName);
     }

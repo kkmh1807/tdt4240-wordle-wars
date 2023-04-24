@@ -44,8 +44,8 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
     @Override
     public void show() {
-        font = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
-        font.getData().setScale(.8f, .8f);
+        font = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"));
+        font.getData().setScale(1.8f, 2f);
         fontLayout = new GlyphLayout(font, "");
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         title.getData().setScale(1f, 2f);
@@ -82,10 +82,10 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
             String name = presenter.getHighScore().getHighscoreList().get(i).getUsername();
             Integer score = presenter.getHighScore().getHighscoreList().get(i).getScore();
-            String text = i + 1 + ". " + name + " : " + score + " points";
+            String text = i + 1 + ". " + name + ": " + 1000 + " points";
             fontLayout.setText(font, text);
-            float xPos = Gdx.graphics.getWidth() / 2f - fontLayout.width/2;
-            float yPos = Gdx.graphics.getHeight() / 2.5f - (i * 75);
+            float xPos = Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth()/3f ;
+            float yPos = Gdx.graphics.getHeight() / 1.5f - (i * 75);
             font.draw(batch, text, xPos, yPos);
         }
 
