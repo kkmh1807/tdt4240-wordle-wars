@@ -13,7 +13,7 @@ public class WordleTimer {
     private static WordleTimer instance = null;
 
     private WordleTimer() {
-        interval = 15;
+        interval = 5*60;
         observers = new ArrayList<ITimerObserver>();
     }
 
