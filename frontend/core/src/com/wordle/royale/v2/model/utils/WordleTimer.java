@@ -13,7 +13,7 @@ public class WordleTimer {
     private static WordleTimer instance = null;
 
     private WordleTimer() {
-        interval = 30;
+        interval = 5*60;
         observers = new ArrayList<ITimerObserver>();
     }
 
@@ -50,7 +50,7 @@ public class WordleTimer {
 
     }
 
-    public static int setInterval() {
+    private static int setInterval() {
         if (interval == 1) {
             for (ITimerObserver observer: observers) {
                 System.out.println("Notified");

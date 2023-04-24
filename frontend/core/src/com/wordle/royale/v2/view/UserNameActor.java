@@ -23,26 +23,20 @@ public class UserNameActor extends Actor {
         userInput = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
         userName = "";
         layout = new GlyphLayout(userInput, userName);
-        userInput.getData().setScale(2f, 2f);
+        userInput.getData().setScale(1f, 1.5f);
     }
 
     public void updateUsername(String s) {
-        if(userName.length() >= 15) {
+        if(userName.length() >= 10) {
             return;
         }
         userName += s;
-        if(userName.length() > 8) {
-            userInput.getData().scale(-0.09f);
-        }
         layout.setText(userInput, userName);
     }
 
     public void removeCharacter() {
         if(userName.length() > 0) {
             userName = userName.substring(0, userName.length() - 1);
-        }
-        if(userName.length() > 8) {
-            userInput.getData().scale(0.09f);
         }
         layout.setText(userInput, userName);
     }

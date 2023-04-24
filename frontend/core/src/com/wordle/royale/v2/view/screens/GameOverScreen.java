@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wordle.royale.v2.model.Player;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.GameOverPresenter;
 import com.wordle.royale.v2.presenter.HighScorePresenter;
@@ -29,6 +31,10 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
     private final float GAME_WORLD_HEIGHT = Gdx.graphics.getHeight();
     private TextButton backToMenu;
     private TextButton playAgain;
+    private BitmapFont userName;
+    private GlyphLayout userNameLayout;
+    private BitmapFont userScore;
+    private GlyphLayout userScoreLayout;
     private ScreenController parent;
     private BitmapFont title;
     private GlyphLayout layout;
@@ -41,10 +47,15 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
 
     @Override
     public void show() {
-        font = new BitmapFont();
-        font.getData().setScale(2f, 4f);
         title = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
-        title.getData().setScale(.7f, 2f);
+        title.getData().setScale(1.5f, 2f);
+        userScore = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        userName = new BitmapFont(Gdx.files.internal("craftacular/raw/font-title-export.fnt"));
+        userScore.getData().setScale(1f, 1f);
+        userName.getData().setScale(1f, 1f);
+        userNameLayout = new GlyphLayout(userName, Player.getInstance().getName());
+        userScoreLayout = new GlyphLayout(userScore, "Score: " + Player.getInstance().getScore());
+
         layout = new GlyphLayout(title, "Game over");
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
@@ -52,16 +63,16 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         presenter = new HighScorePresenter(parent,stage);
         float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
+        viewport = new StretchViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
         backToMenu = new TextButton("To main menu", skin, "default");
-        backToMenu.setScale(1f, 2f);
+        backToMenu.setScale(2f, 2f);
         backToMenu.setTransform(true);
-        backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth() / 2f, backToMenu.getHeight());
+        backToMenu.setPosition(Gdx.graphics.getWidth() / 2f - backToMenu.getWidth(), backToMenu.getHeight());
         playAgain = new TextButton("Play again", skin, "default");
-        playAgain.setScale(1f, 2f);
+        playAgain.setScale(2f, 2f);
         playAgain.setTransform(true);
-        playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth() / 2f,
+        playAgain.setPosition(Gdx.graphics.getWidth() / 2f - playAgain.getWidth(),
                 Gdx.graphics.getHeight() / 3f - playAgain.getHeight() * 2f);
         setupChangeToMenu();
         changeToGameScreen();
@@ -75,10 +86,13 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        userNameLayout.setText(userName, Player.getInstance().getName());
+        userScoreLayout.setText(userScore, "Score: " + Player.getInstance().getScore());
 
         batch.begin();
         title.draw(batch, "Game over", Gdx.graphics.getWidth()/2f - (layout.width/2), Gdx.graphics.getHeight()- layout.height*2);
-
+        userName.draw(batch, Player.getInstance().getName(), Gdx.graphics.getWidth()/2f - userNameLayout.width/2, Gdx.graphics.getHeight()/2f + userNameLayout.height*2);
+        userScore.draw(batch,"Score: "+ Player.getInstance().getScore(), Gdx.graphics.getWidth()/2f - userScoreLayout.width/2, Gdx.graphics.getHeight()/2f );
         stage.draw();
 
         batch.end();
@@ -117,6 +131,7 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         backToMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Player.getInstance().destroyUser();
                 presenter.changeScreens(ScreenController.MENU);
             }
         });
@@ -127,6 +142,7 @@ public class GameOverScreen implements Screen, GameOverPresenter.changeScreens {
         playAgain.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Player.getInstance().resetScore();
                 presenter.changeScreens(ScreenController.GAME);
             }
         });

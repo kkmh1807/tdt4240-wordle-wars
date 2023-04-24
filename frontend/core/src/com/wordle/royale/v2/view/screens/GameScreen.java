@@ -35,6 +35,8 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
     private BitmapFont timerText;
 
     private BitmapFont feedback;
+    private BitmapFont playerScore;
+    private GlyphLayout scoreLayout;
     private GlyphLayout layout;
     private GlyphLayout timerLayout;
     private GameScreenPresenter presenter;
@@ -52,8 +54,11 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("craftacular/skin/craftacular-ui.json"));
         feedback = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"));
+        playerScore = new BitmapFont(Gdx.files.internal("craftacular/raw/font-export.fnt"));
         feedback.getData().setScale(2f, 2f);
+        playerScore.getData().setScale(2f, 2f);
         layout = new GlyphLayout(feedback, " ");
+        scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore());
         timer = WordleTimer.getInstance();
         timer.start();
         exitButton = new TextButton("Exit", skin, "default");
@@ -68,6 +73,7 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
             public void clicked(InputEvent event, float x, float y) {
                 timer.stop();
                 timer = null;
+                Player.getInstance().destroyUser();
                 presenter.changeScreens(ScreenController.MENU);
 
             }
@@ -87,22 +93,21 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore());
 
-        if (presenter != null && timer != null) {
-            presenter.checkTimer(timer);
-
-        }
         batch.begin();
 
         if (presenter.isTimeUp()) {
-            presenter.changeScreens(ScreenController.MENU);
+            presenter.changeScreens(ScreenController.GAMEOVER);
         }
 
         stage.draw();
         feedback.draw(batch, getFeedbackFunc(), (Gdx.graphics.getWidth() / 2f) - layout.width / 2,
-                Gdx.graphics.getHeight() - layout.height);
+                Gdx.graphics.getHeight() - (layout.height + (layout.height /2)));
         timerText.getData().setScale(1.5f, 2.5f);
         timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2f) - timerLayout.width / 2,
+                Gdx.graphics.getHeight() - timerLayout.height);
+        playerScore.draw(batch, "Score: "+Player.getInstance().getScore(), (Gdx.graphics.getWidth()) - scoreLayout.width - scoreLayout.width/10f,
                 Gdx.graphics.getHeight() - timerLayout.height);
         stage.act();
 

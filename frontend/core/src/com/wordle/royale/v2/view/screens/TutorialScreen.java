@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wordle.royale.v2.model.other.ScreenController;
 import com.wordle.royale.v2.presenter.TutorialPresenter;
@@ -50,13 +51,13 @@ public class TutorialScreen implements Screen, TutorialPresenter.TutorialScreen 
 
         float aspectRatio = (float) Gdx.graphics.getHeight()/ (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
-        viewport = new FillViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
+        viewport = new StretchViewport(GAME_WORLD_WIDTH * aspectRatio, GAME_WORLD_HEIGHT, camera);
         viewport.apply();
 
         backToMenu = new TextButton("To main menu", skin, "default");
-        backToMenu.setScale(1f, 2f);
+        backToMenu.setScale(2f, 2f);
         backToMenu.setTransform(true);
-        backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth()/2f, backToMenu.getHeight()*2);
+        backToMenu.setPosition(Gdx.graphics.getWidth() /2f - backToMenu.getWidth(), backToMenu.getHeight()*2);
 
         changeScreens();
         Gdx.input.setInputProcessor((stage));
@@ -83,9 +84,9 @@ public class TutorialScreen implements Screen, TutorialPresenter.TutorialScreen 
         table.add(addressText1).width(100);
 
          */
-        tutorialText.getData().setScale(1f, 1.5f);
+        tutorialText.getData().setScale(2f, 2f);
         tutorialText.draw(batch, "You have six tries to guess the\nfive-letter Wordle word.\nType in your guess and submit\nyour word by hitting the “enter”\nkey on the Wordle keyboard.\n" +
-                "\nThe color of the tiles will\nchange after you submit your\nword.\nA yellow tile indicates that you\npicked the right letter but it’s\nin the wrong spot.\nThe green tile indicates that\nyou picked the right letter in\nthe correct spot. The gray tile\nindicates that the letter you\npicked is not included\nin the word at all.\n\nContinue until you solve the\nWordle or run out of guesses.\nGood luck!", Gdx.graphics.getWidth()/4f ,Gdx.graphics.getHeight() - backToMenu.getHeight()*2);
+                "\nThe color of the tiles will\nchange after you submit your\nword.\nA yellow tile indicates that you\npicked the right letter but it’s\nin the wrong spot,\nthis will give you 5 points.\nThe green tile indicates that\nyou picked the right letter in\nthe correct spot, this will\ngive you 10 points.\nThe gray tile\nindicates that the letter you\npicked is not included\nin the word at all.\n\nContinue until you solve the\nWordle or run out of guesses.\nYour best guess is what\ngives you points.\n\nGood luck!", 0,Gdx.graphics.getHeight() - backToMenu.getHeight()*2);
         stage.draw();
 
 
