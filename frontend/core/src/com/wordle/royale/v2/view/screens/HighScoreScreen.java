@@ -82,7 +82,7 @@ public class HighScoreScreen implements Screen, HighScorePresenter.changeScreens
 
             String name = presenter.getHighScore().getHighscoreList().get(i).getUsername();
             Integer score = presenter.getHighScore().getHighscoreList().get(i).getScore();
-            String text = i + 1 + ". " + name + ": " + 1000 + " points";
+            String text = i + 1 + ". " + name + ": " + score + " points";
             fontLayout.setText(font, text);
             float xPos = Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth()/3f ;
             float yPos = Gdx.graphics.getHeight() / 1.5f - (i * 75);
