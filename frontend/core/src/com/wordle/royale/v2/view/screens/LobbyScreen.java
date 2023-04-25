@@ -28,7 +28,7 @@ import com.wordle.royale.v2.view.UserNameActor;
 
 import java.awt.TextField;
 
-public class LobbyScreen implements Screen {
+public class LobbyScreen implements Screen, LobbyScreenPresenter.LobbyView {
 
     private User user;
     private Stage stage;
@@ -71,13 +71,8 @@ public class LobbyScreen implements Screen {
         gameButton.setScale(2f, 2f);
         gameButton.setPosition(Gdx.graphics.getWidth() / 2f - gameButton.getWidth(),
                 Gdx.graphics.getHeight() / 2f - gameButton.getHeight() * 4);
-        gameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                presenter.startGame();
-            }
-        });
 
+        setupStartGame();
         Gdx.input.setInputProcessor(stage);
         presenter.addActor(gameButton);
 
@@ -123,5 +118,15 @@ public class LobbyScreen implements Screen {
     public void dispose() {
         batch.dispose();
         stage.dispose();
+    }
+
+    @Override
+    public void setupStartGame() {
+        gameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                presenter.startGame();
+            }
+        });
     }
 }
