@@ -58,7 +58,7 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         feedback.getData().setScale(2f, 2f);
         playerScore.getData().setScale(2f, 2f);
         layout = new GlyphLayout(feedback, " ");
-        scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore());
+        scoreLayout = new GlyphLayout(playerScore, "Score: " + (Player.getInstance().getScore()+presenter.getLastRowScore()));
         timer = WordleTimer.getInstance();
         timer.start();
         exitButton = new TextButton("Exit", skin, "default");
@@ -93,7 +93,7 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore());
+        scoreLayout = new GlyphLayout(playerScore, "Score: " + Player.getInstance().getScore()+ " ("+presenter.getLastRowScore()+")");
 
         batch.begin();
 
@@ -105,9 +105,9 @@ public class GameScreen implements Screen, GameScreenPresenter.gameScreenView {
         feedback.draw(batch, getFeedbackFunc(), (Gdx.graphics.getWidth() / 2f) - layout.width / 2,
                 Gdx.graphics.getHeight() - (layout.height + (layout.height /2)));
         timerText.getData().setScale(1.5f, 2.5f);
-        timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2f) - timerLayout.width / 2,
+        timerText.draw(batch, timer.getInterval(), (Gdx.graphics.getWidth() / 2.5f) - timerLayout.width / 2,
                 Gdx.graphics.getHeight() - timerLayout.height);
-        playerScore.draw(batch, "Score: "+Player.getInstance().getScore(), (Gdx.graphics.getWidth()) - scoreLayout.width - scoreLayout.width/10f,
+        playerScore.draw(batch, "Score: "+Player.getInstance().getScore()+ " ("+presenter.getLastRowScore()+")", (Gdx.graphics.getWidth()) - scoreLayout.width - scoreLayout.width/10f,
                 Gdx.graphics.getHeight() - timerLayout.height);
         stage.act();
 

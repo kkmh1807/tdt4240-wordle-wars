@@ -24,6 +24,7 @@ import com.wordle.royale.v2.model.other.ScreenController;
 
 import com.wordle.royale.v2.presenter.HighScorePresenter;
 import com.wordle.royale.v2.presenter.LobbyScreenPresenter;
+import com.wordle.royale.v2.view.UserNameActor;
 
 import java.awt.TextField;
 

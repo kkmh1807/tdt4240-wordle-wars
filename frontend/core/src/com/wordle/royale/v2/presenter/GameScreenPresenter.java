@@ -24,7 +24,11 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
     private ScoreApiService scoreApi;
     private int word_id;
 
-    private int score;
+    public int getLastRowScore() {
+        return lastRowScore;
+    }
+
+    private int lastRowScore;
 
     public boolean isTimeUp() {
         return timeUp;
@@ -35,7 +39,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
     public GameScreenPresenter(ScreenController screenController, Stage stage) {
         super(stage, screenController);
         WordleTimer.getInstance().addObserver(this);
-        score = 0;
+        lastRowScore = 0;
         timeUp = false;
         this.wordApi = new WordApiService();
         this.scoreApi = new ScoreApiService();
@@ -63,6 +67,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
             @Override
             public void onSuccess(Integer wordID) {
                 setWord_id(wordID);
+                lastRowScore = 0;
                 System.out.println("Your wordID:  " + wordID);
             }
 
@@ -111,14 +116,14 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
             @Override
             public void onSuccess(Boolean valid, guessedWord guessedWord) {
                 colorTiles(guessedWord);
-                score = (guessedWord.getGreen() * 10) + (guessedWord.getYellow() * 5);
+                lastRowScore = (guessedWord.getGreen() * 10) + (guessedWord.getYellow() * 5);
                 if (guessedWord.getCorrect() || textTileGrid.getActiveRowIndex() == 0) {
                     if (guessedWord.getCorrect()) {
                         setFeedback("        Correct!\nHere is a new word");
                         Player.getInstance().setScore(50 + (25 * (textTileGrid.getActiveRowIndex())));
                     } else {
                         setFeedback("  No more tries  \nhere is a new word");
-                        Player.getInstance().setScore(score);
+                        Player.getInstance().setScore(lastRowScore);
                     }
                     resetGame();
                 }
@@ -161,7 +166,7 @@ public class GameScreenPresenter extends AbstractPresenter implements IKeyboard,
     @Override
     public void timeUp(Boolean timeUp) {
         this.timeUp = timeUp;
-        Player.getInstance().setScore(score);
+        Player.getInstance().setScore(lastRowScore);
         scoreApi.submitScore(Player.getInstance().getName(), Player.getInstance().getScore(),
                 new ScoreApiService.CallbackPostScore<HighScore>() {
                     @Override
