@@ -64,7 +64,7 @@ public class WordRow extends Actor {
 
     public void updateTileXColor(int index, int place, int exists) {
         if (exists == 1) {
-            textTiles.get(index).setColor(new Color(Color.YELLOW.cpy()));
+            textTiles.get(index).setColor(new Color(1.5f, 2.0f, 0.2f, 1f));
             if (place == 1) {
                 textTiles.get(index).setColor(new Color(Color.GREEN.cpy()));
             }

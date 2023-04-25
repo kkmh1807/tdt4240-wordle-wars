@@ -33,8 +33,10 @@ public class LobbyScreenPresenter extends AbstractPresenter implements IKeyboard
     }
 
     public void startGame() {
-        Player.getInstance().setName(userNameActor.getUserName());
-        changeScreens(ScreenController.GAME);
+        if(userNameActor.getUserName().length() > 0){
+            Player.getInstance().setName(userNameActor.getUserName());
+            changeScreens(ScreenController.GAME);
+        }
     }
 
 }
