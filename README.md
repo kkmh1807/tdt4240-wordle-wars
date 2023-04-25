@@ -28,7 +28,7 @@ Now you got two options:
 1. Create an android emulator with your desired android version.
 2. Run the game from android studio.
 
-NOTE: If you are on eduroam and do not do changes on the backend you can keep the BASE_URL = "http://10.212.25.104:8080" in ScoreApiService and WordApiService in the network-folder to use the hosted backend. If you need to run the backend locally you need to edit this URL.
+NOTE: If you are on eduroam and do not do changes on the backend you can keep the BASE_URL = "http://10.212.25.104:8080" in ScoreApiService and WordApiService in the network-folder to use the hosted backend. If you need to run the backend locally you need to edit this URL to "http://10.0.2.2:3000" if you use the example .env.
 
 ## Backend
 
@@ -42,6 +42,7 @@ BACKEND_PORT=3000
 # Database
 # Use DB_URI for running server without docker
 # DB_URI = mongodb://devUser:topSecret@localhost:27017/wordle?authSource=admin
+# Replace "host.docker.internal" with "wordle-db" if using Ubuntu.
 DOCKER_DATABASE_URI = mongodb://devUser:topSecret@host.docker.internal:27017/wordle?authSource=admin
 MONGO_INITDB_ROOT_USERNAME="devUser"
 MONGO_INITDB_ROOT_PASSWORD="topSecret"
