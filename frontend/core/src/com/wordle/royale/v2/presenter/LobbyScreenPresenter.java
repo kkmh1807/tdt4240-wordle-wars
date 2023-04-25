@@ -39,4 +39,8 @@ public class LobbyScreenPresenter extends AbstractPresenter implements IKeyboard
         }
     }
 
+    public interface LobbyView {
+        void setupStartGame();
+    }
+
 }
